@@ -1,0 +1,3 @@
+"""
+Rentals test package.
+"""
