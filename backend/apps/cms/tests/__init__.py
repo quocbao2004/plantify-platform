@@ -1,0 +1,3 @@
+"""
+CMS test package.
+"""
