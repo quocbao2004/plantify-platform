@@ -1,3 +1,4 @@
+import { LABELS } from "@/constants/labels";
 import React from "react";
 import { Spinner } from "@/components/ui";
 import { cn } from "@/utils";
@@ -8,14 +9,14 @@ interface LoadingOverlayProps {
 }
 
 export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
-  message = "Đang tải dữ liệu...",
+  message = LABELS.common.LOADING_DATA,
   className,
 }) => {
   return (
     <div
       className={cn(
         "flex flex-col items-center justify-center p-12 space-y-3",
-        className
+        className,
       )}
     >
       <Spinner size="lg" />

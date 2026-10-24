@@ -1,14 +1,22 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { ErrorBoundary } from "@/components/common";
 
 export const MainLayout: React.FC = () => {
+  const isHome = useLocation().pathname === "/";
   return (
-    <div className="min-h-screen flex flex-col bg-surface-50 text-surface-900">
+    <div className="store-shell min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main
+        id="main-content"
+        className={
+          isHome
+            ? "flex-1 w-full"
+            : "flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        }
+      >
         <ErrorBoundary>
           <Outlet />
         </ErrorBoundary>

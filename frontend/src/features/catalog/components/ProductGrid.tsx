@@ -1,3 +1,4 @@
+import { LABELS } from "@/constants/labels";
 import React from "react";
 import { ProductCard } from "./ProductCard";
 import { EmptyState, LoadingOverlay } from "@/components/common";
@@ -8,16 +9,24 @@ interface ProductGridProps {
   isLoading: boolean;
 }
 
-export const ProductGrid: React.FC<ProductGridProps> = ({ products, isLoading }) => {
+export const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  isLoading,
+}) => {
   if (isLoading) {
-    return <LoadingOverlay message="Đang tải danh sách cây cảnh..." className="min-h-[300px]" />;
+    return (
+      <LoadingOverlay
+        message={LABELS.catalog.LOADING}
+        className="min-h-[300px]"
+      />
+    );
   }
 
   if (!products || products.length === 0) {
     return (
       <EmptyState
-        title="Không tìm thấy cây cảnh phù hợp"
-        description="Thử thay đổi từ khóa tìm kiếm hoặc điều chỉnh lại các tiêu chí bộ lọc."
+        title={LABELS.catalog.EMPTY_TITLE}
+        description={LABELS.catalog.EMPTY_DESCRIPTION}
         className="min-h-[280px]"
       />
     );

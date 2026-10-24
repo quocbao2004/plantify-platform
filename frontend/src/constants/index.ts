@@ -3,7 +3,11 @@ export const STORAGE_KEYS = {
   REFRESH_TOKEN: "plantify_refresh_token",
   USER: "plantify_user",
   THEME: "plantify_theme",
+  NEWSLETTER_INTEREST: "plantify-newsletter-interest-v1",
 } as const;
+
+export { LABELS, PRODUCT_LABELS } from "./labels";
+export { MESSAGES, VALIDATION_MESSAGES } from "./messages";
 
 export const PAGINATION = {
   DEFAULT_PAGE: 1,

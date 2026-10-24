@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { authApi } from "../api/authApi";
 import { useAuthStore } from "@/stores/authStore";
 import { LoginPayload, RegisterPayload } from "../types";
+import { MESSAGES } from "@/constants/messages";
+import { notify } from "@/services/notifications";
 
 export const useLogin = () => {
   const navigate = useNavigate();
@@ -10,6 +12,10 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: (payload: LoginPayload) => authApi.login(payload),
+    meta: {
+      successMessage: MESSAGES.LOGIN_SUCCESS,
+      errorMessage: MESSAGES.LOGIN_ERROR,
+    },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens);
       navigate("/");
@@ -23,6 +29,10 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: (payload: RegisterPayload) => authApi.register(payload),
+    meta: {
+      successMessage: MESSAGES.REGISTER_SUCCESS,
+      errorMessage: MESSAGES.REGISTER_ERROR,
+    },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens);
       navigate("/");
@@ -38,6 +48,7 @@ export const useLogout = () => {
   return () => {
     logout();
     queryClient.clear();
+    notify.success(MESSAGES.LOGOUT_SUCCESS);
     navigate("/login");
   };
 };

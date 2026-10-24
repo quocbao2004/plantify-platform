@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" type="device" compressed="false">
+  <diagram id="plantify-simple" name="ERD tổng quan">
+    <mxGraphModel dx="1450" dy="1320" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1450" pageHeight="1320" math="0" shadow="0" background="#181818">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object id="Category" label="Category" tooltip="catalog_categories">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="850" y="40" width="150" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="User" label="User" tooltip="accounts_users">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="160" y="240" width="150" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="Product" label="Product" tooltip="catalog_products">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="850" y="240" width="150" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="Order" label="Order" tooltip="orders_orders">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="160" y="440" width="150" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="ProductVariant" label="ProductVariant" tooltip="catalog_product_variants">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="835" y="440" width="180" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="RentalContract" label="RentalContract" tooltip="rental_contracts">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="260" y="680" width="190" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="OrderItem" label="OrderItem" tooltip="orders_order_items">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="650" y="680" width="170" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="StockBalance" label="StockBalance" tooltip="inventory_stock_balances">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="920" y="680" width="180" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="PlantAsset" label="PlantAsset" tooltip="inventory_plant_assets">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="1190" y="680" width="170" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="Payment" label="Payment" tooltip="payments_payments">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="120" y="930" width="160" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="DepositLedgerEntry" label="DepositLedgerEntry" tooltip="payments_deposit_ledger">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="355" y="930" width="230" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="RentalContractItem" label="RentalContractItem" tooltip="rental_contract_items">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="650" y="930" width="230" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="PaymentAllocation" label="PaymentAllocation" tooltip="payments_payment_allocations">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="40" y="1180" width="210" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="Refund" label="Refund" tooltip="payments_refunds">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="300" y="1180" width="160" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="RentalAssetBooking" label="RentalAssetBooking" tooltip="rental_asset_bookings">
+          <mxCell vertex="1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#30517D;strokeWidth=1.5;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=16;align=center;verticalAlign=middle;spacing=8;">
+            <mxGeometry x="650" y="1180" width="240" height="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="rel0" label="đặt hàng" tooltip="Order.user_id → User.id">
+          <mxCell edge="1" parent="1" source="User" target="Order" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.35;exitY=1;exitPerimeter=0;entryX=0.35;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" x="0.0" y="5.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel1" label="phân loại" tooltip="Product.category_id → Category.id">
+          <mxCell edge="1" parent="1" source="Category" target="Product" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" x="0.0" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel2" label="có biến thể" tooltip="ProductVariant.product_id → Product.id">
+          <mxCell edge="1" parent="1" source="Product" target="ProductVariant" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <mxPoint as="offset" x="0.0" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel3" label="tồn kho bán" tooltip="StockBalance.variant_id → ProductVariant.id">
+          <mxCell edge="1" parent="1" source="ProductVariant" target="StockBalance" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToOne;endFill=0;endSize=17;exitX=0.6;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="943" y="590" />
+                <mxPoint x="1010" y="590" />
+              </Array>
+              <mxPoint as="offset" x="18.5" y="50.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel4" label="cây cho thuê" tooltip="PlantAsset.variant_id → ProductVariant.id">
+          <mxCell edge="1" parent="1" source="ProductVariant" target="PlantAsset" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.85;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="988" y="565" />
+                <mxPoint x="1275" y="565" />
+              </Array>
+              <mxPoint as="offset" x="103.5" y="75.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel5" label="chi tiết đơn" tooltip="OrderItem.order_id → Order.id">
+          <mxCell edge="1" parent="1" source="Order" target="OrderItem" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.85;exitY=1;exitPerimeter=0;entryX=0.3;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="287.5" y="565" />
+                <mxPoint x="701" y="565" />
+              </Array>
+              <mxPoint as="offset" x="166.75" y="75.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel6" label="được mua hoặc thuê" tooltip="OrderItem.variant_id → ProductVariant.id">
+          <mxCell edge="1" parent="1" source="ProductVariant" target="OrderItem" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.25;exitY=1;exitPerimeter=0;entryX=0.7;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="880" y="610" />
+                <mxPoint x="769" y="610" />
+              </Array>
+              <mxPoint as="offset" x="33.5" y="30.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel7" label="hợp đồng thuê" tooltip="RentalContract.order_id → Order.id">
+          <mxCell edge="1" parent="1" source="Order" target="RentalContract" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToOne;endFill=0;endSize=17;exitX=0.45;exitY=1;exitPerimeter=0;entryX=0.25;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="227.5" y="595" />
+                <mxPoint x="307.5" y="595" />
+              </Array>
+              <mxPoint as="offset" x="30.0" y="45.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel8" label="khách thuê" tooltip="RentalContract.user_id → User.id">
+          <mxCell edge="1" parent="1" source="User" target="RentalContract" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.7;exitY=1;exitPerimeter=0;entryX=0.84;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="265" y="360" />
+                <mxPoint x="419.6" y="360" />
+              </Array>
+              <mxPoint as="offset" x="0.0" y="122.3" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel9" label="chi tiết hợp đồng" tooltip="RentalContractItem.contract_id → RentalContract.id">
+          <mxCell edge="1" parent="1" source="RentalContract" target="RentalContractItem" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.9;exitY=1;exitPerimeter=0;entryX=0.22;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="431" y="815" />
+                <mxPoint x="700.6" y="815" />
+              </Array>
+              <mxPoint as="offset" x="-50.8" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel10" label="tách theo từng cây" tooltip="RentalContractItem.order_item_id → OrderItem.id">
+          <mxCell edge="1" parent="1" source="OrderItem" target="RentalContractItem" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.7;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="735" y="865" />
+                <mxPoint x="811" y="865" />
+              </Array>
+              <mxPoint as="offset" x="15.0" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel11" label="gán cây vật lý" tooltip="RentalContractItem.plant_asset_id → PlantAsset.id">
+          <mxCell edge="1" parent="1" source="PlantAsset" target="RentalContractItem" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERzeroToOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.3;exitY=1;exitPerimeter=0;entryX=0.9;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1241" y="865" />
+                <mxPoint x="857" y="865" />
+              </Array>
+              <mxPoint as="offset" x="177.0" y="-50.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel12" label="lịch thuê" tooltip="RentalAssetBooking.contract_item_id → RentalContractItem.id">
+          <mxCell edge="1" parent="1" source="RentalContractItem" target="RentalAssetBooking" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToOne;endFill=0;endSize=17;exitX=0.45;exitY=1;exitPerimeter=0;entryX=0.45;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="753.5" y="1100" />
+                <mxPoint x="758" y="1100" />
+              </Array>
+              <mxPoint as="offset" x="2.25" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel13" label="được đặt lịch" tooltip="RentalAssetBooking.asset_id → PlantAsset.id">
+          <mxCell edge="1" parent="1" source="PlantAsset" target="RentalAssetBooking" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.8;exitY=1;exitPerimeter=0;entryX=0.8;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="1326" y="1140" />
+                <mxPoint x="842" y="1140" />
+              </Array>
+              <mxPoint as="offset" x="77.0" y="-75.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel14" label="thanh toán" tooltip="Payment.order_id → Order.id">
+          <mxCell edge="1" parent="1" source="Order" target="Payment" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERzeroToOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.15;exitY=1;exitPerimeter=0;entryX=0.16;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="182.5" y="550" />
+                <mxPoint x="145.6" y="550" />
+              </Array>
+              <mxPoint as="offset" x="0.0" y="93.45" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel15" label="giao dịch thuê" tooltip="Payment.rental_contract_id → RentalContract.id">
+          <mxCell edge="1" parent="1" source="RentalContract" target="Payment" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERzeroToOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.2;exitY=1;exitPerimeter=0;entryX=0.75;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="298" y="865" />
+                <mxPoint x="240" y="865" />
+              </Array>
+              <mxPoint as="offset" x="-14.0" y="0.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel16" label="phân bổ tiền" tooltip="PaymentAllocation.payment_id → Payment.id">
+          <mxCell edge="1" parent="1" source="Payment" target="PaymentAllocation" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.3;exitY=1;exitPerimeter=0;entryX=0.6;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="168" y="1100" />
+                <mxPoint x="166" y="1100" />
+              </Array>
+              <mxPoint as="offset" x="-1.0" y="10.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel17" label="hoàn tiền" tooltip="Refund.payment_id → Payment.id">
+          <mxCell edge="1" parent="1" source="Payment" target="Refund" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.75;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="240" y="1060" />
+                <mxPoint x="380" y="1060" />
+              </Array>
+              <mxPoint as="offset" x="30.0" y="50.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object id="rel18" label="theo dõi cọc" tooltip="DepositLedgerEntry.rental_contract_id → RentalContract.id">
+          <mxCell edge="1" parent="1" source="RentalContract" target="DepositLedgerEntry" style="edgeStyle=none;html=1;rounded=0;strokeColor=#9CA3AF;strokeWidth=1.4;dashed=1;dashPattern=5 4;startArrow=ERmandOne;startFill=0;startSize=17;endArrow=ERzeroToMany;endFill=0;endSize=17;exitX=0.65;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontColor=#F8FAFC;fontFamily=Segoe UI;fontSize=15;labelBackgroundColor=#181818;jumpStyle=arc;jumpSize=8;">
+            <mxGeometry relative="1" as="geometry">
+              <Array as="points">
+                <mxPoint x="383.5" y="835" />
+                <mxPoint x="470" y="835" />
+              </Array>
+              <mxPoint as="offset" x="28.25" y="45.0" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,3 +1,4 @@
+import { LABELS } from "@/constants/labels";
 import React from "react";
 import { cn } from "@/utils";
 
@@ -11,19 +12,23 @@ const sizeClasses = {
   lg: "w-8 h-8 border-3",
 };
 
-export const Spinner: React.FC<SpinnerProps> = ({ size = "md", className, ...props }) => {
+export const Spinner: React.FC<SpinnerProps> = ({
+  size = "md",
+  className,
+  ...props
+}) => {
   return (
     <div
       role="status"
-      aria-label="Đang tải"
+      aria-label={LABELS.common.LOADING}
       className={cn(
         "inline-block rounded-full border-surface-300 border-t-accent-600 animate-spin",
         sizeClasses[size],
-        className
+        className,
       )}
       {...props}
     >
-      <span className="sr-only">Đang tải...</span>
+      <span className="sr-only">{LABELS.common.LOADING_SHORT}</span>
     </div>
   );
 };

@@ -1,60 +1,139 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Sprout } from "lucide-react";
-import { Card, Badge } from "@/components/ui";
+import { MESSAGES } from "@/constants/messages";
+import { notify } from "@/services/notifications";
+import { ButtonCommon } from "@/components/common/ButtonCommon";
+import { LinkCommon } from "@/components/common/LinkCommon";
+import { LABELS, PRODUCT_LABELS } from "@/constants/labels";
+
+import { Heart, Plus, Sprout, ArrowUpRight } from "lucide-react";
 import { formatCurrencyVND } from "@/utils";
-import { Product } from "../types";
-import { CARE_LEVEL_LABELS } from "../constants";
+import { useWishlistStore } from "@/stores/wishlistStore";
+import type { Product } from "../types";
 
 interface ProductCardProps {
   product: Product;
+  onQuickView?: (product: Product) => void;
+  badge?: string;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export function ProductCard({ product, onQuickView, badge }: ProductCardProps) {
+  const favorite = useWishlistStore((state) =>
+    state.productIds.includes(product.id),
+  );
+  const toggleFavorite = useWishlistStore((state) => state.toggle);
+  const detailPath = `/catalog/${product.slug || product.id}`;
+  const imageContent = product.primary_image ? (
+    <img
+      src={product.primary_image}
+      alt={product.name}
+      loading="lazy"
+      width={600}
+      height={600}
+    />
+  ) : (
+    <div className="product-image-empty">
+      <Sprout size={48} strokeWidth={1} />
+      <span>{LABELS.common.IMAGE_PENDING}</span>
+    </div>
+  );
+
   return (
-    <Card className="overflow-hidden hover:border-surface-400 transition-colors group flex flex-col h-full">
-      <Link to={`/catalog/${product.slug || product.id}`} className="block relative aspect-square bg-surface-100 overflow-hidden">
-        {product.primary_image ? (
-          <img
-            src={product.primary_image}
-            alt={product.name}
-            loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
+    <article className="plant-product-card">
+      <div className="product-image-wrap">
+        {onQuickView ? (
+          <ButtonCommon
+            variant="unstyled"
+            type="button"
+            className="product-image-link"
+            onClick={() => onQuickView(product)}
+            aria-label={PRODUCT_LABELS.quickView(product.name)}
+          >
+            {imageContent}
+          </ButtonCommon>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-surface-400">
-            <Sprout className="w-12 h-12 stroke-[1.5]" />
-            <span className="text-xs mt-2">Hình ảnh đang cập nhật</span>
-          </div>
+          <LinkCommon to={detailPath} className="product-image-link">
+            {imageContent}
+          </LinkCommon>
         )}
-      </Link>
-
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-        <div>
-          <div className="flex items-center justify-between text-xs text-surface-500 mb-1">
-            <span>{product.category_name}</span>
-            <Badge variant="outline" className="text-[10px] py-0 px-1.5">
-              {CARE_LEVEL_LABELS[product.care_level] || product.care_level}
-            </Badge>
-          </div>
-
-          <Link
-            to={`/catalog/${product.slug || product.id}`}
-            className="text-sm font-semibold text-surface-900 line-clamp-1 hover:text-accent-700 transition-colors"
+        <span className="product-badge">
+          {badge ||
+            (product.care_level === "EASY"
+              ? LABELS.catalog.EASY_BADGE
+              : LABELS.catalog.BESTSELLER)}
+        </span>
+        <ButtonCommon
+          variant="unstyled"
+          type="button"
+          className={`favorite-button${favorite ? " is-favorite" : ""}`}
+          onClick={() => {
+            toggleFavorite(product.id);
+            notify.success(
+              favorite
+                ? MESSAGES.FAVORITE_REMOVED(product.name)
+                : MESSAGES.FAVORITE_ADDED(product.name),
+              { id: `wishlist-${product.id}` },
+            );
+          }}
+          aria-label={PRODUCT_LABELS.favorite(product.name, favorite)}
+          aria-pressed={favorite}
+        >
+          <Heart
+            size={17}
+            strokeWidth={1.4}
+            fill={favorite ? "currentColor" : "none"}
+          />
+        </ButtonCommon>
+      </div>
+      <div className="product-copy">
+        {onQuickView ? (
+          <ButtonCommon
+            variant="unstyled"
+            type="button"
+            className="product-name"
+            onClick={() => onQuickView(product)}
           >
             {product.name}
-          </Link>
-        </div>
-
-        <div className="pt-2 border-t border-surface-100 flex items-center justify-between">
-          <div>
-            <span className="text-[11px] text-surface-500 block">Giá từ</span>
-            <span className="text-sm font-bold text-accent-700">
-              {product.min_sale_price_vnd ? formatCurrencyVND(product.min_sale_price_vnd) : "Liên hệ"}
-            </span>
-          </div>
+          </ButtonCommon>
+        ) : (
+          <LinkCommon to={detailPath} className="product-name">
+            {product.name}
+          </LinkCommon>
+        )}
+        <p className="product-description">
+          {product.care_level === "EASY"
+            ? LABELS.catalog.EASY_CARE
+            : LABELS.catalog.MODERATE_CARE}
+          <span aria-hidden="true"> · </span>
+          {product.light_requirement === "LOW"
+            ? LABELS.catalog.LOW_LIGHT
+            : LABELS.catalog.DAILY_GREEN}
+        </p>
+        <div className="product-price-row">
+          <span className="product-price">
+            {product.min_sale_price_vnd
+              ? formatCurrencyVND(product.min_sale_price_vnd)
+              : LABELS.common.CONTACT}
+          </span>
+          {onQuickView ? (
+            <ButtonCommon
+              variant="unstyled"
+              className="product-quick-view"
+              type="button"
+              onClick={() => onQuickView(product)}
+              aria-label={PRODUCT_LABELS.detail(product.name)}
+            >
+              <Plus size={17} strokeWidth={1.4} />
+            </ButtonCommon>
+          ) : (
+            <LinkCommon
+              to={detailPath}
+              className="product-quick-view"
+              aria-label={PRODUCT_LABELS.detail(product.name)}
+            >
+              <ArrowUpRight size={17} strokeWidth={1.4} />
+            </LinkCommon>
+          )}
         </div>
       </div>
-    </Card>
+    </article>
   );
-};
+}
