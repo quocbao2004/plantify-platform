@@ -1,6 +1,8 @@
+import { LABELS } from "@/constants/labels";
 import { Component, ErrorInfo, ReactNode } from "react";
 import { AlertCircle, RotateCcw } from "lucide-react";
-import { Button } from "@/components/ui";
+import { ButtonCommon } from "./ButtonCommon";
+import { notify } from "@/services/notifications";
 
 interface Props {
   children: ReactNode;
@@ -24,6 +26,7 @@ export class ErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // eslint-disable-next-line no-console
     console.error("ErrorBoundary caught an unhandled error:", error, errorInfo);
+    notify.error(LABELS.common.ERROR_TITLE);
   }
 
   private handleReset = () => {
@@ -44,15 +47,22 @@ export class ErrorBoundary extends Component<Props, State> {
               <AlertCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-surface-900">Đã xảy ra sự cố không mong muốn</h3>
+              <h3 className="text-sm font-semibold text-surface-900">
+                {LABELS.common.ERROR_TITLE}
+              </h3>
               <p className="text-xs text-surface-500 mt-1">
-                {this.state.error?.message || "Hệ thống gặp trục trặc khi tải giao diện. Vui lòng tải lại trang."}
+                {this.state.error?.message || LABELS.common.ERROR_DESCRIPTION}
               </p>
             </div>
-            <Button variant="outline" size="sm" onClick={this.handleReset} className="mx-auto">
+            <ButtonCommon
+              variant="outline"
+              size="sm"
+              onClick={this.handleReset}
+              className="mx-auto"
+            >
               <RotateCcw className="w-3.5 h-3.5" />
-              Tải lại trang
-            </Button>
+              {LABELS.common.RELOAD}
+            </ButtonCommon>
           </div>
         </div>
       );

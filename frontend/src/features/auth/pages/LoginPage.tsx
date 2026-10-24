@@ -1,14 +1,27 @@
+import { TextFieldCommon } from "@/components/common/TextFieldCommon";
+import { notifyFormErrors } from "@/utils/formErrors";
+import { ButtonCommon } from "@/components/common/ButtonCommon";
+import { FormCommon } from "@/components/common/FormCommon";
+import { LinkCommon } from "@/components/common/LinkCommon";
+import { LABELS } from "@/constants/labels";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+
 import { Sprout } from "lucide-react";
-import { Button, Input, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui";
 import { loginSchema, LoginFormValues } from "../schemas/authSchemas";
 import { useLogin } from "../hooks/useAuth";
 
 export const LoginPage: React.FC = () => {
-  const { mutate: login, isPending, error } = useLogin();
+  const { mutate: login, isPending } = useLogin();
 
   const {
     register,
@@ -33,47 +46,56 @@ export const LoginPage: React.FC = () => {
           <div className="w-10 h-10 rounded bg-accent-600 text-white flex items-center justify-center mx-auto mb-2">
             <Sprout className="w-6 h-6" />
           </div>
-          <CardTitle className="text-xl">Đăng nhập Plantify</CardTitle>
-          <CardDescription>Nhập thông tin tài khoản để truy cập hệ thống</CardDescription>
+          <CardTitle className="text-xl">{LABELS.auth.LOGIN_TITLE}</CardTitle>
+          <CardDescription>{LABELS.auth.LOGIN_DESCRIPTION}</CardDescription>
         </CardHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <FormCommon
+          aria-label={LABELS.auth.LOGIN_TITLE}
+          noValidate
+          isSubmitting={isPending}
+          onSubmit={handleSubmit(onSubmit, notifyFormErrors)}
+        >
           <CardContent className="space-y-4">
-            {error && (
-              <div className="p-3 rounded bg-red-50 border border-red-200 text-xs text-red-600 font-medium">
-                Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.
-              </div>
-            )}
-
-            <Input
-              label="Địa chỉ Email"
+            <TextFieldCommon
+              label={LABELS.auth.EMAIL}
               type="email"
-              placeholder="ten@vidu.com"
+              autoComplete="email"
+              placeholder={LABELS.auth.EMAIL_PLACEHOLDER}
               error={errors.email?.message}
               {...register("email")}
             />
 
-            <Input
-              label="Mật khẩu"
+            <TextFieldCommon
+              label={LABELS.auth.PASSWORD}
               type="password"
-              placeholder="••••••••"
+              autoComplete="current-password"
+              placeholder={LABELS.auth.PASSWORD_PLACEHOLDER}
               error={errors.password?.message}
               {...register("password")}
             />
           </CardContent>
 
           <CardFooter className="flex-col gap-3">
-            <Button type="submit" variant="primary" className="w-full" isLoading={isPending}>
-              Đăng nhập
-            </Button>
+            <ButtonCommon
+              type="submit"
+              variant="primary"
+              className="w-full"
+              isLoading={isPending}
+            >
+              {LABELS.navigation.LOGIN}
+            </ButtonCommon>
             <p className="text-xs text-surface-500 text-center">
-              Chưa có tài khoản?{" "}
-              <Link to="/register" className="font-semibold text-accent-700 hover:underline">
-                Đăng ký ngay
-              </Link>
+              {LABELS.auth.NO_ACCOUNT}{" "}
+              <LinkCommon
+                to="/register"
+                className="font-semibold text-accent-700 hover:underline"
+              >
+                {LABELS.auth.REGISTER_NOW}
+              </LinkCommon>
             </p>
           </CardFooter>
-        </form>
+        </FormCommon>
       </Card>
     </div>
   );

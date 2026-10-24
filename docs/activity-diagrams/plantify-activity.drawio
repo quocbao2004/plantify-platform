@@ -1,0 +1,1618 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" type="device" compressed="false">
+  <diagram id="ad01" name="AD-01 — ĐẶT MUA CÂY">
+    <mxGraphModel dx="760" dy="1254" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="760" pageHeight="1254" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" vertex="1" value="AD-01 · ĐẶT MUA CÂY" style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=23;fontStyle=1;fontColor=#111111;">
+          <mxGeometry x="60" y="20" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" vertex="1" value="Tiền điều kiện: Khách hàng đã đăng nhập." style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=14;fontStyle=0;fontColor=#111111;">
+          <mxGeometry x="60" y="63" width="640" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="lane0" parent="1" vertex="1" value="Khách hàng" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="60" y="112" width="320" height="1141.7" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1" parent="1" vertex="1" value="Hệ thống Plantify" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="380" y="112" width="320" height="1141.7" as="geometry" />
+        </mxCell>
+        <object id="start" label="" activityKind="initial">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=#111111;strokeWidth=1.4;">
+            <mxGeometry x="149.0" y="66.8" width="22" height="22" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="chooseMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="102.1" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="choose" label="Chọn cây, biến thể&lt;br/&gt;và số lượng" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="145.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="stock" label="Kiểm tra giỏ hàng&lt;br/&gt;và tồn kho bán" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="145.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="enough" label="Đủ hàng?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="244.6" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="adjust" label="Điều chỉnh số lượng&lt;br/&gt;hoặc chọn cây khác" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="253.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="addressMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="337.3" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="address" label="Nhập hoặc chọn&lt;br/&gt;địa chỉ giao hàng" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="385.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="checkAddress" label="Kiểm tra thông tin&lt;br/&gt;giao nhận" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="385.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="valid" label="Hợp lệ?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="484.7" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="editAddress" label="Sửa thông tin&lt;br/&gt;giao nhận" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="493.7" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="total" label="Tính tiền hàng, phí giao&lt;br/&gt;và hiển thị tổng tiền" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="611.3" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="confirm" label="Xác nhận&lt;br/&gt;đặt hàng?" activityKind="decision">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="602.3" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="cancel" label="Hủy thao tác đặt hàng" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="728.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endCancel" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="833.1" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endCancel_dot" parent="endCancel" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="order" label="Tạo đơn hàng&lt;br/&gt;và giữ số lượng tồn kho" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="728.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="payment" label="Thanh toán đơn hàng&lt;br/&gt;Tham chiếu AD-03" activityKind="call" link="data:page/ad03">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="836.7" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="payment_rake0" parent="payment" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="payment_rake1" parent="payment" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="210" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="payment_rake2" parent="payment" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="48" as="sourcePoint" />
+            <mxPoint x="218" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="payment_rake3" parent="payment" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="226" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="payment_rake4" parent="payment" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="42" as="sourcePoint" />
+            <mxPoint x="218" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object id="result" label="Thông báo mã đơn&lt;br/&gt;và kết quả xử lý hiện tại" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="944.5" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="end" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1048.7" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="end_dot" parent="end" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="flow0" parent="1" edge="1" source="start" target="chooseMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow1" parent="1" edge="1" source="chooseMerge" target="choose" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow2" parent="1" edge="1" source="choose" target="stock" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow3" parent="1" edge="1" source="stock" target="enough" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow4" parent="1" edge="1" source="enough" target="adjust" value="[Không đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow5" parent="1" edge="1" source="adjust" target="chooseMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="80" y="395.6" />
+              <mxPoint x="80" y="224.1" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow6" parent="1" edge="1" source="enough" target="addressMerge" value="[Đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="540" y="439.7" />
+              <mxPoint x="220" y="439.7" />
+            </Array>
+            <mxPoint x="37.25" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow7" parent="1" edge="1" source="addressMerge" target="address" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow8" parent="1" edge="1" source="address" target="checkAddress" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow9" parent="1" edge="1" source="checkAddress" target="valid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow10" parent="1" edge="1" source="valid" target="editAddress" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow11" parent="1" edge="1" source="editAddress" target="addressMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="95" y="635.7" />
+              <mxPoint x="95" y="459.3" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow12" parent="1" edge="1" source="valid" target="total" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="0.4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow13" parent="1" edge="1" source="total" target="confirm" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow14" parent="1" edge="1" source="confirm" target="cancel" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-40.0" y="15.1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow15" parent="1" edge="1" source="cancel" target="endCancel" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow16" parent="1" edge="1" source="confirm" target="order" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="817.0" />
+              <mxPoint x="540" y="817.0" />
+            </Array>
+            <mxPoint x="10.4" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow17" parent="1" edge="1" source="order" target="payment" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow18" parent="1" edge="1" source="payment" target="result" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow19" parent="1" edge="1" source="result" target="end" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ad02" name="AD-02 — ĐẶT THUÊ VÀ BÀN GIAO CÂY">
+    <mxGraphModel dx="1080" dy="1446" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1080" pageHeight="1446" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" vertex="1" value="AD-02 · ĐẶT THUÊ VÀ BÀN GIAO CÂY" style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=23;fontStyle=1;fontColor=#111111;">
+          <mxGeometry x="60" y="20" width="960" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" vertex="1" value="Tiền điều kiện: Đã đăng nhập; biểu giá và điều kiện cọc được cấu hình." style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=14;fontStyle=0;fontColor=#111111;">
+          <mxGeometry x="60" y="63" width="960" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="lane0" parent="1" vertex="1" value="Khách hàng" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="60" y="112" width="320" height="1333.8" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1" parent="1" vertex="1" value="Hệ thống Plantify" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="380" y="112" width="320" height="1333.8" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" parent="1" vertex="1" value="Nhân viên vận hành" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="700" y="112" width="320" height="1333.8" as="geometry" />
+        </mxCell>
+        <object id="start" label="" activityKind="initial">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=#111111;strokeWidth=1.4;">
+            <mxGeometry x="149.0" y="65.6" width="22" height="22" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="chooseMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="96.7" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="choose" label="Chọn cây, số lượng&lt;br/&gt;và thời gian thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="132.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="check" label="Kiểm tra kỳ thuê&lt;br/&gt;và khả năng cung ứng" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="132.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="valid" label="Yêu cầu&lt;br/&gt;hợp lệ?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="218.2" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="adjust" label="Điều chỉnh cây, số lượng&lt;br/&gt;hoặc thời gian thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="227.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="quote" label="Tính phí thuê, tiền cọc&lt;br/&gt;và thông báo tổng tiền" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="330.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="confirm" label="Xác nhận&lt;br/&gt;thuê cây?" activityKind="decision">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="321.4" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="cancel" label="Hủy thao tác đặt thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="433.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endCancel" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="527.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endCancel_dot" parent="endCancel" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="order" label="Tạo đơn thuê&lt;br/&gt;và ghi nhận kỳ thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="433.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="pay" label="Thanh toán phí thuê / cọc&lt;br/&gt;Tham chiếu AD-03" activityKind="call" link="data:page/ad03">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="528.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="pay_rake0" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake1" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="210" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake2" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="48" as="sourcePoint" />
+            <mxPoint x="218" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake3" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="226" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake4" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="42" as="sourcePoint" />
+            <mxPoint x="218" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object id="paid" label="Đủ điều kiện&lt;br/&gt;thanh toán/cọc?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="622.4" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="waitPay" label="Nhận kết quả chưa đủ&lt;br/&gt;điều kiện; đơn chờ xử lý" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="631.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endWaitPay" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="724.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endWaitPay_dot" parent="endWaitPay" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="contract" label="Lập hợp đồng; tách&lt;br/&gt;chi tiết theo từng cây" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="734.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="assetMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="711.6" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="selectAsset" label="Chọn cây vật lý&lt;br/&gt;đúng biến thể" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="764.7" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="allocation" label="Kiểm tra tình trạng cây&lt;br/&gt;và lịch thuê cụ thể" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="842.1" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="available" label="Gán được&lt;br/&gt;cây đã chọn?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="932.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="alternative" label="Còn cây&lt;br/&gt;thay thế?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="932.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="waitAsset" label="Ghi nhận chờ phân bổ;&lt;br/&gt;thông báo khách hàng" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1147.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endWaitAsset" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane2" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1240.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endWaitAsset_dot" parent="endWaitAsset" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="book" label="Gán cây và giữ lịch thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1044.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="deliver" label="Bàn giao cây&lt;br/&gt;và xác nhận giao nhận" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1044.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="active" label="Ghi nhận hợp đồng&lt;br/&gt;đang hiệu lực" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1147.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="end" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1240.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="end_dot" parent="end" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="flow0" parent="1" edge="1" source="start" target="chooseMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow1" parent="1" edge="1" source="chooseMerge" target="choose" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow2" parent="1" edge="1" source="choose" target="check" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow3" parent="1" edge="1" source="check" target="valid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow4" parent="1" edge="1" source="valid" target="adjust" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow5" parent="1" edge="1" source="adjust" target="chooseMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="80" y="369.2" />
+              <mxPoint x="80" y="218.7" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow6" parent="1" edge="1" source="valid" target="quote" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow7" parent="1" edge="1" source="quote" target="confirm" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow8" parent="1" edge="1" source="confirm" target="cancel" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-40.0" y="8.4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow9" parent="1" edge="1" source="cancel" target="endCancel" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow10" parent="1" edge="1" source="confirm" target="order" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="524.0" />
+              <mxPoint x="540" y="524.0" />
+            </Array>
+            <mxPoint x="0.5" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow11" parent="1" edge="1" source="order" target="pay" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow12" parent="1" edge="1" source="pay" target="paid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow13" parent="1" edge="1" source="paid" target="waitPay" value="[Chưa đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow14" parent="1" edge="1" source="waitPay" target="endWaitPay" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow15" parent="1" edge="1" source="paid" target="contract" value="[Đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow16" parent="1" edge="1" source="contract" target="assetMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="700" y="876.6" />
+              <mxPoint x="700" y="799.2" />
+              <mxPoint x="860" y="799.2" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow17" parent="1" edge="1" source="assetMerge" target="selectAsset" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow18" parent="1" edge="1" source="selectAsset" target="allocation" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="710" y="906.7" />
+              <mxPoint x="710" y="945.4" />
+              <mxPoint x="540" y="945.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow19" parent="1" edge="1" source="allocation" target="available" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow20" parent="1" edge="1" source="available" target="alternative" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="5.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow21" parent="1" edge="1" source="alternative" target="assetMerge" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1005" y="1083.0" />
+              <mxPoint x="1005" y="833.6" />
+            </Array>
+            <mxPoint x="0.0" y="38.8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow22" parent="1" edge="1" source="alternative" target="waitAsset" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="860" y="1138.9" />
+              <mxPoint x="1018" y="1138.9" />
+              <mxPoint x="1018" y="1289.4" />
+            </Array>
+            <mxPoint x="0.0" y="91.6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow23" parent="1" edge="1" source="waitAsset" target="endWaitAsset" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow24" parent="1" edge="1" source="available" target="book" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow25" parent="1" edge="1" source="book" target="deliver" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow26" parent="1" edge="1" source="deliver" target="active" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="860" y="1242.1" />
+              <mxPoint x="540" y="1242.1" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow27" parent="1" edge="1" source="active" target="end" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ad03" name="AD-03 — THANH TOÁN ĐƠN HÀNG">
+    <mxGraphModel dx="1080" dy="1440" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1080" pageHeight="1440" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" vertex="1" value="AD-03 · THANH TOÁN ĐƠN HÀNG" style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=23;fontStyle=1;fontColor=#111111;">
+          <mxGeometry x="60" y="20" width="960" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" vertex="1" value="Đơn vị xác nhận: cổng thanh toán trực tuyến hoặc nhân viên đối soát / thu COD." style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=14;fontStyle=0;fontColor=#111111;">
+          <mxGeometry x="60" y="63" width="960" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="lane0" parent="1" vertex="1" value="Khách hàng" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="60" y="112" width="320" height="1327.8" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1" parent="1" vertex="1" value="Hệ thống Plantify" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="380" y="112" width="320" height="1327.8" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" parent="1" vertex="1" value="Đơn vị xác nhận thanh toán" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="700" y="112" width="320" height="1327.8" as="geometry" />
+        </mxCell>
+        <object id="start" label="" activityKind="initial">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=#111111;strokeWidth=1.4;">
+            <mxGeometry x="149.0" y="65.2" width="22" height="22" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="methodMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="94.9" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="method" label="Chọn phương thức&lt;br/&gt;thanh toán" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="128.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="request" label="Ghi nhận yêu cầu&lt;br/&gt;thanh toán" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="128.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="type" label="Phương thức&lt;br/&gt;thanh toán?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="213.5" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="online" label="Thực hiện thanh toán&lt;br/&gt;trên cổng thanh toán" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="320.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="gateway" label="Xử lý giao dịch và&lt;br/&gt;trả kết quả thanh toán" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="320.9" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="bank" label="Chuyển khoản theo&lt;br/&gt;thông tin hướng dẫn" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="419.3" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="bankConfirm" label="Đối chiếu khoản tiền&lt;br/&gt;và xác nhận kết quả" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="419.3" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="cod" label="Chờ giao hàng; xác nhận&lt;br/&gt;số tiền COD đã thu" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="517.7" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="resultMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="607.4" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="verify" label="Xác minh nguồn xác nhận,&lt;br/&gt;mã giao dịch và số tiền" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="653.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="valid" label="Kết quả&lt;br/&gt;hợp lệ?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="742.4" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="invalid" label="Nhận thông báo&lt;br/&gt;cần kiểm tra giao dịch" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="751.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endInvalid" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="816.6" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endInvalid_dot" parent="endInvalid" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="duplicate" label="Kết quả đã&lt;br/&gt;được ghi nhận?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="840.8" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="oldResult" label="Nhận lại kết quả&lt;br/&gt;đã ghi nhận" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="849.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endOld" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="915.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endOld_dot" parent="endOld" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="status" label="Trạng thái&lt;br/&gt;thanh toán?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="939.2" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="paid" label="Ghi nhận đã thanh toán;&lt;br/&gt;phân bổ và cập nhật đơn" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1046.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="notify" label="Thông báo thanh toán&lt;br/&gt;thành công" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1145.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endPaid" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1234.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endPaid_dot" parent="endPaid" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="failed" label="Nhận kết quả thất bại,&lt;br/&gt;hủy hoặc hết hạn" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1046.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="retry" label="Thanh toán lại?" activityKind="decision">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="1136.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endFailed" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1234.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endFailed_dot" parent="endFailed" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="pending" label="Theo dõi giao dịch&lt;br/&gt;đang chờ xác nhận" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1046.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endPending" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane2" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1136.4" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endPending_dot" parent="endPending" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="flow0" parent="1" edge="1" source="start" target="methodMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow1" parent="1" edge="1" source="methodMerge" target="method" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow2" parent="1" edge="1" source="method" target="request" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow3" parent="1" edge="1" source="request" target="type" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow4" parent="1" edge="1" source="type" target="online" value="[Trực tuyến]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="364.5" />
+            </Array>
+            <mxPoint x="73.7" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow5" parent="1" edge="1" source="online" target="gateway" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow6" parent="1" edge="1" source="type" target="bank" value="[Chuyển khoản]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="540" y="512.1" />
+              <mxPoint x="220" y="512.1" />
+            </Array>
+            <mxPoint x="-39.7" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow7" parent="1" edge="1" source="bank" target="bankConfirm" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow8" parent="1" edge="1" source="type" target="cod" value="[COD]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1010" y="364.5" />
+              <mxPoint x="1010" y="659.7" />
+            </Array>
+            <mxPoint x="32.4" y="36.9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow9" parent="1" edge="1" source="gateway" target="resultMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="700" y="462.9" />
+              <mxPoint x="700" y="696.6" />
+              <mxPoint x="540" y="696.6" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow10" parent="1" edge="1" source="bankConfirm" target="resultMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="720" y="561.3" />
+              <mxPoint x="720" y="708.9" />
+              <mxPoint x="540" y="708.9" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow11" parent="1" edge="1" source="cod" target="resultMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="680" y="659.7" />
+              <mxPoint x="680" y="680.2" />
+              <mxPoint x="520" y="680.2" />
+              <mxPoint x="520" y="708.9" />
+              <mxPoint x="540" y="708.9" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow12" parent="1" edge="1" source="resultMerge" target="verify" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow13" parent="1" edge="1" source="verify" target="valid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow14" parent="1" edge="1" source="valid" target="invalid" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow15" parent="1" edge="1" source="invalid" target="endInvalid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow16" parent="1" edge="1" source="valid" target="duplicate" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow17" parent="1" edge="1" source="duplicate" target="oldResult" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow18" parent="1" edge="1" source="oldResult" target="endOld" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow19" parent="1" edge="1" source="duplicate" target="status" value="[Chưa]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="25.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow20" parent="1" edge="1" source="status" target="paid" value="[Thành công]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="0.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow21" parent="1" edge="1" source="paid" target="notify" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow22" parent="1" edge="1" source="notify" target="endPaid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow23" parent="1" edge="1" source="status" target="failed" value="[Không thành công]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="1090.2" />
+            </Array>
+            <mxPoint x="-86.3" y="41.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow24" parent="1" edge="1" source="failed" target="retry" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow25" parent="1" edge="1" source="retry" target="endFailed" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="30.0" y="-8.4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow26" parent="1" edge="1" source="retry" target="methodMerge" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="80" y="1287.0" />
+              <mxPoint x="80" y="216.9" />
+            </Array>
+            <mxPoint x="0.0" y="487.55" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow27" parent="1" edge="1" source="status" target="pending" value="[Chờ xác nhận]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="860" y="1090.2" />
+            </Array>
+            <mxPoint x="86.3" y="41.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow28" parent="1" edge="1" source="pending" target="endPending" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ad04" name="AD-04 — GIA HẠN THUÊ CÂY">
+    <mxGraphModel dx="1080" dy="1459" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1080" pageHeight="1459" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" vertex="1" value="AD-04 · GIA HẠN THUÊ CÂY" style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=23;fontStyle=1;fontColor=#111111;">
+          <mxGeometry x="60" y="20" width="960" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" vertex="1" value="Tiền điều kiện: Khách hàng có cây đang thuê và có quyền yêu cầu gia hạn." style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=14;fontStyle=0;fontColor=#111111;">
+          <mxGeometry x="60" y="63" width="960" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="lane0" parent="1" vertex="1" value="Khách hàng" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="60" y="112" width="320" height="1347.0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1" parent="1" vertex="1" value="Hệ thống Plantify" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="380" y="112" width="320" height="1347.0" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" parent="1" vertex="1" value="Nhân viên vận hành" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="700" y="112" width="320" height="1347.0" as="geometry" />
+        </mxCell>
+        <object id="start" label="" activityKind="initial">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=#111111;strokeWidth=1.4;">
+            <mxGeometry x="149.0" y="65.0" width="22" height="22" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="chooseMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="94.0" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="request" label="Chọn cây đang thuê;&lt;br/&gt;nhập ngày kết thúc mới" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="126.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="check" label="Kiểm tra quyền, ngày mới&lt;br/&gt;và lịch thuê kế tiếp" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="126.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="eligible" label="Đủ điều kiện&lt;br/&gt;gia hạn?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="213.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="invalid" label="Nhận lý do không thể&lt;br/&gt;gửi yêu cầu gia hạn" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="222.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="retry" label="Gửi lại yêu cầu?" activityKind="decision">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="309.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endInvalid" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="406.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endInvalid_dot" parent="endInvalid" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="pendingRequest" label="Ghi nhận yêu cầu&lt;br/&gt;gia hạn chờ duyệt" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="318.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="review" label="Xem xét yêu cầu&lt;br/&gt;và phương án gia hạn" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="318.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="approved" label="Chấp thuận?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="405.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="reject" label="Ghi nhận từ chối&lt;br/&gt;và thông báo lý do" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="414.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endReject" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="478.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endReject_dot" parent="endReject" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="fee" label="Xác định phí gia hạn;&lt;br/&gt;thông báo phương án" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="510.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="accept" label="Đồng ý&lt;br/&gt;phương án?" activityKind="decision">
+          <mxCell vertex="1" parent="lane0" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="501.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="cancel" label="Hủy yêu cầu gia hạn" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="606.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endCancel" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="694.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endCancel_dot" parent="endCancel" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="needPay" label="Có phí&lt;br/&gt;phải trả?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="597.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="pay" label="Thanh toán phí gia hạn&lt;br/&gt;Tham chiếu AD-03" activityKind="call" link="data:page/ad03">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="702.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="pay_rake0" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake1" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="210" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake2" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="48" as="sourcePoint" />
+            <mxPoint x="218" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake3" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="226" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake4" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="42" as="sourcePoint" />
+            <mxPoint x="218" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object id="paid" label="Thanh toán&lt;br/&gt;thành công?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="789.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="waitPay" label="Ghi nhận chờ thanh toán;&lt;br/&gt;giữ nguyên kỳ thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="798.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endWaitPay" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane2" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="886.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endWaitPay_dot" parent="endWaitPay" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="applyMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="914.0" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="stillFree" label="Lịch vẫn&lt;br/&gt;khả dụng?" activityKind="decision">
+          <mxCell vertex="1" parent="lane1" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="965.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="resolve" label="Thông báo chưa thể áp dụng;&lt;br/&gt;xử lý khoản đã thu nếu có" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="974.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endResolve" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane2" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1062.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endResolve_dot" parent="endResolve" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="update" label="Cập nhật đồng bộ&lt;br/&gt;kỳ thuê và lịch cây" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1070.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="notify" label="Thông báo thời hạn&lt;br/&gt;thuê mới" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1166.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="end" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1254.0" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="end_dot" parent="end" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="flow0" parent="1" edge="1" source="start" target="chooseMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow1" parent="1" edge="1" source="chooseMerge" target="request" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow2" parent="1" edge="1" source="request" target="check" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow3" parent="1" edge="1" source="check" target="eligible" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow4" parent="1" edge="1" source="eligible" target="invalid" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow5" parent="1" edge="1" source="invalid" target="retry" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow6" parent="1" edge="1" source="retry" target="chooseMerge" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="80" y="460.0" />
+              <mxPoint x="80" y="216.0" />
+            </Array>
+            <mxPoint x="0.0" y="116.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow7" parent="1" edge="1" source="retry" target="endInvalid" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="30.0" y="-8.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow8" parent="1" edge="1" source="eligible" target="pendingRequest" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow9" parent="1" edge="1" source="pendingRequest" target="review" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow10" parent="1" edge="1" source="review" target="approved" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow11" parent="1" edge="1" source="approved" target="reject" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow12" parent="1" edge="1" source="reject" target="endReject" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow13" parent="1" edge="1" source="approved" target="fee" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="860" y="604.0" />
+              <mxPoint x="700" y="604.0" />
+              <mxPoint x="700" y="652.0" />
+            </Array>
+            <mxPoint x="60.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow14" parent="1" edge="1" source="fee" target="accept" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow15" parent="1" edge="1" source="accept" target="cancel" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-40.0" y="3.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow16" parent="1" edge="1" source="cancel" target="endCancel" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow17" parent="1" edge="1" source="accept" target="needPay" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="704.0" />
+              <mxPoint x="540" y="704.0" />
+            </Array>
+            <mxPoint x="9.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow18" parent="1" edge="1" source="needPay" target="pay" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow19" parent="1" edge="1" source="pay" target="paid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow20" parent="1" edge="1" source="paid" target="waitPay" value="[Chưa]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="25.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow21" parent="1" edge="1" source="waitPay" target="endWaitPay" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow22" parent="1" edge="1" source="paid" target="applyMerge" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-14.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow23" parent="1" edge="1" source="needPay" target="applyMerge" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="390" y="748.0" />
+              <mxPoint x="390" y="1036.0" />
+            </Array>
+            <mxPoint x="0.0" y="-122.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow24" parent="1" edge="1" source="applyMerge" target="stillFree" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow25" parent="1" edge="1" source="stillFree" target="resolve" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="25.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow26" parent="1" edge="1" source="resolve" target="endResolve" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow27" parent="1" edge="1" source="stillFree" target="update" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow28" parent="1" edge="1" source="update" target="notify" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow29" parent="1" edge="1" source="notify" target="end" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ad05" name="AD-05 — THU HỒI CÂY VÀ QUYẾT TOÁN CỌC">
+    <mxGraphModel dx="1080" dy="1642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1080" pageHeight="1642" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" vertex="1" value="AD-05 · THU HỒI CÂY VÀ QUYẾT TOÁN CỌC" style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=23;fontStyle=1;fontColor=#111111;">
+          <mxGeometry x="60" y="20" width="960" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" vertex="1" value="Tiền điều kiện: Có hợp đồng thuê và yêu cầu / lịch thu hồi hợp lệ." style="text;html=1;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;overflow=hidden;fontFamily=Arial;fontSize=14;fontStyle=0;fontColor=#111111;">
+          <mxGeometry x="60" y="63" width="960" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="lane0" parent="1" vertex="1" value="Khách hàng" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="60" y="112" width="320" height="1530.2" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1" parent="1" vertex="1" value="Nhân viên vận hành" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="380" y="112" width="320" height="1530.2" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2" parent="1" vertex="1" value="Hệ thống Plantify" style="swimlane;html=1;horizontal=1;startSize=44;collapsible=0;container=1;recursiveResize=0;rounded=0;fillColor=#F2F2F2;swimlaneFillColor=#FFFFFF;strokeColor=#888888;strokeWidth=1;fontFamily=Arial;fontSize=17;fontStyle=1;fontColor=#111111;align=center;verticalAlign=middle;">
+          <mxGeometry x="700" y="112" width="320" height="1530.2" as="geometry" />
+        </mxCell>
+        <object id="start" label="" activityKind="initial">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=#111111;strokeWidth=1.4;">
+            <mxGeometry x="149.0" y="64.6" width="22" height="22" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="return" label="Bàn giao cây&lt;br/&gt;để thu hồi" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="121.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="receive" label="Tiếp nhận cây và&lt;br/&gt;đối chiếu hợp đồng" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="121.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="inspect" label="Kiểm định từng cây;&lt;br/&gt;ghi nhận tình trạng" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="212.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="recordReturn" label="Ghi nhận cây đã trả&lt;br/&gt;và kết thúc lịch thuê" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="212.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="complete" label="Đã xử lý đủ&lt;br/&gt;các cây?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="295.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="waitReturn" label="Ghi nhận còn cây /&lt;br/&gt;nghĩa vụ chưa xử lý" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="304.0" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endWaitReturn" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="369.4" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endWaitReturn_dot" parent="endWaitReturn" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="assess" label="Xác định và duyệt&lt;br/&gt;các khoản phải thu" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="433.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="calculate" label="Tính cọc đang giữ&lt;br/&gt;và khoản khấu trừ" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="433.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="exceeds" label="Chi phí vượt&lt;br/&gt;cọc đang giữ?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="515.4" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="extra" label="Nhận yêu cầu thanh toán&lt;br/&gt;phần còn thiếu" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="524.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="pay" label="Thanh toán phí bổ sung&lt;br/&gt;Tham chiếu AD-03" activityKind="call" link="data:page/ad03">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="615.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="pay_rake0" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake1" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="210" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake2" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="48" as="sourcePoint" />
+            <mxPoint x="218" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake3" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="226" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pay_rake4" parent="pay" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="42" as="sourcePoint" />
+            <mxPoint x="218" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object id="paid" label="Đã thanh toán&lt;br/&gt;phần còn thiếu?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="697.8" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="debt" label="Ghi nhận công nợ;&lt;br/&gt;chưa đóng hợp đồng" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="706.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endDebt" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="791.2" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endDebt_dot" parent="endDebt" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="settleMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="818.0" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="deduct" label="Ghi nhận khấu trừ;&lt;br/&gt;tính số cọc cần hoàn" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="858.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="hasRefund" label="Còn tiền cọc&lt;br/&gt;phải hoàn?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="941.0" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="refund" label="Thực hiện hoàn tiền cọc&lt;br/&gt;qua đơn vị thanh toán" activityKind="call">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1041.2" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="refund_rake0" parent="refund" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="refund_rake1" parent="refund" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="210" y="48" as="sourcePoint" />
+            <mxPoint x="210" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="refund_rake2" parent="refund" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="48" as="sourcePoint" />
+            <mxPoint x="218" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="refund_rake3" parent="refund" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="226" y="48" as="sourcePoint" />
+            <mxPoint x="226" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="refund_rake4" parent="refund" edge="1" value="" style="endArrow=none;startArrow=none;strokeColor=#222222;strokeWidth=1;connectable=0;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="218" y="42" as="sourcePoint" />
+            <mxPoint x="218" y="48" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object id="refunded" label="Hoàn tiền&lt;br/&gt;thành công?" activityKind="decision">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;fontSize=15;">
+            <mxGeometry x="81.0" y="1123.4" width="158" height="78" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="waitRefund" label="Ghi nhận chờ / hoàn lỗi;&lt;br/&gt;chưa đóng hợp đồng" activityKind="action">
+          <mxCell vertex="1" parent="lane1" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1132.4" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="endWaitRefund" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane1" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1216.8" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="endWaitRefund_dot" parent="endWaitRefund" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <object id="ledger" label="Ghi nhận hoàn cọc&lt;br/&gt;vào sổ theo dõi" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1223.6" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="closeMerge" label="" activityKind="merge">
+          <mxCell vertex="1" parent="lane2" style="rhombus;perimeter=rhombusPerimeter;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="150.0" y="1312.0" width="20" height="20" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="close" label="Đóng hợp đồng và&lt;br/&gt;thông báo quyết toán" activityKind="action">
+          <mxCell vertex="1" parent="lane2" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1352.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="result" label="Nhận kết quả&lt;br/&gt;quyết toán hợp đồng" activityKind="action">
+          <mxCell vertex="1" parent="lane0" style="rounded=1;arcSize=16;absoluteArcSize=1;html=1;whiteSpace=wrap;strokeColor=#222222;strokeWidth=1.4;fillColor=#FFFFFF;fontFamily=Arial;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;spacing=5;">
+            <mxGeometry x="41.0" y="1352.8" width="238" height="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object id="end" label="" activityKind="final">
+          <mxCell vertex="1" parent="lane0" style="ellipse;aspect=fixed;fillColor=#FFFFFF;strokeColor=#111111;strokeWidth=2;">
+            <mxGeometry x="146.0" y="1437.2" width="28" height="28" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="end_dot" parent="end" vertex="1" value="" style="ellipse;aspect=fixed;fillColor=#111111;strokeColor=none;connectable=0;">
+          <mxGeometry x="6" y="6" width="16" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="flow0" parent="1" edge="1" source="start" target="return" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow1" parent="1" edge="1" source="return" target="receive" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow2" parent="1" edge="1" source="receive" target="inspect" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow3" parent="1" edge="1" source="inspect" target="recordReturn" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow4" parent="1" edge="1" source="recordReturn" target="complete" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow5" parent="1" edge="1" source="complete" target="waitReturn" value="[Chưa đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow6" parent="1" edge="1" source="waitReturn" target="endWaitReturn" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow7" parent="1" edge="1" source="complete" target="assess" value="[Đủ]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="860" y="518.2" />
+              <mxPoint x="540" y="518.2" />
+            </Array>
+            <mxPoint x="61.9" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow8" parent="1" edge="1" source="assess" target="calculate" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=0;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow9" parent="1" edge="1" source="calculate" target="exceeds" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow10" parent="1" edge="1" source="exceeds" target="extra" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-10.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow11" parent="1" edge="1" source="extra" target="pay" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="220" y="712.0" />
+              <mxPoint x="860" y="712.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow12" parent="1" edge="1" source="pay" target="paid" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow13" parent="1" edge="1" source="paid" target="debt" value="[Chưa]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow14" parent="1" edge="1" source="debt" target="endDebt" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow15" parent="1" edge="1" source="paid" target="settleMerge" value="[Đã thanh toán]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="0.0" y="-14.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow16" parent="1" edge="1" source="exceeds" target="settleMerge" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1025" y="666.4" />
+              <mxPoint x="1025" y="940.0" />
+            </Array>
+            <mxPoint x="0.0" y="-106.7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow17" parent="1" edge="1" source="settleMerge" target="deduct" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow18" parent="1" edge="1" source="deduct" target="hasRefund" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow19" parent="1" edge="1" source="hasRefund" target="refund" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow20" parent="1" edge="1" source="refund" target="refunded" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow21" parent="1" edge="1" source="refunded" target="waitRefund" value="[Chưa]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="-15.0" y="0.0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow22" parent="1" edge="1" source="waitRefund" target="endWaitRefund" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow23" parent="1" edge="1" source="refunded" target="ledger" value="[Có]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <mxPoint x="20.0" y="-4.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow24" parent="1" edge="1" source="ledger" target="closeMerge" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow25" parent="1" edge="1" source="hasRefund" target="closeMerge" value="[Không]" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=1;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="1025" y="1092.0" />
+              <mxPoint x="1025" y="1434.0" />
+            </Array>
+            <mxPoint x="0.0" y="-144.7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="flow26" parent="1" edge="1" source="closeMerge" target="close" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow27" parent="1" edge="1" source="close" target="result" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0;exitY=0.5;exitPerimeter=0;entryX=1;entryY=0.5;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="flow28" parent="1" edge="1" source="result" target="end" value="" style="edgeStyle=none;html=1;rounded=0;endArrow=block;endFill=1;endSize=8;startArrow=none;strokeColor=#222222;strokeWidth=1.2;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;fontFamily=Arial;fontSize=14;fontColor=#111111;labelBackgroundColor=#FFFFFF;jumpStyle=arc;jumpSize=5;spacing=2;">
+          <mxGeometry x="0" y="0" width="0" height="0" as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,26 +1,38 @@
+import { VALIDATION_MESSAGES } from "@/constants/messages";
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.string().min(1, "Vui lòng nhập email").email("Định dạng email không hợp lệ"),
-  password: z.string().min(6, "Mật khẩu tối thiểu 6 ký tự"),
+  email: z
+    .string()
+    .min(1, VALIDATION_MESSAGES.EMAIL_REQUIRED)
+    .email(VALIDATION_MESSAGES.EMAIL_INVALID),
+  password: z.string().min(6, VALIDATION_MESSAGES.PASSWORD_LOGIN_MIN),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const registerSchema = z
   .object({
-    full_name: z.string().min(2, "Họ và tên tối thiểu 2 ký tự"),
-    email: z.string().min(1, "Vui lòng nhập email").email("Định dạng email không hợp lệ"),
+    full_name: z.string().min(2, VALIDATION_MESSAGES.NAME_MIN),
+    email: z
+      .string()
+      .min(1, VALIDATION_MESSAGES.EMAIL_REQUIRED)
+      .email(VALIDATION_MESSAGES.EMAIL_INVALID),
     phone_number: z
       .string()
-      .regex(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, "Số điện thoại Việt Nam không hợp lệ")
+      .regex(
+        /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+        VALIDATION_MESSAGES.PHONE_INVALID,
+      )
       .optional()
       .or(z.literal("")),
-    password: z.string().min(8, "Mật khẩu tối thiểu 8 ký tự"),
-    confirm_password: z.string().min(1, "Vui lòng xác nhận mật khẩu"),
+    password: z.string().min(8, VALIDATION_MESSAGES.PASSWORD_REGISTER_MIN),
+    confirm_password: z
+      .string()
+      .min(1, VALIDATION_MESSAGES.PASSWORD_CONFIRM_REQUIRED),
   })
   .refine((data) => data.password === data.confirm_password, {
-    message: "Mật khẩu xác nhận không trùng khớp",
+    message: VALIDATION_MESSAGES.PASSWORD_MISMATCH,
     path: ["confirm_password"],
   });
 

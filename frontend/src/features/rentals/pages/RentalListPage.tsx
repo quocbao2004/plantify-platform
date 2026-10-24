@@ -1,16 +1,26 @@
+import { LinkCommon } from "@/components/common/LinkCommon";
+import { LABELS } from "@/constants/labels";
 import React from "react";
-import { Link } from "react-router-dom";
-import { Trees, ArrowRight, ShieldCheck, RefreshCw, CalendarCheck } from "lucide-react";
-import { Button, Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
+
+import {
+  Trees,
+  ArrowRight,
+  ShieldCheck,
+  RefreshCw,
+  CalendarCheck,
+} from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
 
 export const RentalListPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Introduction Banner */}
       <div className="pb-4 border-b border-surface-200">
-        <h1 className="text-2xl font-bold tracking-tight text-surface-900">Dịch vụ cho thuê cây cảnh trọn gói</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-surface-900">
+          {LABELS.rentals.TITLE}
+        </h1>
         <p className="text-xs text-surface-500 mt-1">
-          Giải pháp không gian xanh linh hoạt cho văn phòng, căn hộ và sự kiện chuyên nghiệp
+          {LABELS.rentals.DESCRIPTION}
         </p>
       </div>
 
@@ -21,11 +31,13 @@ export const RentalListPage: React.FC = () => {
             <div className="w-8 h-8 rounded bg-accent-50 text-accent-700 flex items-center justify-center mb-2">
               <RefreshCw className="w-4 h-4" />
             </div>
-            <CardTitle className="text-sm">Chăm sóc & Đổi cây định kỳ</CardTitle>
+            <CardTitle className="text-sm">
+              {LABELS.rentals.CARE_TITLE}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-xs text-surface-500">
-              Kỹ thuật viên Plantify kiểm định sức khỏe cây 2 tuần/lần và thay cây mới miễn phí nếu cây yếu.
+              {LABELS.rentals.CARE_DESCRIPTION}
             </p>
           </CardContent>
         </Card>
@@ -35,11 +47,13 @@ export const RentalListPage: React.FC = () => {
             <div className="w-8 h-8 rounded bg-accent-50 text-accent-700 flex items-center justify-center mb-2">
               <CalendarCheck className="w-4 h-4" />
             </div>
-            <CardTitle className="text-sm">Kỳ hạn thuê linh hoạt</CardTitle>
+            <CardTitle className="text-sm">
+              {LABELS.rentals.TERM_TITLE}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-xs text-surface-500">
-              Tùy chọn thuê theo ngày cho sự kiện, theo tuần hoặc hợp đồng dài hạn theo tháng với chi phí tối ưu.
+              {LABELS.rentals.TERM_DESCRIPTION}
             </p>
           </CardContent>
         </Card>
@@ -49,11 +63,13 @@ export const RentalListPage: React.FC = () => {
             <div className="w-8 h-8 rounded bg-accent-50 text-accent-700 flex items-center justify-center mb-2">
               <ShieldCheck className="w-4 h-4" />
             </div>
-            <CardTitle className="text-sm">Hoàn trả tiền cọc minh bạch</CardTitle>
+            <CardTitle className="text-sm">
+              {LABELS.rentals.DEPOSIT_TITLE}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-xs text-surface-500">
-              Sổ quỹ cọc điện tử (Deposit Ledger) ghi nhận tự động và hoàn trả 100% qua tài khoản ngân hàng khi kết thúc hợp đồng.
+              {LABELS.rentals.DEPOSIT_DESCRIPTION}
             </p>
           </CardContent>
         </Card>
@@ -62,16 +78,18 @@ export const RentalListPage: React.FC = () => {
       {/* CTA Box */}
       <div className="p-6 rounded-md bg-white border border-surface-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-semibold text-surface-900">Bạn muốn thuê cây cảnh cho văn phòng hoặc nhà ở?</h3>
-          <p className="text-xs text-surface-500 mt-0.5">Chọn mẫu cây bạn yêu thích trong danh mục và nhấn &ldquo;Thuê cây định kỳ&rdquo;.</p>
+          <h3 className="text-sm font-semibold text-surface-900">
+            {LABELS.rentals.CTA_TITLE}
+          </h3>
+          <p className="text-xs text-surface-500 mt-0.5">
+            {LABELS.rentals.CTA_DESCRIPTION}
+          </p>
         </div>
-        <Link to="/catalog">
-          <Button variant="primary" size="sm">
-            <Trees className="w-4 h-4" />
-            Xem danh mục cây cho thuê
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Button>
-        </Link>
+        <LinkCommon to="/catalog" variant="primary" size="sm">
+          <Trees className="w-4 h-4" />
+          {LABELS.rentals.CTA}
+          <ArrowRight className="w-3.5 h-3.5" />
+        </LinkCommon>
       </div>
     </div>
   );
