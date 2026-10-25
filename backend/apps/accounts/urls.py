@@ -1,0 +1,20 @@
+from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from apps.accounts.views.auth import RegisterView, SocialAuthInterfaceView
+from apps.accounts.views.profile import ProfileView, PreferenceView
+from apps.accounts.views.addresses import AddressListView, AddressDetailView
+
+app_name = "accounts"
+
+urlpatterns = [
+    # Auth
+    path("auth/register/", RegisterView.as_view(), name="register"),
+    path("auth/token/", TokenObtainPairView.as_view(), name="token-obtain"),
+    path("auth/token/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("auth/social/", SocialAuthInterfaceView.as_view(), name="social-auth-interface"),
+    # Me / Profile
+    path("me/", ProfileView.as_view(), name="profile"),
+    path("me/addresses/", AddressListView.as_view(), name="address-list"),
+    path("me/addresses/<uuid:id>/", AddressDetailView.as_view(), name="address-detail"),
+    path("me/preferences/", PreferenceView.as_view(), name="preference"),
+]
