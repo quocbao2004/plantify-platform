@@ -31,7 +31,7 @@ AD-02 và AD-04 gọi AD-03 để tránh lặp toàn bộ quy trình thanh toán
 - Năm file draw.io offline riêng, mỗi file chứa đúng một sơ đồ chỉnh sửa được.
 - Nền trắng, nét đen, nhãn tiếng Việt; ưu tiên bố cục dọc đọc được trên A4.
 - Dùng swimlane thể hiện trách nhiệm; mỗi hình chỉ có các vai trò thực sự tham gia. Nếu lane thanh toán/nhân viên khiến hình quá rộng, gom phần xử lý phương thức thành hoạt động con có chú thích trách nhiệm.
-- Dùng điểm bắt đầu/kết thúc, action bo góc, decision/merge và các nhánh có điều kiện rõ ràng. Fork/join chỉ dùng cho xử lý thực sự song song.
+- Mỗi sơ đồ chỉ có một điểm bắt đầu và một điểm kết thúc chung. Dùng action bo góc, decision/merge và các nhánh có điều kiện rõ ràng; các kết quả hội tụ qua merge trước End. Fork/join chỉ dùng cho xử lý thực sự song song.
 - AD-05 có thể dùng hoạt động con cho kiểm định từng cây/hoàn tiền để giữ một trang dễ đọc.
 - Mỗi hình thể hiện hành động nghiệp vụ và kết quả, không đưa tên hàm/API/khóa ngoại lên sơ đồ.
 - Kèm SVG/PNG cho từng hình và một tài liệu đặc tả ngắn. Đặt tên hình trong luận văn theo mã chức năng, sau đó đánh số theo chương.
