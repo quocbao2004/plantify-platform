@@ -2,6 +2,8 @@
 
 Mỗi chức năng có một file draw.io offline riêng, gồm đúng một sơ đồ.
 
+Mỗi sơ đồ có đúng **một Start và một End**. Các nhánh thành công, hủy, từ chối hoặc chờ xử lý hội tụ qua các merge trước khi đến End chung. End chỉ kết thúc lần xử lý đang mô tả; kết quả nghiệp vụ được giữ rõ ở hành động trước đó.
+
 Mở từng file bằng ứng dụng draw.io / diagrams.net desktop qua **File → Open**. Các swimlane, hành động, quyết định, nhãn điều kiện và đường nối đều là đối tượng chỉnh sửa được.
 
 | Mã | Chức năng | File draw.io riêng | PNG để chèn Word | SVG vector |
@@ -14,7 +16,7 @@ Mở từng file bằng ứng dụng draw.io / diagrams.net desktop qua **File �
 
 Các sơ đồ dùng nền trắng, nét đen và nhãn tiếng Việt. Các khối có biểu tượng hoạt động con và dòng “Tham chiếu AD-03” gọi quy trình thanh toán: mở file `AD-03-thanh-toan.drawio` để xem chi tiết. File riêng sử dụng tooltip tham chiếu thay cho liên kết sang tab không còn tồn tại. Khối hoàn cọc ở AD-05 là một hoạt động con khái quát, có kiểm tra kết quả ngay sau đó.
 
-Bản tổng hợp nhiều trang trước đây vẫn được giữ tại [plantify-activity.drawio](plantify-activity.drawio).
+Bản tổng hợp nhiều trang [plantify-activity.drawio](plantify-activity.drawio) cũng đã được đồng bộ quy tắc một Start và một End cho từng trang.
 
 Đặc tả, quy ước nghiệp vụ và đối chiếu mã nguồn nằm trong [specifications.md](specifications.md). Bộ hình mô tả thiết kế nghiệp vụ theo phạm vi đã thống nhất; các nhánh chờ xử lý kết thúc lần xử lý hiện tại, không khẳng định đơn hàng hoặc hợp đồng đã hoàn tất.
 
