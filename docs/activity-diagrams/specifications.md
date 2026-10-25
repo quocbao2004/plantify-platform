@@ -5,7 +5,7 @@
 Bộ sơ đồ mô tả hoạt động ở mức phân tích/thiết kế nghiệp vụ, dùng cho luận văn tốt nghiệp. Không phải mọi nhánh trên hình đều đã được tích hợp đầy đủ vào ứng dụng hiện tại. Các bước có căn cứ mã nguồn và phần thiết kế dự kiến được phân biệt ở cuối tài liệu.
 
 - Khách hàng đã đăng nhập khi đặt hàng hoặc yêu cầu gia hạn.
-- Mỗi hình có một điểm bắt đầu và các kết quả kết thúc rõ ràng. Điểm kết thúc ở nhánh chờ xử lý chỉ kết thúc lần yêu cầu đang mô tả; nghiệp vụ tổng thể vẫn có thể được tiếp tục sau.
+- Mỗi hình có đúng một điểm bắt đầu (Start) và một điểm kết thúc (End). Các kết quả thành công, hủy, từ chối hoặc chờ xử lý được giữ ở các hành động tương ứng, sau đó hội tụ qua merge và đi đến End chung. End chỉ kết thúc lần xử lý đang mô tả; nghiệp vụ tổng thể vẫn có thể được tiếp tục sau.
 - Hình thoi không nhãn là merge của các nhánh lựa chọn, không phải join đồng bộ. Không có fork/join vì bộ quy trình này không yêu cầu mô tả xử lý song song.
 - Đường nối có mũi tên là control flow; nhãn trong ngoặc vuông là guard. Chỉ một nhánh của mỗi quyết định được chọn theo dữ liệu của lần xử lý.
 - Biểu tượng rake trên một khối hành động thể hiện hoạt động con. AD-01, AD-02, AD-04 và phần thu phí bổ sung trong AD-05 tham chiếu AD-03.
@@ -146,10 +146,10 @@ Các sơ đồ không tự đặt mức phạt, tỷ lệ cọc, cách làm trò
 
 ## Rà soát bộ hình
 
-- Đúng 5 file riêng AD-01 đến AD-05, mỗi file chứa một sơ đồ và một điểm bắt đầu. Bản tổng hợp nhiều trang trước đây được giữ để tham khảo.
+- Đúng 5 file riêng AD-01 đến AD-05, mỗi file chứa một sơ đồ, đúng một Start và đúng một End. Bản tổng hợp nhiều trang được đồng bộ cùng nội dung.
 - Mọi node có thể đi đến từ điểm bắt đầu và có đường đến ít nhất một kết quả kết thúc.
 - Mỗi quyết định có guard rõ; các nhánh lựa chọn hội tụ qua merge khi cần.
 - Không đặt nhiều luồng vào một action để vô tình biểu diễn đồng bộ; các điểm hội tụ được tách riêng.
 - Hủy thao tác trước khi tạo đơn không làm phát sinh giữ kho. Chưa trả tiền/chưa giao/chưa hoàn cọc không bị mô tả là đã hoàn tất nghiệp vụ tương ứng.
-- Các điều kiện chưa đạt có kết quả chờ/không áp dụng rõ ràng; không để nhánh treo.
+- Các điều kiện chưa đạt có kết quả chờ/không áp dụng rõ ràng; không để nhánh treo. Mọi nhánh kết thúc đều đi đến End chung qua merge, không tạo thêm activity final riêng.
 - Xuất hình bằng draw.io desktop; kiểm tra đường nối, chữ, swimlane và ký hiệu ở bản xuất.

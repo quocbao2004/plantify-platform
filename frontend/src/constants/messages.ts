@@ -2,6 +2,7 @@ export const MESSAGES = {
   NETWORK_ERROR: "Không thể kết nối máy chủ. Vui lòng thử lại sau.",
   SERVER_ERROR: "Hệ thống đang bận. Vui lòng thử lại sau.",
   UNEXPECTED_ERROR: "Đã có lỗi xảy ra. Vui lòng thử lại.",
+  INVALID_API_RESPONSE: "Dữ liệu máy chủ trả về không đúng định dạng. Vui lòng thử lại.",
   LOGIN_SUCCESS: "Đăng nhập thành công. Chào mừng bạn trở lại!",
   LOGIN_ERROR: "Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.",
   REGISTER_SUCCESS: "Tạo tài khoản thành công. Chào mừng bạn!",

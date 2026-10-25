@@ -20,7 +20,7 @@ export function HomeFeaturedPlants() {
   const { data } = useProducts({ page_size: 4 }, { silentError: true });
   const [filter, setFilter] = useState<HomeFilter>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const products = data?.results.length ? data.results : homeProducts;
+  const products = data?.results?.length ? data.results : homeProducts;
   const filteredProducts = products.filter((product) => {
     if (filter === "easy") return product.care_level === "EASY";
     if (filter === "indoor") {
