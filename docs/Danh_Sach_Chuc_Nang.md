@@ -1,10 +1,6 @@
 \# DANH SÁCH CHỨC NĂNG HỆ THỐNG BÁN VÀ CHO THUÊ CÂY CẢNH
 
-
-
 \## I. PHÂN HỆ KHÁCH HÀNG (FRONT-END)
-
-
 
 \### 1. Tài khoản \& Xác thực
 
@@ -20,29 +16,9 @@
 
 \- Quản lý sổ địa chỉ.
 
-
-
-\### 2. Chương trình khách hàng thân thiết (Loyalty)
-
-\- Hiển thị hạng thành viên: Mới, Bạc, Vàng, Bạch Kim.
-
-\- Hiển thị điểm tích lũy.
-
-\- Hiển thị tiến trình thăng hạng.
-
-\- Xem quyền lợi của từng hạng.
-
-\- Xem lịch sử nhận và tiêu điểm.
-
-\- Đổi điểm lấy voucher.
-
-\- Dùng điểm trừ trực tiếp vào tiền thanh toán.
-
-
-
 \### 3. Tìm kiếm \& Lọc sản phẩm
 
-\- Tìm kiếm cây theo từ khóa.
+\- Tìm kiếm cây theo từ khóa, từ khóa liên quan.
 
 \- Tìm kiếm theo danh mục.
 
@@ -53,8 +29,6 @@
 \- Lọc theo kích thước.
 
 \- Lọc theo điều kiện sinh trưởng: Ưa nắng, bóng râm.
-
-
 
 \### 4. Chi tiết sản phẩm
 
@@ -73,8 +47,6 @@
 \- Xem phí đặt cọc.
 
 \- Xem đánh giá và bình luận.
-
-
 
 \### 5. Giỏ hàng \& Thanh toán (Cart \& Checkout)
 
@@ -98,8 +70,6 @@
 
 \- Xác nhận thông tin và đặt hàng.
 
-
-
 \### 6. Quản lý đơn hàng \& Hợp đồng thuê
 
 \- Xem danh sách đơn hàng đã đặt.
@@ -114,8 +84,6 @@
 
 \- Gửi yêu cầu thu hồi cây sớm.
 
-
-
 \### 7. Chatbot \& Tương tác
 
 \- Chatbot trả lời FAQ về vận chuyển, đổi trả, tiền cọc.
@@ -129,8 +97,6 @@
 \- Viết đánh giá sau khi mua/thuê.
 
 \- Xem blog kiến thức.
-
-
 
 \### 8. Thanh toán \& Lịch sử giao dịch (Payment)
 
@@ -166,15 +132,9 @@
 
 \- Xem chi tiết tiền đặt cọc, khoản khấu trừ và số tiền được hoàn trả.
 
-
-
 \---
 
-
-
 \## II. PHÂN HỆ QUẢN TRỊ VIÊN (ADMIN / BACK-END)
-
-
 
 \### 1. Dashboard
 
@@ -190,8 +150,6 @@
 
 \- Cảnh báo cây sắp hết hàng.
 
-
-
 \### 2. Quản lý danh mục \& Sản phẩm
 
 \- Thêm/sửa/xóa danh mục.
@@ -206,8 +164,6 @@
 
 \- Quản lý số lượng tồn kho khả dụng.
 
-
-
 \### 3. Quản lý đơn hàng mua
 
 \- Xem danh sách đơn hàng.
@@ -221,8 +177,6 @@
 \- In hóa đơn.
 
 \- In phiếu giao hàng.
-
-
 
 \### 4. Quản lý hợp đồng thuê
 
@@ -244,26 +198,6 @@
 
 \- Hoàn trả tiền cọc cho khách.
 
-
-
-\### 5. Quản lý khách hàng \& Điểm thưởng
-
-\- Xem thông tin khách hàng.
-
-\- Xem lịch sử mua và thuê.
-
-\- Đánh giá uy tín khách hàng dựa trên tỷ lệ bùng đơn, làm hỏng cây.
-
-\- Cấu hình tỷ lệ tích điểm cho đơn mua và thuê.
-
-\- Thiết lập mốc thăng hạng.
-
-\- Cộng điểm thủ công.
-
-\- Trừ điểm thủ công.
-
-
-
 \### 6. Hệ thống Chat \& Kịch bản Bot
 
 \- Thêm/sửa từ khóa nhận diện của chatbot.
@@ -273,18 +207,6 @@
 \- Tiếp nhận tin nhắn live chat từ khách hàng.
 
 \- Xem lịch sử trò chuyện với chatbot.
-
-
-
-\### 7. Quản lý nội dung (CMS)
-
-\- Quản lý bài viết blog.
-
-\- Quản lý tin tức.
-
-\- Quản lý banner.
-
-
 
 \### 8. Báo cáo \& Cài đặt hệ thống
 
@@ -301,100 +223,3 @@
 \- Cấu hình phí vận chuyển.
 
 \- Cấu hình quy định bồi thường hợp đồng.
-
-
-
-\### 9. Quản lý thanh toán \& Hoàn tiền (Payment Management)
-
-
-
-\*\*Quản lý giao dịch thanh toán\*\*
-
-\- Xem danh sách tất cả giao dịch.
-
-\- Xem chi tiết giao dịch thanh toán.
-
-\- Tìm kiếm, lọc giao dịch theo khách hàng, thời gian, phương thức và trạng thái.
-
-\- Theo dõi trạng thái thanh toán.
-
-\- Xác nhận thanh toán thủ công đối với chuyển khoản hoặc COD khi cần.
-
-\- Xử lý giao dịch thất bại hoặc giao dịch cần kiểm tra.
-
-\- Đối soát giao dịch với cổng thanh toán.
-
-
-
-\*\*Quản lý tiền đặt cọc\*\*
-
-\- Theo dõi tiền đặt cọc của từng hợp đồng thuê.
-
-\- Xem tổng tiền cọc đang giữ.
-
-\- Xác định số tiền cọc cần hoàn trả.
-
-\- Tính khoản khấu trừ do hư hỏng hoặc vi phạm hợp đồng.
-
-\- Ghi nhận lịch sử khấu trừ và hoàn tiền cọc.
-
-
-
-\*\*Quản lý hoàn tiền (Refund Management)\*\*
-
-\- Xem danh sách yêu cầu hoàn tiền.
-
-\- Duyệt hoặc từ chối yêu cầu hoàn tiền.
-
-\- Hoàn tiền toàn bộ hoặc một phần.
-
-\- Hoàn tiền khi hủy đơn hàng theo chính sách.
-
-\- Hoàn tiền đặt cọc sau khi kết thúc hợp đồng.
-
-\- Theo dõi trạng thái hoàn tiền.
-
-\- Lưu lịch sử và lý do hoàn tiền.
-
-
-
-\*\*Quản lý hóa đơn \& Báo cáo thanh toán\*\*
-
-\- Xem danh sách hóa đơn.
-
-\- Xuất hóa đơn/biên nhận thanh toán.
-
-\- Thống kê tổng tiền đã thanh toán.
-
-\- Thống kê giao dịch thành công và thất bại.
-
-\- Thống kê số tiền đã hoàn.
-
-\- Thống kê tiền đặt cọc đang giữ.
-
-\- Báo cáo doanh thu theo phương thức thanh toán.
-
-\- Xuất báo cáo giao dịch theo khoảng thời gian.
-
-
-
-\---
-
-
-
-\## III. TỔNG KẾT
-
-
-
-Hệ thống bao gồm \*\*17 nhóm chức năng chính\*\*:
-
-
-
-\- \*\*Phân hệ khách hàng:\*\* 8 nhóm chức năng.
-
-\- \*\*Phân hệ quản trị viên:\*\* 9 nhóm chức năng.
-
-
-
-Danh sách được tổng hợp từ tài liệu yêu cầu ban đầu, kết hợp với các chức năng đã đề xuất bổ sung, đặc biệt là quản lý thanh toán, giao dịch và hoàn tiền. Các chức năng mở rộng sẽ cần được xác nhận phạm vi trước khi triển khai.
-
