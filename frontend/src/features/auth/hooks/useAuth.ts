@@ -16,8 +16,12 @@ export const useLogin = () => {
       successMessage: MESSAGES.LOGIN_SUCCESS,
       errorMessage: MESSAGES.LOGIN_ERROR,
     },
-    onSuccess: (data) => {
-      setAuth(data.user, data.tokens);
+    onSuccess: (data: any) => {
+      const user = data.user || data.data?.user;
+      const tokens = data.tokens || data.data?.tokens;
+      if (user && tokens) {
+        setAuth(user, tokens);
+      }
       navigate("/");
     },
   });
@@ -33,8 +37,12 @@ export const useRegister = () => {
       successMessage: MESSAGES.REGISTER_SUCCESS,
       errorMessage: MESSAGES.REGISTER_ERROR,
     },
-    onSuccess: (data) => {
-      setAuth(data.user, data.tokens);
+    onSuccess: (data: any) => {
+      const user = data.user || data.data?.user;
+      const tokens = data.tokens || data.data?.tokens;
+      if (user && tokens) {
+        setAuth(user, tokens);
+      }
       navigate("/");
     },
   });

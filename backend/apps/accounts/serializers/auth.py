@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
+
+
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=8)
@@ -11,3 +16,4 @@ class RegisterSerializer(serializers.Serializer):
 class SocialAuthInterfaceSerializer(serializers.Serializer):
     provider = serializers.ChoiceField(choices=["GOOGLE", "FACEBOOK"])
     auth_token = serializers.CharField(write_only=True)
+
