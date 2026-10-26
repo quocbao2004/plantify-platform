@@ -36,6 +36,9 @@ export const LABELS = {
     SEARCH: "Tìm kiếm cây",
     ACCOUNT: "Tài khoản",
     ACCOUNT_ORDERS: "Tài khoản và đơn hàng",
+    PROFILE: "Hồ sơ tài khoản",
+    ORDERS: "Đơn hàng",
+    USER_MENU: "Menu tài khoản",
     LOGIN: "Đăng nhập",
     LOGOUT: "Đăng xuất",
     CART: "Giỏ hàng",
@@ -253,6 +256,22 @@ export const LABELS = {
     CTA_DESCRIPTION:
       "Chọn mẫu cây bạn yêu thích trong danh mục và nhấn “Thuê cây định kỳ”.",
     CTA: "Xem danh mục cây cho thuê",
+  },
+  profile: {
+    TITLE: "Hồ sơ tài khoản",
+    DESCRIPTION:
+      "Thông tin cá nhân và thiết lập tài khoản của bạn tại K&B Plants",
+    PERSONAL_INFO: "Thông tin cá nhân",
+    FULL_NAME: "Họ và tên",
+    EMAIL: "Email",
+    PHONE: "Số điện thoại",
+    ROLE: "Vai trò",
+    STATUS: "Trạng thái",
+    ACTIVE: "Đang hoạt động",
+    ROLE_CUSTOMER: "Khách hàng",
+    ROLE_ADMIN: "Quản trị viên",
+    NOT_PROVIDED: "Chưa cập nhật",
+    VIEW_ORDERS: "Xem đơn hàng của tôi",
   },
   admin: {
     TITLE: "Bảng điều khiển quản trị",

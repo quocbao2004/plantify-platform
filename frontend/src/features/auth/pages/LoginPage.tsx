@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sprout } from "lucide-react";
 
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { FormCommon } from "@/components/common/FormCommon";
 import { LinkCommon } from "@/components/common/LinkCommon";
 import { LABELS } from "@/constants/labels";
+import { notify } from "@/services/notifications";
 import { notifyFormErrors } from "@/utils/formErrors";
+import { env } from "@/config/env";
+import { triggerGoogleLogin, triggerFacebookLogin } from "@/services/socialAuth";
 import { loginSchema, LoginFormValues } from "../schemas/authSchemas";
-import { useLogin } from "../hooks/useAuth";
+import { useLogin, useSocialLogin } from "../hooks/useAuth";
 
 const GoogleIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
@@ -78,8 +80,29 @@ const EyeOffIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+const HomeIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
+
 export const LoginPage: React.FC = () => {
-  const { mutate: login, isPending } = useLogin();
+  const { mutate: login, isPending: isLoginPending } = useLogin();
+  const { mutate: socialLogin, isPending: isSocialPending } = useSocialLogin();
+  const [socialLoadingProvider, setSocialLoadingProvider] = useState<
+    "GOOGLE" | "FACEBOOK" | null
+  >(null);
+
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -97,6 +120,38 @@ export const LoginPage: React.FC = () => {
 
   const onSubmit = (values: LoginFormValues) => {
     login(values);
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setSocialLoadingProvider("GOOGLE");
+      const token = await triggerGoogleLogin(env.VITE_GOOGLE_CLIENT_ID);
+      socialLogin(
+        { provider: "GOOGLE", access_token: token },
+        {
+          onSettled: () => setSocialLoadingProvider(null),
+        },
+      );
+    } catch (err: any) {
+      setSocialLoadingProvider(null);
+      notify.error(err.message || "Đăng nhập Google thất bại.");
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      setSocialLoadingProvider("FACEBOOK");
+      const token = await triggerFacebookLogin(env.VITE_FACEBOOK_APP_ID);
+      socialLogin(
+        { provider: "FACEBOOK", access_token: token },
+        {
+          onSettled: () => setSocialLoadingProvider(null),
+        },
+      );
+    } catch (err: any) {
+      setSocialLoadingProvider(null);
+      notify.error(err.message || "Đăng nhập Facebook thất bại.");
+    }
   };
 
   return (
@@ -143,24 +198,21 @@ export const LoginPage: React.FC = () => {
         className="flex-1 flex flex-col justify-between min-h-screen p-6 sm:p-10 lg:p-12 xl:p-16 bg-white"
         aria-labelledby="login-heading"
       >
-        {/* Top Brand Logo */}
-        <div className="flex justify-center pt-2 pb-6">
+        {/* Top Header with Home Button */}
+        <div className="flex items-center justify-between pt-2 pb-6 w-full">
           <LinkCommon
             to="/"
             className="inline-flex items-center gap-2 text-brand hover:opacity-90 transition-opacity"
             aria-label={LABELS.navigation.BRAND_HOME}
           >
-            <Sprout className="w-5 h-5 text-brand" aria-hidden="true" />
+            <HomeIcon className="w-5 h-5 text-brand" aria-hidden="true" />
             <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-brand">
-              {LABELS.common.BRAND}
-            </span>
-            <span
-              className="text-xs text-brand font-serif self-start"
-              aria-hidden="true"
-            >
-              {LABELS.common.REGISTERED}
+              {LABELS.navigation.HOME}
             </span>
           </LinkCommon>
+
+          {/* Spacer to keep brand logo visually centered */}
+          <div className="w-20 hidden sm:block" aria-hidden="true" />
         </div>
 
         {/* Form Container */}
@@ -180,7 +232,7 @@ export const LoginPage: React.FC = () => {
           <FormCommon
             aria-label={LABELS.auth.LOGIN_TITLE}
             noValidate
-            isSubmitting={isPending}
+            isSubmitting={isLoginPending}
             onSubmit={handleSubmit(onSubmit, notifyFormErrors)}
             className="space-y-4"
           >
@@ -206,8 +258,8 @@ export const LoginPage: React.FC = () => {
               rightElement={
                 <button
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="p-1 text-surface-400 hover:text-surface-600 focus:outline-none transition-colors"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-surface-400 hover:text-surface-600 transition-colors focus:outline-none"
                   aria-label={
                     showPassword
                       ? LABELS.auth.HIDE_PASSWORD
@@ -230,14 +282,14 @@ export const LoginPage: React.FC = () => {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-surface-300 text-brand focus:ring-brand cursor-pointer"
+                  className="rounded border-surface-300 text-brand focus:ring-brand h-3.5 w-3.5"
                 />
                 <span>{LABELS.auth.REMEMBER_ME}</span>
               </label>
 
               <LinkCommon
                 to="/forgot-password"
-                className="text-brand font-medium hover:underline"
+                className="text-surface-500 hover:text-brand transition-colors"
               >
                 {LABELS.auth.FORGOT_PASSWORD}
               </LinkCommon>
@@ -247,7 +299,7 @@ export const LoginPage: React.FC = () => {
               type="submit"
               variant="brand"
               className="w-full h-11 rounded font-medium mt-2"
-              isLoading={isPending}
+              isLoading={isLoginPending}
             >
               {LABELS.navigation.LOGIN}
             </ButtonCommon>
@@ -268,6 +320,11 @@ export const LoginPage: React.FC = () => {
               <ButtonCommon
                 type="button"
                 variant="outline"
+                onClick={handleGoogleLogin}
+                isLoading={
+                  isSocialPending && socialLoadingProvider === "GOOGLE"
+                }
+                disabled={isLoginPending || isSocialPending}
                 className="w-full h-10 border border-surface-200 hover:bg-surface-50 text-surface-700 text-xs font-medium rounded flex items-center justify-center gap-2"
                 aria-label={LABELS.auth.GOOGLE}
               >
@@ -278,6 +335,11 @@ export const LoginPage: React.FC = () => {
               <ButtonCommon
                 type="button"
                 variant="outline"
+                onClick={handleFacebookLogin}
+                isLoading={
+                  isSocialPending && socialLoadingProvider === "FACEBOOK"
+                }
+                disabled={isLoginPending || isSocialPending}
                 className="w-full h-10 border border-surface-200 hover:bg-surface-50 text-surface-700 text-xs font-medium rounded flex items-center justify-center gap-2"
                 aria-label={LABELS.auth.FACEBOOK}
               >
@@ -300,7 +362,7 @@ export const LoginPage: React.FC = () => {
 
         {/* Bottom Copyright */}
         <div className="pt-6 pb-2 text-center">
-          <p className="text-xs text-surface-400">
+          <p className="text-[11px] text-surface-400">
             {LABELS.auth.COPYRIGHT_TEXT}
           </p>
         </div>
@@ -308,3 +370,5 @@ export const LoginPage: React.FC = () => {
     </div>
   );
 };
+
+export default LoginPage;

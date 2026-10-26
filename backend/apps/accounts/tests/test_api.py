@@ -93,3 +93,45 @@ def test_token_refresh_api(api_client):
     assert refresh_resp.status_code == status.HTTP_200_OK
     assert "access" in refresh_resp.data
 
+
+
+@pytest.mark.django_db
+def test_social_auth_invalid_provider(api_client):
+    response = api_client.post(
+        "/api/v1/accounts/auth/social/",
+        {"provider": "TWITTER", "access_token": "some_token"},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_social_auth_missing_token(api_client):
+    response = api_client.post(
+        "/api/v1/accounts/auth/social/",
+        {"provider": "GOOGLE"},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_social_google_endpoint_resolves(api_client):
+    response = api_client.post(
+        "/api/v1/accounts/auth/social/google/",
+        {"access_token": "invalid_test_token"},
+        format="json",
+    )
+    # Reaches adapter validation and returns 400 with invalid token
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_social_facebook_endpoint_resolves(api_client):
+    response = api_client.post(
+        "/api/v1/accounts/auth/social/facebook/",
+        {"access_token": "invalid_test_token"},
+        format="json",
+    )
+    # Reaches adapter validation and returns 400 with invalid token
+    assert response.status_code == status.HTTP_400_BAD_REQUEST

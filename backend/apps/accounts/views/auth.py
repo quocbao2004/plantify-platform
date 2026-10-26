@@ -4,6 +4,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView
+
 from apps.accounts.serializers.auth import (
     LoginSerializer,
     RegisterSerializer,
@@ -12,7 +17,6 @@ from apps.accounts.serializers.auth import (
 from apps.accounts.serializers.user import UserSerializer
 from apps.accounts.services.authenticate_user import authenticate_user
 from apps.accounts.services.register_user import register_user
-from apps.accounts.services.social_login import authenticate_social_identity
 
 
 class LoginView(APIView):
@@ -74,15 +78,77 @@ class RegisterView(APIView):
         )
 
 
-
-class SocialAuthInterfaceView(APIView):
+class BaseSocialLoginView(SocialLoginView):
     permission_classes = [AllowAny]
 
-    def post(self, request):
+    def get_response(self):
+        user = self.user
+        user_data = UserSerializer(user).data
+        refresh = RefreshToken.for_user(user)
+        tokens = {
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+        }
+        return Response(
+            {
+                "success": True,
+                "message": "Đăng nhập thành công.",
+                "data": {
+                    "user": user_data,
+                    "tokens": tokens,
+                },
+                "user": user_data,
+                "tokens": tokens,
+                "access": tokens["access"],
+                "refresh": tokens["refresh"],
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class GoogleLoginView(BaseSocialLoginView):
+    """
+    Google OAuth2 login endpoint.
+    Accepts access_token or id_token (from Google Identity Services).
+    """
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+
+def post(self, request, *args, **kwargs):
+        data = request.data.copy() if hasattr(request.data, "copy") else dict(request.data)
+        
+        credential = data.get("credential") or data.get("auth_token") or data.get("token")
+        if credential:
+            data.setdefault("access_token", credential)
+        if "id_token" in data and not data["id_token"]:
+            data.pop("id_token", None)
+
+        request._full_data = data
+        print("Final Backend Data:", data)
+        return super().post(request, *args, **kwargs)
+
+
+
+class SocialAuthInterfaceView(APIView):
+    """
+    Unified Social Authentication endpoint.
+    Accepts provider: 'GOOGLE' | 'FACEBOOK' and token payload.
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
         serializer = SocialAuthInterfaceSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        authenticate_social_identity(
-            provider=serializer.validated_data["provider"],
-            auth_token=serializer.validated_data["auth_token"],
+        provider = serializer.validated_data["provider"]
+
+        if provider == "GOOGLE":
+            return GoogleLoginView.as_view()(request._request, *args, **kwargs)
+       
+
+        return Response(
+            {
+                "success": False,
+                "message": "Nhà cung cấp không hợp lệ. Vui lòng chọn GOOGLE hoặc FACEBOOK.",
+            },
+            status=status.HTTP_400_BAD_REQUEST,
         )
-        return Response({"success": True})

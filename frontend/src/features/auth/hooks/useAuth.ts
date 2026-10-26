@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { authApi } from "../api/authApi";
 import { useAuthStore } from "@/stores/authStore";
-import { LoginPayload, RegisterPayload } from "../types";
+import { LoginPayload, RegisterPayload, SocialLoginPayload } from "../types";
 import { MESSAGES } from "@/constants/messages";
 import { notify } from "@/services/notifications";
 
@@ -36,6 +36,27 @@ export const useRegister = () => {
     meta: {
       successMessage: MESSAGES.REGISTER_SUCCESS,
       errorMessage: MESSAGES.REGISTER_ERROR,
+    },
+    onSuccess: (data: any) => {
+      const user = data.user || data.data?.user;
+      const tokens = data.tokens || data.data?.tokens;
+      if (user && tokens) {
+        setAuth(user, tokens);
+      }
+      navigate("/");
+    },
+  });
+};
+
+export const useSocialLogin = () => {
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  return useMutation({
+    mutationFn: (payload: SocialLoginPayload) => authApi.socialLogin(payload),
+    meta: {
+      successMessage: MESSAGES.LOGIN_SUCCESS,
+      errorMessage: MESSAGES.LOGIN_ERROR,
     },
     onSuccess: (data: any) => {
       const user = data.user || data.data?.user;
