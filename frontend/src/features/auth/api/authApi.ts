@@ -47,14 +47,6 @@ export const authApi = {
     return data;
   },
 
-  facebookLogin: async (accessToken: string): Promise<AuthResponse> => {
-    const { data } = await httpClient.post<AuthResponse>(
-      API_ENDPOINTS.AUTH.SOCIAL_FACEBOOK,
-      { access_token: accessToken },
-    );
-    return data;
-  },
-
   getMe: async (): Promise<User> => {
     const { data } = await httpClient.get<User>(API_ENDPOINTS.AUTH.ME);
     return data;

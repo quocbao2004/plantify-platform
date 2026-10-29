@@ -10,7 +10,7 @@ import { LABELS } from "@/constants/labels";
 import { notify } from "@/services/notifications";
 import { notifyFormErrors } from "@/utils/formErrors";
 import { env } from "@/config/env";
-import { triggerGoogleLogin, triggerFacebookLogin } from "@/services/socialAuth";
+import { triggerGoogleLogin} from "@/services/socialAuth";
 import { loginSchema, LoginFormValues } from "../schemas/authSchemas";
 import { useLogin, useSocialLogin } from "../hooks/useAuth";
 
@@ -35,16 +35,6 @@ const GoogleIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-const FacebookIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-  </svg>
-);
 
 const EyeIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -100,7 +90,7 @@ export const LoginPage: React.FC = () => {
   const { mutate: login, isPending: isLoginPending } = useLogin();
   const { mutate: socialLogin, isPending: isSocialPending } = useSocialLogin();
   const [socialLoadingProvider, setSocialLoadingProvider] = useState<
-    "GOOGLE" | "FACEBOOK" | null
+    "GOOGLE"| null
   >(null);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -138,21 +128,6 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleFacebookLogin = async () => {
-    try {
-      setSocialLoadingProvider("FACEBOOK");
-      const token = await triggerFacebookLogin(env.VITE_FACEBOOK_APP_ID);
-      socialLogin(
-        { provider: "FACEBOOK", access_token: token },
-        {
-          onSettled: () => setSocialLoadingProvider(null),
-        },
-      );
-    } catch (err: any) {
-      setSocialLoadingProvider(null);
-      notify.error(err.message || "Đăng nhập Facebook thất bại.");
-    }
-  };
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row bg-white">
@@ -202,13 +177,11 @@ export const LoginPage: React.FC = () => {
         <div className="flex items-center justify-between pt-2 pb-6 w-full">
           <LinkCommon
             to="/"
-            className="inline-flex items-center gap-2 text-brand hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand/20 bg-brand/5 text-brand hover:bg-brand/10 hover:border-brand/40 transition-all duration-200 text-sm font-medium"
             aria-label={LABELS.navigation.BRAND_HOME}
           >
-            <HomeIcon className="w-5 h-5 text-brand" aria-hidden="true" />
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-brand">
-              {LABELS.navigation.HOME}
-            </span>
+            <HomeIcon className="w-4 h-4 text-brand" aria-hidden="true" />
+            <span>{LABELS.navigation.HOME}</span>
           </LinkCommon>
 
           {/* Spacer to keep brand logo visually centered */}
@@ -256,10 +229,12 @@ export const LoginPage: React.FC = () => {
               placeholder={LABELS.auth.PASSWORD}
               error={errors.password?.message}
               rightElement={
-                <button
+                <ButtonCommon
                   type="button"
+                  variant="ghost"
+                  size="unstyled"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="text-surface-400 hover:text-surface-600 transition-colors focus:outline-none"
+                  className="p-1 text-surface-400 hover:text-surface-600 transition-colors focus:outline-none"
                   aria-label={
                     showPassword
                       ? LABELS.auth.HIDE_PASSWORD
@@ -271,7 +246,7 @@ export const LoginPage: React.FC = () => {
                   ) : (
                     <EyeIcon className="w-4 h-4" />
                   )}
-                </button>
+                </ButtonCommon>
               }
               {...register("password")}
             />
@@ -316,7 +291,7 @@ export const LoginPage: React.FC = () => {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex justify-center">
               <ButtonCommon
                 type="button"
                 variant="outline"
@@ -330,21 +305,6 @@ export const LoginPage: React.FC = () => {
               >
                 <GoogleIcon className="w-4 h-4" />
                 <span>{LABELS.auth.GOOGLE}</span>
-              </ButtonCommon>
-
-              <ButtonCommon
-                type="button"
-                variant="outline"
-                onClick={handleFacebookLogin}
-                isLoading={
-                  isSocialPending && socialLoadingProvider === "FACEBOOK"
-                }
-                disabled={isLoginPending || isSocialPending}
-                className="w-full h-10 border border-surface-200 hover:bg-surface-50 text-surface-700 text-xs font-medium rounded flex items-center justify-center gap-2"
-                aria-label={LABELS.auth.FACEBOOK}
-              >
-                <FacebookIcon className="w-4 h-4 text-brand-facebook" />
-                <span>{LABELS.auth.FACEBOOK}</span>
               </ButtonCommon>
             </div>
 
