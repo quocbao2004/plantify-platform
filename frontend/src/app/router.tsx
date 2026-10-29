@@ -5,7 +5,7 @@ import { AuthGuard, GuestGuard, AdminGuard } from "./guards";
 // Feature Pages
 import { HomePage } from "@/features/catalog/pages/HomePage";
 import { ProductListPage, ProductDetailPage } from "@/features/catalog";
-import { LoginPage, RegisterPage } from "@/features/auth";
+import { LoginPage, RegisterPage, ProfilePage } from "@/features/auth";
 import { CartPage } from "@/features/cart";
 import { CheckoutPage } from "@/features/checkout";
 import { OrderListPage } from "@/features/orders";
@@ -39,6 +39,7 @@ export const router = createBrowserRouter([
           { path: "cart", element: <CartPage /> },
           { path: "checkout", element: <CheckoutPage /> },
           { path: "orders", element: <OrderListPage /> },
+          { path: "profile", element: <ProfilePage /> },
         ],
       },
 

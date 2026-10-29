@@ -3,3 +3,4 @@ export * from "./api/authApi";
 export * from "./hooks/useAuth";
 export * from "./pages/LoginPage";
 export * from "./pages/RegisterPage";
+export * from "./pages/ProfilePage";

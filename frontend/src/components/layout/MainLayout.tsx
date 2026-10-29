@@ -5,7 +5,20 @@ import { Footer } from "./Footer";
 import { ErrorBoundary } from "@/components/common";
 
 export const MainLayout: React.FC = () => {
-  const isHome = useLocation().pathname === "/";
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  const isAuth = pathname === "/login";
+
+  if (isAuth) {
+    return (
+      <div className="store-shell min-h-screen">
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+      </div>
+    );
+  }
+
   return (
     <div className="store-shell min-h-screen flex flex-col">
       <Header />
