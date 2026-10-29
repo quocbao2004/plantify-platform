@@ -57,8 +57,9 @@ LOCAL_APPS = [
     "apps.chatbot",
     "apps.cms",
     "apps.recommendations",
-    "apps.notifications",
     "apps.system_settings",
+    "apps.notifications",
+    
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -132,22 +133,6 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         "SCOPE": ["profile", "email"],
         "AUTH_PARAMS": {"access_type": "online"},
-    },
-    "facebook": {
-        "APP": {
-            "client_id": os.getenv("FACEBOOK_APP_ID", ""),
-            "secret": os.getenv("FACEBOOK_APP_SECRET", ""),
-            "key": "",
-        },
-        "METHOD": "oauth2",
-        "SCOPE": ["email", "public_profile"],
-        "FIELDS": [
-            "id",
-            "email",
-            "name",
-            "first_name",
-            "last_name",
-        ],
     },
 }
 
@@ -256,3 +241,4 @@ LOGGING = {
         },
     },
 }
+
