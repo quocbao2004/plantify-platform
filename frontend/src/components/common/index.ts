@@ -1,3 +1,4 @@
+export * from "./CheckboxCommon";
 export * from "./ErrorBoundary";
 export * from "./EmptyState";
 export * from "./LoadingOverlay";

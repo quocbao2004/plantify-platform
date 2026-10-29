@@ -6,6 +6,7 @@ import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { FormCommon } from "@/components/common/FormCommon";
 import { LinkCommon } from "@/components/common/LinkCommon";
+import { CheckboxCommon } from "@/components/common/CheckboxCommon";
 import { LABELS } from "@/constants/labels";
 import { notify } from "@/services/notifications";
 import { notifyFormErrors } from "@/utils/formErrors";
@@ -252,15 +253,11 @@ export const LoginPage: React.FC = () => {
             />
 
             <div className="flex items-center justify-between text-xs pt-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none text-surface-600">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-surface-300 text-brand focus:ring-brand h-3.5 w-3.5"
-                />
-                <span>{LABELS.auth.REMEMBER_ME}</span>
-              </label>
+              <CheckboxCommon
+                label={LABELS.auth.REMEMBER_ME}
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
 
               <LinkCommon
                 to="/forgot-password"
