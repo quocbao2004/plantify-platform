@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
@@ -8,12 +6,7 @@ import { FormCommon } from "@/components/common/FormCommon";
 import { LinkCommon } from "@/components/common/LinkCommon";
 import { CheckboxCommon } from "@/components/common/CheckboxCommon";
 import { LABELS } from "@/constants/labels";
-import { notify } from "@/services/notifications";
-import { notifyFormErrors } from "@/utils/formErrors";
-import { env } from "@/config/env";
-import { triggerGoogleLogin} from "@/services/socialAuth";
-import { loginSchema, LoginFormValues } from "../schemas/authSchemas";
-import { useLogin, useSocialLogin } from "../hooks/useAuth";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 const GoogleIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
@@ -35,7 +28,6 @@ const GoogleIcon: React.FC<{ className?: string }> = ({ className }) => (
     />
   </svg>
 );
-
 
 const EyeIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -88,47 +80,18 @@ const HomeIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const LoginPage: React.FC = () => {
-  const { mutate: login, isPending: isLoginPending } = useLogin();
-  const { mutate: socialLogin, isPending: isSocialPending } = useSocialLogin();
-  const [socialLoadingProvider, setSocialLoadingProvider] = useState<
-    "GOOGLE"| null
-  >(null);
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-
   const {
-    register,
+    email, setEmail,
+    password, setPassword,
+    fieldErrors,
+    showPassword, setShowPassword,
+    rememberMe, setRememberMe,
+    isLoginPending,
+    isSocialPending,
+    socialLoadingProvider,
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = (values: LoginFormValues) => {
-    login(values);
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      setSocialLoadingProvider("GOOGLE");
-      const token = await triggerGoogleLogin(env.VITE_GOOGLE_CLIENT_ID);
-      socialLogin(
-        { provider: "GOOGLE", access_token: token },
-        {
-          onSettled: () => setSocialLoadingProvider(null),
-        },
-      );
-    } catch (err: any) {
-      setSocialLoadingProvider(null);
-      notify.error(err.message || "Đăng nhập Google thất bại.");
-    }
-  };
-
+    handleGoogleLogin,
+  } = useLoginForm();
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row bg-white">
@@ -143,12 +106,10 @@ export const LoginPage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-cover object-center"
           loading="eager"
         />
-        {/* Soft green gradient fading up to make text stand out */}
         <div
           className="absolute inset-0 bg-gradient-to-t from-[#0e2518] via-[#0e2518]/70 via-35% to-transparent to-70%"
           aria-hidden="true"
         />
-
         <div className="relative z-10 p-12 lg:p-16 text-white max-w-xl">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-px bg-white/70" aria-hidden="true" />
@@ -156,13 +117,11 @@ export const LoginPage: React.FC = () => {
               {LABELS.auth.HERO_EYEBROW}
             </span>
           </div>
-
           <h1 className="font-serif text-3xl xl:text-4xl leading-snug font-normal mb-3 text-white">
             {LABELS.home.HERO_TITLE_FIRST}
             <br />
             {LABELS.home.HERO_TITLE_SECOND}
           </h1>
-
           <p className="text-sm text-white/80 max-w-sm font-light leading-relaxed">
             {LABELS.auth.HERO_SUBTITLE}
           </p>
@@ -174,7 +133,7 @@ export const LoginPage: React.FC = () => {
         className="flex-1 flex flex-col justify-between min-h-screen p-6 sm:p-10 lg:p-12 xl:p-16 bg-white"
         aria-labelledby="login-heading"
       >
-        {/* Top Header with Home Button */}
+        {/* Top Header */}
         <div className="flex items-center justify-between pt-2 pb-6 w-full">
           <LinkCommon
             to="/"
@@ -184,8 +143,6 @@ export const LoginPage: React.FC = () => {
             <HomeIcon className="w-4 h-4 text-brand" aria-hidden="true" />
             <span>{LABELS.navigation.HOME}</span>
           </LinkCommon>
-
-          {/* Spacer to keep brand logo visually centered */}
           <div className="w-20 hidden sm:block" aria-hidden="true" />
         </div>
 
@@ -207,7 +164,7 @@ export const LoginPage: React.FC = () => {
             aria-label={LABELS.auth.LOGIN_TITLE}
             noValidate
             isSubmitting={isLoginPending}
-            onSubmit={handleSubmit(onSubmit, notifyFormErrors)}
+            onSubmit={handleSubmit}
             className="space-y-4"
           >
             <TextFieldCommon
@@ -217,8 +174,9 @@ export const LoginPage: React.FC = () => {
               type="email"
               autoComplete="email"
               placeholder={LABELS.auth.EMAIL_OR_PHONE_PLACEHOLDER}
-              error={errors.email?.message}
-              {...register("email")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={fieldErrors.email}
             />
 
             <TextFieldCommon
@@ -228,7 +186,9 @@ export const LoginPage: React.FC = () => {
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               placeholder={LABELS.auth.PASSWORD}
-              error={errors.password?.message}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={fieldErrors.password}
               rightElement={
                 <ButtonCommon
                   type="button"
@@ -249,7 +209,6 @@ export const LoginPage: React.FC = () => {
                   )}
                 </ButtonCommon>
               }
-              {...register("password")}
             />
 
             <div className="flex items-center justify-between text-xs pt-1">
@@ -258,7 +217,6 @@ export const LoginPage: React.FC = () => {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-
               <LinkCommon
                 to="/forgot-password"
                 className="text-surface-500 hover:text-brand transition-colors"
@@ -277,10 +235,7 @@ export const LoginPage: React.FC = () => {
             </ButtonCommon>
 
             <div className="relative my-6 text-center">
-              <div
-                className="absolute inset-0 flex items-center"
-                aria-hidden="true"
-              >
+              <div className="absolute inset-0 flex items-center" aria-hidden="true">
                 <div className="w-full border-t border-surface-200" />
               </div>
               <span className="relative bg-white px-3 text-xs text-surface-400">
@@ -293,9 +248,7 @@ export const LoginPage: React.FC = () => {
                 type="button"
                 variant="outline"
                 onClick={handleGoogleLogin}
-                isLoading={
-                  isSocialPending && socialLoadingProvider === "GOOGLE"
-                }
+                isLoading={isSocialPending && socialLoadingProvider === "GOOGLE"}
                 disabled={isLoginPending || isSocialPending}
                 className="w-full h-10 border border-surface-200 hover:bg-surface-50 text-surface-700 text-xs font-medium rounded flex items-center justify-center gap-2"
                 aria-label={LABELS.auth.GOOGLE}
