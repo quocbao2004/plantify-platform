@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, type ReactNode } from "react";
+import { ButtonCommon, type ButtonVariant, type ButtonSize } from "./ButtonCommon";
 
 export interface DropdownCommonProps {
   /** The clickable element or node that triggers the dropdown */
@@ -17,6 +18,12 @@ export interface DropdownCommonProps {
   onOpenChange?: (open: boolean) => void;
   /** Whether to close the dropdown when an action item (a or button) is clicked (default: true) */
   closeOnItemClick?: boolean;
+  /** Variant của trigger button (default: "unstyled") */
+  triggerVariant?: ButtonVariant;
+  /** Size của trigger button (default: "unstyled") */
+  triggerSize?: ButtonSize;
+  /** Class name bổ sung cho trigger button */
+  triggerClassName?: string;
 }
 
 export const DropdownCommon: React.FC<DropdownCommonProps> = ({
@@ -28,6 +35,9 @@ export const DropdownCommon: React.FC<DropdownCommonProps> = ({
   isOpen: controlledOpen,
   onOpenChange,
   closeOnItemClick = true,
+  triggerVariant = "unstyled",
+  triggerSize = "unstyled",
+  triggerClassName = "",
 }) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
@@ -71,16 +81,18 @@ export const DropdownCommon: React.FC<DropdownCommonProps> = ({
   }, [open]);
 
   return (
-    <div ref={containerRef} className={`relative inline-block ${className}`}>
-      <button
+<div ref={containerRef} className={`relative inline-block ${className}`}>
+      <ButtonCommon
         type="button"
+        variant={triggerVariant}
+        size={triggerSize}
         onClick={() => setOpen(!open)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="inline-flex items-center justify-center cursor-pointer bg-transparent border-0 p-0 m-0 focus:outline-none"
+        className={triggerClassName}
       >
         {trigger}
-      </button>
+      </ButtonCommon>
 
       {open && (
         <div

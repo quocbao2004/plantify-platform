@@ -131,7 +131,7 @@ def post(self, request, *args, **kwargs):
 class SocialAuthInterfaceView(APIView):
     """
     Unified Social Authentication endpoint.
-    Accepts provider: 'GOOGLE' | 'FACEBOOK' and token payload.
+    Accepts provider: 'GOOGLE' and token payload.
     """
     permission_classes = [AllowAny]
 
@@ -147,7 +147,7 @@ class SocialAuthInterfaceView(APIView):
         return Response(
             {
                 "success": False,
-                "message": "Nhà cung cấp không hợp lệ. Vui lòng chọn GOOGLE hoặc FACEBOOK.",
+                "message": "Nhà cung cấp không hợp lệ. Vui lòng chọn GOOGLE.",
             },
             status=status.HTTP_400_BAD_REQUEST,
         )
