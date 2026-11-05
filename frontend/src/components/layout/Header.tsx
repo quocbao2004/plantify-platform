@@ -16,6 +16,7 @@ import {
   X,
   LogOut,
   ArrowRight,
+  Inbox,
 } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { useLogout } from "@/features/auth/hooks/useAuth";
@@ -76,9 +77,7 @@ export function Header() {
             <LinkCommon href="/#plant-care">
               {LABELS.navigation.CARE}
             </LinkCommon>
-            {user?.role === "ADMIN" ? (
-              <NavLink to="/admin">{LABELS.navigation.ADMIN}</NavLink>
-            ) : null}
+            {user?.role === "ADMIN" ? null : null}
           </nav>
           <div className="header-actions">
             <ButtonCommon
@@ -100,7 +99,26 @@ export function Header() {
             </LinkCommon>
 
             {isAuthenticated ? (
-              <DropdownCommon
+              <>
+                {/* Admin inbox icon — chỉ hiện với ADMIN, nổi bật và dễ nhận dạng sát avatar */}
+                {user?.role === "ADMIN" ? (
+                  <LinkCommon
+                    to="/admin"
+                    className="relative inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-brand/10 text-brand border border-brand/25 hover:bg-brand hover:text-white hover:border-brand shadow-xs transition-all duration-200 text-xs font-semibold group ml-1"
+                    aria-label={LABELS.navigation.ADMIN_PANEL}
+                    title={LABELS.navigation.ADMIN_PANEL}
+                  >
+                    <span className="relative flex items-center justify-center">
+                      <Inbox size={17} className="transition-transform group-hover:scale-110" />
+                      {/* Chấm trạng thái nhỏ báo hiệu quyền quản trị */}
+                      <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white" />
+                    </span>
+                    <span className="hidden md:inline tracking-tight font-medium">
+                      {LABELS.navigation.ADMIN}
+                    </span>
+                  </LinkCommon>
+                ) : null}
+                <DropdownCommon
                 align="right"
                 trigger={
                   <span
@@ -159,6 +177,7 @@ export function Header() {
                   </ButtonCommon>
                 </div>
               </DropdownCommon>
+              </>
             ) : (
               <LinkCommon
                 to="/login"
@@ -206,9 +225,6 @@ export function Header() {
               {LABELS.navigation.CARE}
             </LinkCommon>
             <LinkCommon to="/rentals">{LABELS.navigation.RENTALS}</LinkCommon>
-            {user?.role === "ADMIN" ? (
-              <LinkCommon to="/admin">{LABELS.navigation.ADMIN}</LinkCommon>
-            ) : null}
             {isAuthenticated ? (
               <>
                 <LinkCommon to="/profile">

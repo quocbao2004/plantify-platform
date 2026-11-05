@@ -28,6 +28,7 @@ export const LABELS = {
     OFFERS: "Ưu đãi",
     CARE: "Chăm cây",
     ADMIN: "Quản trị",
+    ADMIN_PANEL: "Vào trang quản trị",
     MAIN: "Điều hướng chính",
     MOBILE: "Điều hướng trên điện thoại",
     OPEN_MENU: "Mở menu",
@@ -290,6 +291,125 @@ export const LABELS = {
     AUDIT: "Nhật ký kiểm toán (Audit Logs)",
     AUDIT_DESCRIPTION:
       "Theo dõi lịch sử thay đổi cấu hình, cập nhật kho số lượng và can thiệp trạng thái hợp đồng.",
+
+    // Dashboard overview
+    DASHBOARD_TITLE: "Tổng quan cửa hàng",
+    DASHBOARD_GREETING: (name: string) =>
+      `Chào ${name}, cùng chăm sóc cửa hàng xanh của bạn hôm nay.`,
+    PERIOD_THIS_MONTH: "Tháng này",
+    EXPORT_REPORT: "Xuất báo cáo",
+
+    // Stat cards
+    STAT_REVENUE: "Tổng doanh thu",
+    STAT_REVENUE_TREND: (pct: number) =>
+      `+${pct}% so với tháng trước`,
+    STAT_ORDERS: "Đơn hàng",
+    STAT_ORDERS_PENDING: (n: number) => `${n} chờ xử lý`,
+    STAT_INVENTORY: "Kho cây & phụ kiện",
+    STAT_CONSULT: "Yêu cầu tư vấn",
+    STAT_CONSULT_CTA: "Cần liên hệ khách hàng",
+    STAT_CONSULT_NEW: (n: number) => `${n} yêu cầu mới`,
+
+    // Orders table
+    ORDERS_SECTION_TITLE: "Đơn hàng mới & Yêu cầu Order",
+    ORDERS_SECTION_DESC: "Theo dõi đơn hàng và những yêu cầu từ khách hàng.",
+    ORDERS_VIEW_ALL: "Xem tất cả",
+    ORDERS_TAB_ALL: "Tất cả",
+    ORDERS_TAB_ORDERS: "Đơn hàng",
+    ORDERS_TAB_REQUESTS: "Yêu cầu Order",
+    ORDERS_FILTER: "Bộ lọc",
+    ORDERS_COL_ID: "Mã đơn",
+    ORDERS_COL_CUSTOMER: "Khách hàng",
+    ORDERS_COL_PRODUCT: "Sản phẩm",
+    ORDERS_COL_NOTE: "Yêu cầu đặc biệt",
+    ORDERS_COL_STATUS: "Trạng thái",
+    ORDERS_COL_TOTAL: "Tổng tiền",
+    ORDERS_FOOTER_TIP: "Chăm chút từng yêu cầu đặc biệt",
+    ORDERS_FOOTER_SUB: "Bọc quà kèm thiệp chúc mừng · Đổi sang chậu trắng",
+
+    // Consultation panel
+    CONSULT_TITLE: "Yêu cầu tư vấn cây cảnh hiện tại",
+    CONSULT_DESC: "Kết nối và hỗ trợ từng khách hàng",
+    CONSULT_VIEW_ALL: "Xem tất cả yêu cầu tư vấn",
+    CONSULT_CALL: "Gọi tư vấn",
+    CONSULT_DETAIL: "Xem chi tiết",
+
+    // Sidebar
+    SIDEBAR_SECTION: "QUẢN LÝ CỬA HÀNG",
+    SIDEBAR_OVERVIEW: "Tổng quan",
+    SIDEBAR_ORDERS: "Quản lý đơn hàng",
+    SIDEBAR_PLANTS: "Quản lý cây cảnh",
+    SIDEBAR_CONSULT: "Yêu cầu tư vấn",
+    SIDEBAR_CUSTOMERS: "Khách hàng",
+    SIDEBAR_SETTINGS: "Cài đặt",
+    SIDEBAR_HELP: "Trung tâm trợ giúp",
+    SIDEBAR_PROMO_TITLE: "Mỗi ngày, thêm một mầm xanh.",
+    SIDEBAR_PROMO_DESC:
+      "Chăm chút từng chiếc lá, kết nối từng khách hàng.",
+
+    // Header
+    HEADER_SEARCH_PLACEHOLDER: "Tìm kiếm đơn hàng, sản phẩm...",
+    HEADER_ADMIN_ROLE: "Quản trị viên",
+    HEADER_NOTIFICATION: "Thông báo",
+
+    // Status badges
+    STATUS_PENDING: "Chờ xác nhận",
+    STATUS_DELIVERING: "Đang giao",
+    STATUS_DONE: "Hoàn thành",
+    STATUS_CANCELLED: "Đã huỷ",
+    STATUS_NOT_CALLED: "Chưa gọi",
+    STATUS_SUPPORTED: "Đã hỗ trợ",
+
+    // Inventory breakdown
+    INVENTORY_INDOOR: "Cây trong nhà",
+    INVENTORY_DESKTOP: "Cây để bàn",
+    INVENTORY_ACCESSORY: "Phụ kiện",
+
+    // Units & Shortcuts
+    UNIT_ORDER: "đơn",
+    UNIT_PRODUCT: "sản phẩm",
+    UNIT_NEW_REQUESTS: "yêu cầu mới",
+    LANGUAGES: "VN | EN",
+    SEARCH_SHORTCUT: "⌘K",
+    EMPTY_ORDERS: "Chưa có đơn hàng nào phát sinh.",
+    EMPTY_CONSULTS: "Chưa có yêu cầu tư vấn nào.",
+    NO_NOTE: "Không có ghi chú",
+    STATUS_UNAVAILABLE: "—",
+
+    // Customer Management
+    CUSTOMERS_TITLE: "Quản lý khách hàng",
+    CUSTOMERS_DESCRIPTION:
+      "Theo dõi danh sách tài khoản, trạng thái hoạt động và phân quyền khách hàng",
+    CUSTOMERS_SEARCH_PLACEHOLDER: "Tìm theo tên, email hoặc số điện thoại...",
+    CUSTOMERS_TOTAL: (count: number) => `Tổng cộng ${count} tài khoản`,
+    CUSTOMERS_FILTER_STATUS: "Trạng thái",
+    CUSTOMERS_FILTER_ALL: "Tất cả trạng thái",
+    CUSTOMERS_FILTER_ACTIVE: "Đang hoạt động",
+    CUSTOMERS_FILTER_BLOCKED: "Đã khoá",
+    CUSTOMERS_FILTER_ROLE: "Vai trò",
+    CUSTOMERS_ROLE_ALL: "Tất cả vai trò",
+    CUSTOMERS_ROLE_CUSTOMER: "Khách hàng",
+    CUSTOMERS_ROLE_ADMIN: "Quản trị viên",
+    CUSTOMERS_ROLE_STAFF: "Nhân viên",
+    CUSTOMERS_COL_USER: "Khách hàng",
+    CUSTOMERS_COL_CONTACT: "Thông tin liên hệ",
+    CUSTOMERS_COL_ROLE: "Vai trò",
+    CUSTOMERS_COL_STATUS: "Trạng thái",
+    CUSTOMERS_COL_JOINED: "Ngày tham gia",
+    CUSTOMERS_COL_ACTIONS: "Thao tác",
+    CUSTOMERS_EMPTY_TITLE: "Không tìm thấy khách hàng nào",
+    CUSTOMERS_EMPTY_DESC:
+      "Hãy thử thay đổi từ khóa tìm kiếm hoặc điều chỉnh bộ lọc.",
+    CUSTOMERS_ACTION_LOCK: "Khoá tài khoản",
+    CUSTOMERS_ACTION_UNLOCK: "Mở khoá tài khoản",
+    CUSTOMERS_ACTION_VIEW: "Xem chi tiết",
+    CUSTOMERS_STATUS_ACTIVE: "Hoạt động",
+    CUSTOMERS_STATUS_BLOCKED: "Đã khoá",
+    CUSTOMERS_MODAL_TITLE: "Thông tin chi tiết tài khoản",
+    CUSTOMERS_CONFIRM_LOCK: (name: string) =>
+      `Bạn có chắc chắn muốn khoá tài khoản của "${name}"? Khách hàng sẽ không thể đăng nhập.`,
+    CUSTOMERS_CONFIRM_UNLOCK: (name: string) =>
+      `Mở khoá tài khoản cho "${name}" để khách hàng tiếp tục sử dụng dịch vụ?`,
   },
 } as const;
 

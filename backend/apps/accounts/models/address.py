@@ -15,7 +15,6 @@ class UserAddress(UUIDTimeStampedModel):
     ward = models.CharField(max_length=100, verbose_name="Phường/Xã")
     district = models.CharField(max_length=100, blank=True, verbose_name="Quận/Huyện")
     province = models.CharField(max_length=100, verbose_name="Tỉnh/Thành phố")
-    postal_code = models.CharField(max_length=20, blank=True, verbose_name="Mã bưu chính")
     is_default = models.BooleanField(default=False, verbose_name="Địa chỉ mặc định")
 
     class Meta:

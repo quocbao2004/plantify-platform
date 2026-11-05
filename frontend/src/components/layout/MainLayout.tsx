@@ -6,10 +6,28 @@ import { ErrorBoundary } from "@/components/common";
 
 export const MainLayout: React.FC = () => {
   const { pathname } = useLocation();
+<<<<<<< HEAD
+  const isHome  = pathname === "/";
+  const isAuth  = pathname === "/login" || pathname === "/register";
+  const isAdmin = pathname.startsWith("/admin");
+=======
   const isHome = pathname === "/";
   const isAuth = pathname === "/login" || pathname === "/register";
+>>>>>>> 00a1bbd2385e78f5b8f2079465445345b5986618
 
+  // Auth pages: no header/footer
   if (isAuth) {
+    return (
+      <div className="store-shell min-h-screen">
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+      </div>
+    );
+  }
+
+  // Admin pages: full-screen layout (admin tự có header/sidebar riêng)
+  if (isAdmin) {
     return (
       <div className="store-shell min-h-screen">
         <ErrorBoundary>

@@ -10,7 +10,11 @@ import { CartPage } from "@/features/cart";
 import { CheckoutPage } from "@/features/checkout";
 import { OrderListPage } from "@/features/orders";
 import { RentalListPage } from "@/features/rentals";
-import { AdminDashboardPage } from "@/features/admin";
+import {
+  AdminLayout,
+  AdminDashboardPage,
+  AdminCustomersPage,
+} from "@/features/admin";
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +51,15 @@ export const router = createBrowserRouter([
       {
         path: "admin",
         element: <AdminGuard />,
-        children: [{ index: true, element: <AdminDashboardPage /> }],
+        children: [
+          {
+            element: <AdminLayout />,
+            children: [
+              { index: true, element: <AdminDashboardPage /> },
+              { path: "customers", element: <AdminCustomersPage /> },
+            ],
+          },
+        ],
       },
 
       // Fallback 404

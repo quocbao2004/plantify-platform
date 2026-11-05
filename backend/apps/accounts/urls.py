@@ -9,6 +9,8 @@ from apps.accounts.views.auth import (
 )
 from apps.accounts.views.profile import ProfileView, PreferenceView
 from apps.accounts.views.addresses import AddressListView, AddressDetailView
+from apps.accounts.views.admin_users import AdminUserListView, AdminUserDetailView
+from apps.accounts.views.admin_dashboard import AdminDashboardSummaryView
 
 app_name = "accounts"
 
@@ -29,4 +31,8 @@ urlpatterns = [
     path("me/addresses/", AddressListView.as_view(), name="address-list"),
     path("me/addresses/<uuid:id>/", AddressDetailView.as_view(), name="address-detail"),
     path("me/preferences/", PreferenceView.as_view(), name="preference"),
+    # Admin User Management
+    path("admin/dashboard/", AdminDashboardSummaryView.as_view(), name="admin-dashboard-summary"),
+    path("admin/users/", AdminUserListView.as_view(), name="admin-user-list"),
+    path("admin/users/<uuid:id>/", AdminUserDetailView.as_view(), name="admin-user-detail"),
 ]
