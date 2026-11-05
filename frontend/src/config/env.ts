@@ -5,6 +5,8 @@ const envSchema = z.object({
   VITE_APP_ENV: z.enum(["development", "test", "production"]).default("development"),
   VITE_API_BASE_URL: z.string().url().default("http://localhost:8001/api/v1"),
   VITE_API_TIMEOUT: z.coerce.number().default(15000),
+  VITE_GOOGLE_CLIENT_ID: z.string().optional().default(""),
+  VITE_FACEBOOK_APP_ID: z.string().optional().default(""),
 });
 
 const parseEnv = () => {

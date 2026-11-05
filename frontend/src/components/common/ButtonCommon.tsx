@@ -3,7 +3,13 @@ import { cn } from "@/utils/cn";
 import { Spinner } from "@/components/ui/Spinner";
 
 export type ButtonVariant =
-  "primary" | "secondary" | "outline" | "ghost" | "danger" | "unstyled";
+  | "primary"
+  | "brand"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "unstyled";
 export type ButtonSize = "sm" | "md" | "lg" | "unstyled";
 
 export interface ButtonCommonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +20,9 @@ export interface ButtonCommonProps extends ButtonHTMLAttributes<HTMLButtonElemen
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent-600 text-white hover:bg-accent-700 border border-transparent focus-visible:ring-accent-500",
+    "bg-[#285a45] text-white hover:bg-[#1e4635] border border-transparent focus-visible:ring-[#285a45]",
+  brand:
+    "bg-[#285a45] text-white hover:bg-[#1e4635] border border-transparent focus-visible:ring-[#285a45]",
   secondary:
     "bg-surface-100 text-surface-900 hover:bg-surface-200 border border-surface-200 focus-visible:ring-surface-400",
   outline:
@@ -74,7 +82,9 @@ export const ButtonCommon = forwardRef<HTMLButtonElement, ButtonCommonProps>(
         <Spinner
           size="sm"
           className={
-            variant === "primary" || variant === "danger"
+            variant === "primary" ||
+            variant === "brand" ||
+            variant === "danger"
               ? "border-t-white"
               : ""
           }

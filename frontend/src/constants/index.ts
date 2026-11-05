@@ -28,6 +28,9 @@ export const API_ENDPOINTS = {
     REFRESH: "/accounts/refresh/",
     ME: "/accounts/me/",
     CHANGE_PASSWORD: "/accounts/change-password/",
+    SOCIAL_LOGIN: "/accounts/auth/social/",
+    SOCIAL_GOOGLE: "/accounts/auth/social/google/",
+    SOCIAL_FACEBOOK: "/accounts/auth/social/facebook/",
   },
   CATALOG: {
     PRODUCTS: "/catalog/products/",

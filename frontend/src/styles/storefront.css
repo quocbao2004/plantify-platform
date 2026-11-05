@@ -16,7 +16,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .store-container { width: calc(100% - 128px); max-width: 1320px; margin-inline: auto; }
 .store-brand { display: inline-flex; align-items: center; gap: 11px; color: var(--store-ink); white-space: nowrap; }
 .store-brand > svg { width: 30px; height: 34px; stroke-width: 1; color: #497a60; }
-.store-brand > span:not(.brand-dot) { font-family: 'Lora', Georgia, serif; font-size: 31px; font-weight: 600; letter-spacing: -1.1px; }
+.store-brand > span:not(.brand-dot) { font-family: var(--font-serif); font-size: 31px; font-weight: 600; letter-spacing: -1.1px; }
 .store-brand .brand-dot { font-size: 9px; align-self: flex-start; padding-top: 11px; margin-left: 0; color: #548066; }
 .store-header { border-bottom: 1px solid #f0f2ec; position: relative; z-index: 20; background: #fff; }
 .header-inner { height: 94px; display: flex; align-items: center; justify-content: space-between; gap: 35px; }
@@ -37,7 +37,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .section-eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; color: #46745a; letter-spacing: .3px; line-height: 1.7; }
 .hero-eyebrow { display: flex; align-items: center; gap: 11px; margin-bottom: 25px; }
 .hero-eyebrow > span { width: 27px; height: 1px; background: #6b9272; }
-.hero-copy h1 { font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: clamp(45px, 4.65vw, 68px); letter-spacing: -1.8px; line-height: 1.16; margin: 0 0 25px; }
+.hero-copy h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(45px, 4.65vw, 68px); letter-spacing: -1.8px; line-height: 1.16; margin: 0 0 25px; }
 .hero-description { color: #7d857b; font-size: 14px; line-height: 1.9; max-width: 430px; margin-bottom: 24px; }
 .store-primary-button { min-height: 48px; background: #2f6a4f; color: white; padding: 13px 24px; display: inline-flex; align-items: center; justify-content: center; gap: 26px; font-size: 13px; font-weight: 500; border: 1px solid #2f6a4f; border-radius: 2px; transition: background 180ms, border-color 180ms; }
 .store-primary-button:hover { background: #204d38; border-color: #204d38; }
@@ -48,7 +48,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .hero-image > img { width: 100%; height: 100%; position: absolute; object-fit: cover; object-position: center; }
 .hero-image-note { position: absolute; left: 28px; bottom: 28px; background: #fffff8; border-radius: 3px; padding: 17px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 2px 12px #00000006; }
 .hero-image-note > span:first-child { font-size: 9px; text-transform: uppercase; letter-spacing: .6px; color: #8a8e7e; }
-.hero-image-note > span:last-child { font-family: 'Lora', Georgia, serif; font-size: 19px; display: flex; align-items: center; gap: 17px; }
+.hero-image-note > span:last-child { font-family: var(--font-serif); font-size: 19px; display: flex; align-items: center; gap: 17px; }
 .home-benefits { border-bottom: 1px solid var(--store-line); }
 .benefits-grid { display: flex; align-items: center; justify-content: space-between; gap: 25px; min-height: 98px; padding-inline: 24px; }
 .benefit { display: flex; align-items: center; gap: 17px; }
@@ -59,7 +59,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .home-section { padding-top: 72px; }
 .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 30px; }
 .section-heading .section-eyebrow { margin-bottom: 10px; }
-.section-heading h2 { font-family: 'Lora', Georgia, serif; font-size: clamp(28px, 2.7vw, 39px); font-weight: 400; line-height: 1.3; letter-spacing: -.65px; }
+.section-heading h2 { font-family: var(--font-serif); font-size: clamp(28px, 2.7vw, 39px); font-weight: 400; line-height: 1.3; letter-spacing: -.65px; }
 .store-text-link { display: inline-flex; align-items: center; gap: 17px; font-size: 12px; font-weight: 500; color: #49785c; white-space: nowrap; padding-block: 6px; }
 .store-text-link svg { transition: transform 180ms; flex-shrink: 0; }
 .store-text-link:hover svg { transform: translateX(4px); }
@@ -104,7 +104,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .care-image img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: 57% center; }
 .care-copy { align-self: center; padding: 35px 46px; }
 .care-copy .section-eyebrow { margin-bottom: 13px; }
-.care-copy h2 { font-family: 'Lora', Georgia, serif; font-size: clamp(25px, 2.25vw, 33px); font-weight: 400; line-height: 1.45; letter-spacing: -.7px; margin-bottom: 12px; }
+.care-copy h2 { font-family: var(--font-serif); font-size: clamp(25px, 2.25vw, 33px); font-weight: 400; line-height: 1.45; letter-spacing: -.7px; margin-bottom: 12px; }
 .care-copy > p:not(.section-eyebrow) { color: #93998a; font-size: 12px; line-height: 1.85; margin-bottom: 13px; max-width: 700px; }
 .care-copy .store-text-link { font-size: 11px; }
 
@@ -120,7 +120,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .footer-link-column h2 { font-size: 11px; font-weight: 600; margin-bottom: 3px; }
 .footer-link-column a, .footer-link-column button { color: #8c9484; font-size: 10px; line-height: 1.6; text-align: left; }
 .footer-link-column a:hover, .footer-link-column button:hover { color: var(--store-green); }
-.footer-newsletter h2 { font-family: 'Lora', Georgia, serif; font-size: 24px; font-weight: 400; letter-spacing: -.4px; }
+.footer-newsletter h2 { font-family: var(--font-serif); font-size: 24px; font-weight: 400; letter-spacing: -.4px; }
 .footer-newsletter > p { color: #8c9484; font-size: 10px; line-height: 1.8; margin-top: 13px; }
 .newsletter-form { background: #fff; display: flex; margin-top: 16px; border: 1px solid #dce3d8; border-radius: 2px; min-height: 45px; }
 .newsletter-form .common-field { flex: 1; }
@@ -135,7 +135,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
 .store-dialog::backdrop { background: #14281e70; backdrop-filter: blur(3px); }
 .store-dialog-content { padding: 28px; font-family: var(--font-sans); }
 .store-dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
-.store-dialog-heading h2 { font-family: 'Lora', Georgia, serif; font-weight: 400; font-size: 27px; line-height: 1.5; }
+.store-dialog-heading h2 { font-family: var(--font-serif); font-weight: 400; font-size: 27px; line-height: 1.5; }
 .store-dialog .store-icon-button { color: #285a45; }
 .store-dialog .dialog-intro, .information-copy { font-size: 13px; color: #7b8476; line-height: 1.9; margin-bottom: 20px; }
 .store-search-form { display: flex; gap: 10px; }

@@ -12,6 +12,14 @@ export interface RegisterPayload {
   phone_number?: string;
 }
 
+export interface SocialLoginPayload {
+  provider: "GOOGLE" | "FACEBOOK";
+  access_token?: string;
+  id_token?: string;
+  auth_token?: string;
+  code?: string;
+}
+
 export interface AuthResponse {
   user: User;
   tokens: AuthTokens;

@@ -32,6 +32,22 @@ export default {
           900: "#14532d",
           950: "#052e16",
         },
+        // Store & Brand Palette (K&B Plants identity)
+        brand: {
+          DEFAULT: "#285a45",
+          dark: "#1c382a",
+          ink: "#204b38",
+          hover: "#1e4635",
+          light: "#f2f4f2",
+          sage: "#eff3ec",
+          line: "#e5e9e1",
+          overlay: "#143224",
+          facebook: "#1877f2",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "'Be Vietnam Pro'", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["var(--font-serif)", "'Lora'", "'Times New Roman'", "Times", "serif"],
       },
       borderRadius: {
         DEFAULT: "6px",
