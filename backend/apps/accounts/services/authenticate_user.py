@@ -13,7 +13,7 @@ def authenticate_user(*, email: str, password: str) -> tuple[User, dict[str, str
     """
     normalized_email = normalize_email_address(email)
     try:
-        user = User.objects.get(email=normalized_email)
+        user = User.objects.get(email__iexact=normalized_email)
     except User.DoesNotExist:
         raise AuthenticationFailed(
             detail="Email hoặc mật khẩu không chính xác.",

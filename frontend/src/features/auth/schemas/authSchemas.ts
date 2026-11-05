@@ -13,15 +13,19 @@ export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const registerSchema = z
   .object({
-    full_name: z.string().min(2, VALIDATION_MESSAGES.NAME_MIN),
+    full_name: z.string().trim().min(2, VALIDATION_MESSAGES.NAME_MIN).max(255, VALIDATION_MESSAGES.NAME_MAX),
     email: z
       .string()
+      .trim()
+      .toLowerCase()
       .min(1, VALIDATION_MESSAGES.EMAIL_REQUIRED)
-      .email(VALIDATION_MESSAGES.EMAIL_INVALID),
+      .email(VALIDATION_MESSAGES.EMAIL_INVALID)
+      .max(254, VALIDATION_MESSAGES.EMAIL_MAX),
     phone_number: z
       .string()
+      .trim()
       .regex(
-        /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+        /^(?:0[35789]\d{8}|\+?84[35789]\d{8})?$/,
         VALIDATION_MESSAGES.PHONE_INVALID,
       )
       .optional()

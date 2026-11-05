@@ -54,6 +54,7 @@ export async function triggerGoogleLogin(clientId: string): Promise<string> {
       const tokenClient = window.google.accounts.oauth2.initTokenClient({
         client_id: clientId,
         scope: "email profile openid",
+        error_callback: () => reject(new Error("Cửa sổ Google đã đóng hoặc không thể mở. Vui lòng thử lại.")),
         callback: (response: any) => {
           if (response.error) {
             reject(new Error(response.error_description || response.error));

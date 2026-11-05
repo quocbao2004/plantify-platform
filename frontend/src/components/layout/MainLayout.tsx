@@ -7,7 +7,7 @@ import { ErrorBoundary } from "@/components/common";
 export const MainLayout: React.FC = () => {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
-  const isAuth = pathname === "/login";
+  const isAuth = pathname === "/login" || pathname === "/register";
 
   if (isAuth) {
     return (
