@@ -37,13 +37,9 @@ export const useRegister = () => {
       successMessage: MESSAGES.REGISTER_SUCCESS,
       errorMessage: MESSAGES.REGISTER_ERROR,
     },
-    onSuccess: (data: any) => {
-      const user = data.user || data.data?.user;
-      const tokens = data.tokens || data.data?.tokens;
-      if (user && tokens) {
-        setAuth(user, tokens);
-      }
-      navigate("/");
+    onSuccess: (data) => {
+      setAuth(data.user, data.tokens);
+      navigate("/", { replace: true });
     },
   });
 };

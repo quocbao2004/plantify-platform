@@ -7,6 +7,23 @@ import {
   AuthResponse,
 } from "../types";
 import { User } from "@/types";
+import { MESSAGES } from "@/constants/messages";
+
+type AuthApiData = Omit<AuthResponse, "user"> & { user: User & { phone?: string } };
+
+function readAuthResponse(response: AuthApiData | { data: AuthApiData }): AuthResponse {
+  if (!response || typeof response !== "object") {
+    throw new Error(MESSAGES.INVALID_API_RESPONSE);
+  }
+  const payload = "data" in response ? response.data : response;
+  if (!payload?.user?.id || typeof payload.tokens?.access !== "string" || !payload.tokens.access || typeof payload.tokens?.refresh !== "string" || !payload.tokens.refresh) {
+    throw new Error(MESSAGES.INVALID_API_RESPONSE);
+  }
+  return {
+    user: { ...payload.user, phone_number: payload.user.phone ?? payload.user.phone_number },
+    tokens: payload.tokens,
+  };
+}
 
 export const authApi = {
   login: async (payload: LoginPayload): Promise<AuthResponse> => {
@@ -14,15 +31,16 @@ export const authApi = {
       API_ENDPOINTS.AUTH.LOGIN,
       payload,
     );
-    return data;
+    return readAuthResponse(data);
   },
 
   register: async (payload: RegisterPayload): Promise<AuthResponse> => {
+    const { phone_number, ...fields } = payload;
     const { data } = await httpClient.post<AuthResponse>(
       API_ENDPOINTS.AUTH.REGISTER,
-      payload,
+      { ...fields, phone: phone_number ?? "" },
     );
-    return data;
+    return readAuthResponse(data);
   },
 
   socialLogin: async (payload: SocialLoginPayload): Promise<AuthResponse> => {
@@ -30,7 +48,7 @@ export const authApi = {
       API_ENDPOINTS.AUTH.SOCIAL_LOGIN,
       payload,
     );
-    return data;
+    return readAuthResponse(data);
   },
 
   googleLogin: async (
@@ -44,7 +62,7 @@ export const authApi = {
       API_ENDPOINTS.AUTH.SOCIAL_GOOGLE,
       payload,
     );
-    return data;
+    return readAuthResponse(data);
   },
 
   getMe: async (): Promise<User> => {

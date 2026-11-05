@@ -8,6 +8,7 @@ export const MESSAGES = {
   REGISTER_SUCCESS: "Tạo tài khoản thành công. Chào mừng bạn!",
   REGISTER_ERROR:
     "Đăng ký không thành công. Vui lòng kiểm tra thông tin và thử lại.",
+  GOOGLE_AUTH_ERROR: "Không thể xác thực với Google. Vui lòng thử lại.",
   LOGOUT_SUCCESS: "Đã đăng xuất tài khoản.",
   NEWSLETTER_SAVED: "Đã lưu email trên thiết bị này. Cảm ơn bạn đã ghé thăm!",
   STORAGE_ERROR:
@@ -29,6 +30,8 @@ export const VALIDATION_MESSAGES = {
   PASSWORD_LOGIN_MIN: "Mật khẩu tối thiểu 6 ký tự",
   PASSWORD_REGISTER_MIN: "Mật khẩu tối thiểu 8 ký tự",
   NAME_MIN: "Họ và tên tối thiểu 2 ký tự",
+  NAME_MAX: "Họ và tên tối đa 255 ký tự",
+  EMAIL_MAX: "Email tối đa 254 ký tự",
   PHONE_INVALID: "Số điện thoại Việt Nam không hợp lệ",
   PASSWORD_CONFIRM_REQUIRED: "Vui lòng xác nhận mật khẩu",
   PASSWORD_MISMATCH: "Mật khẩu xác nhận không trùng khớp",

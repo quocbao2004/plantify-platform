@@ -26,6 +26,7 @@ vi.mock("@/services/notifications", () => ({
 }));
 // Icon rendering is outside these interaction tests; skip the large icon barrel.
 vi.mock("lucide-react", () => ({
+  Home: () => null,
   Sprout: () => null,
   X: () => null,
   AlertCircle: () => null,
