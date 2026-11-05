@@ -1,451 +1,580 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
-  LayoutDashboard,
   ShoppingBag,
   Leaf,
   MessageCircle,
-  Users,
-  Settings,
-  HelpCircle,
-  Bell,
-  Search,
   CalendarDays,
   Download,
   Filter,
   ChevronRight,
-  Phone,
-  MessageSquare,
-  Home,
   TrendingUp,
+  MessageSquare,
+  Phone,
+  RefreshCw,
 } from "lucide-react";
 import { LABELS } from "@/constants/labels";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { LinkCommon } from "@/components/common/LinkCommon";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui";
-import {
-  type OrderStatus,
-  type ConsultStatus,
-  type OrderRow,
-  type ConsultRow,
-} from "../constants/dashboardData";
+import { LoadingOverlay } from "@/components/common/LoadingOverlay";
+import { TableCommon, type TableColumn } from "@/components/common/TableCommon";
+import { EmptyState } from "@/components/common/EmptyState";
+import { formatCurrencyVND } from "@/utils";
 import { useAuthStore } from "@/stores/authStore";
+import { useAdminDashboard } from "../hooks/useAdminDashboard";
+import {
+  DashboardRecentOrder,
+  DashboardRecentConsult,
+} from "../api/adminDashboardApi";
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ─── Constants & Status Mappings ─────────────────────────────────────────────
 
-const formatVND = (amount: number) => amount.toLocaleString("vi-VN") + " đ";
-
-const ORDER_STATUS_MAP: Record<OrderStatus, { label: string; className: string }> = {
-  pending:    { label: LABELS.admin.STATUS_PENDING,    className: "bg-orange-100 text-orange-600" },
-  delivering: { label: LABELS.admin.STATUS_DELIVERING, className: "bg-blue-100 text-blue-600" },
-  done:       { label: LABELS.admin.STATUS_DONE,       className: "bg-green-100 text-green-700" },
-  cancelled:  { label: LABELS.admin.STATUS_CANCELLED,  className: "bg-red-100 text-red-600" },
+const ORDER_STATUS_MAP: Record<
+  string,
+  { label: string; className: string; dotColor: string }
+> = {
+  pending: {
+    label: LABELS.admin.STATUS_PENDING,
+    className: "bg-amber-50 text-amber-700 border-amber-200/70",
+    dotColor: "bg-amber-500",
+  },
+  pending_payment: {
+    label: LABELS.admin.STATUS_PENDING,
+    className: "bg-amber-50 text-amber-700 border-amber-200/70",
+    dotColor: "bg-amber-500",
+  },
+  paid: {
+    label: LABELS.admin.STATUS_DONE,
+    className: "bg-emerald-50 text-emerald-700 border-emerald-200/70",
+    dotColor: "bg-emerald-500",
+  },
+  delivering: {
+    label: LABELS.admin.STATUS_DELIVERING,
+    className: "bg-blue-50 text-blue-700 border-blue-200/70",
+    dotColor: "bg-blue-500",
+  },
+  done: {
+    label: LABELS.admin.STATUS_DONE,
+    className: "bg-emerald-50 text-emerald-700 border-emerald-200/70",
+    dotColor: "bg-emerald-500",
+  },
+  completed: {
+    label: LABELS.admin.STATUS_DONE,
+    className: "bg-emerald-50 text-emerald-700 border-emerald-200/70",
+    dotColor: "bg-emerald-500",
+  },
+  cancelled: {
+    label: LABELS.admin.STATUS_CANCELLED,
+    className: "bg-rose-50 text-rose-700 border-rose-200/70",
+    dotColor: "bg-rose-500",
+  },
 };
 
-const CONSULT_STATUS_MAP: Record<ConsultStatus, { label: string; className: string }> = {
-  not_called: { label: LABELS.admin.STATUS_NOT_CALLED, className: "text-orange-500" },
-  supported:  { label: LABELS.admin.STATUS_SUPPORTED,  className: "text-green-600" },
+const CONSULT_STATUS_MAP: Record<
+  string,
+  { label: string; className: string }
+> = {
+  not_called: {
+    label: LABELS.admin.STATUS_NOT_CALLED,
+    className: "text-amber-600",
+  },
+  supported: {
+    label: LABELS.admin.STATUS_SUPPORTED,
+    className: "text-emerald-600",
+  },
 };
 
-// ─── Empty State ─────────────────────────────────────────────────────────────
+const DASHBOARD_TABS = [
+  { key: "all", label: LABELS.admin.ORDERS_TAB_ALL },
+  { key: "orders", label: LABELS.admin.ORDERS_TAB_ORDERS },
+  { key: "requests", label: LABELS.admin.ORDERS_TAB_REQUESTS },
+] as const;
 
-const EmptyRow: React.FC<{ colSpan: number; message: string }> = ({ colSpan, message }) => (
-  <tr>
-    <td colSpan={colSpan} className="py-10 text-center text-sm text-surface-400 italic">
-      {message}
-    </td>
-  </tr>
-);
-
-const EmptyList: React.FC<{ message: string }> = ({ message }) => (
-  <div className="py-10 text-center text-sm text-surface-400 italic">{message}</div>
-);
+type TabKey = (typeof DASHBOARD_TABS)[number]["key"];
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
-
-const NavItem: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  badge?: number;
-  to?: string;
-}> = ({ icon, label, active, badge, to = "#" }) => (
-  <LinkCommon
-    to={to}
-    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-      active
-        ? "bg-brand text-white"
-        : "text-surface-600 hover:bg-surface-100 hover:text-surface-900"
-    }`}
-  >
-    <span className="w-4 h-4 shrink-0">{icon}</span>
-    <span className="flex-1">{label}</span>
-    {badge ? (
-      <span className="ml-auto bg-orange-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-        {badge}
-      </span>
-    ) : null}
-  </LinkCommon>
-);
 
 const StatCard: React.FC<{
   label: string;
   icon: React.ReactNode;
   children: React.ReactNode;
 }> = ({ label, icon, children }) => (
-  <Card className="p-5">
-    <div className="flex items-start justify-between mb-3">
-      <p className="text-xs text-surface-500 font-medium">{label}</p>
-      <span className="w-8 h-8 rounded-lg bg-brand/10 text-brand flex items-center justify-center shrink-0">
+  <div className="bg-white rounded-2xl border border-surface-200/80 p-5 shadow-xs hover:shadow-sm hover:border-surface-300 transition-all duration-200 flex flex-col justify-between">
+    <div className="flex items-center justify-between mb-3">
+      <p className="text-xs font-semibold text-surface-500 uppercase tracking-wider">
+        {label}
+      </p>
+      <span className="w-9 h-9 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0 shadow-2xs">
         {icon}
       </span>
     </div>
-    {children}
-  </Card>
+    <div className="flex-1 flex flex-col justify-end">{children}</div>
+  </div>
 );
 
-const StatusBadge: React.FC<{ status: OrderStatus }> = ({ status }) => {
-  const { label, className } = ORDER_STATUS_MAP[status];
+const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
+  const normalized = status.toLowerCase();
+  const config = ORDER_STATUS_MAP[normalized] || {
+    label: status,
+    className: "bg-surface-100 text-surface-700 border-surface-200/80",
+    dotColor: "bg-surface-400",
+  };
+
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${className}`}>
-      • {label}
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border shadow-2xs ${config.className}`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${config.dotColor}`} />
+      <span>{config.label}</span>
     </span>
   );
 };
 
-const OrderTableRow: React.FC<{ row: OrderRow }> = ({ row }) => (
-  <tr className="border-t border-surface-100 hover:bg-surface-50 transition-colors">
-    <td className="py-3 px-4 text-sm font-medium text-brand">{row.id}</td>
-    <td className="py-3 px-4 text-sm text-surface-800">{row.customerName}</td>
-    <td className="py-3 px-4">
-      <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded bg-surface-100 shrink-0 flex items-center justify-center">
-          <Leaf className="w-4 h-4 text-brand/60" />
-        </div>
-        <span className="text-sm text-surface-700 leading-tight">{row.productName}</span>
-      </div>
-    </td>
-    <td className="py-3 px-4 text-xs text-surface-500 max-w-[160px] truncate">{row.specialNote}</td>
-    <td className="py-3 px-4">
-      <StatusBadge status={row.status} />
-    </td>
-    <td className="py-3 px-4 text-sm text-surface-700 text-right">
-      {row.total != null ? formatVND(row.total) : "—"}
-    </td>
-  </tr>
-);
+const ConsultCard: React.FC<{ row: DashboardRecentConsult }> = ({ row }) => {
+  const config =
+    CONSULT_STATUS_MAP[row.status] || CONSULT_STATUS_MAP.not_called;
 
-const ConsultCard: React.FC<{ row: ConsultRow }> = ({ row }) => {
-  const { label, className } = CONSULT_STATUS_MAP[row.status];
   return (
-    <div className="p-4 border-b border-surface-100 last:border-0">
-      <div className="flex items-start gap-3">
-        <div className="w-9 h-9 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center shrink-0">
+    <div className="p-4 sm:p-5 border-b border-surface-100/80 last:border-0 hover:bg-surface-50/50 transition-colors">
+      <div className="flex items-start gap-3.5">
+        <div className="w-10 h-10 rounded-full bg-brand/10 text-brand text-xs font-bold flex items-center justify-center shrink-0 ring-2 ring-brand/10">
           {row.initials}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <p className="text-sm font-semibold text-surface-800">{row.customerName}</p>
-            <span className={`text-[11px] font-semibold ${className}`}>• {label}</span>
+            <p className="text-sm font-semibold text-surface-900 truncate">
+              {row.customer_name}
+            </p>
+            <span
+              className={`text-[11px] font-semibold shrink-0 inline-flex items-center gap-1 ${config.className}`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-current" />
+              {config.label}
+            </span>
           </div>
-          <p className="text-[11px] text-surface-400">{row.phone}</p>
-          <div className="flex items-center gap-1 mt-1">
-            <MessageSquare className="w-3 h-3 text-surface-400" />
-            <p className="text-xs text-surface-500 italic truncate">{row.note}</p>
+          <p className="text-xs text-surface-400 mt-0.5">{row.phone}</p>
+          <div className="flex items-start gap-1.5 mt-2 bg-surface-50/80 rounded-lg p-2 border border-surface-100">
+            <MessageSquare className="w-3.5 h-3.5 text-surface-400 shrink-0 mt-0.5" />
+            <p className="text-xs text-surface-600 italic line-clamp-2 leading-relaxed">
+              {row.note}
+            </p>
           </div>
-          <p className="text-[11px] text-surface-400 mt-0.5">{row.topic}</p>
+          <p className="text-[11px] text-surface-400 mt-1.5 pl-1">{row.topic}</p>
         </div>
       </div>
-      <div className="flex items-center gap-3 mt-3 pl-12">
+      <div className="flex items-center justify-end gap-3 mt-3 pt-2 border-t border-surface-100/60">
         {row.status === "not_called" ? (
-          <button className="flex items-center gap-1.5 text-xs text-brand font-medium hover:underline">
-            <Phone className="w-3 h-3" />
+          <ButtonCommon
+            variant="ghost"
+            size="sm"
+            className="text-xs text-brand font-semibold hover:text-brand-dark p-0 h-auto gap-1.5"
+          >
+            <Phone className="w-3.5 h-3.5" />
             {LABELS.admin.CONSULT_CALL}
-          </button>
+          </ButtonCommon>
         ) : (
-          <button className="flex items-center gap-1.5 text-xs text-surface-500 font-medium hover:underline">
-            <ChevronRight className="w-3 h-3" />
+          <ButtonCommon
+            variant="ghost"
+            size="sm"
+            className="text-xs text-surface-500 font-medium hover:text-surface-800 p-0 h-auto gap-1"
+          >
+            <ChevronRight className="w-3.5 h-3.5" />
             {LABELS.admin.CONSULT_DETAIL}
-          </button>
+          </ButtonCommon>
         )}
       </div>
     </div>
   );
 };
 
-// ─── Sidebar ──────────────────────────────────────────────────────────────────
-
-const AdminSidebar: React.FC = () => (
-  <aside className="w-56 shrink-0 flex flex-col bg-white border-r border-surface-200 min-h-screen sticky top-0">
-    <div className="px-5 py-4 border-b border-surface-100 flex items-center gap-2">
-      <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center">
-        <Leaf className="w-4 h-4 text-white" />
-      </div>
-      <span className="text-sm font-bold text-surface-900">{LABELS.common.BRAND}</span>
-    </div>
-
-    <nav className="flex-1 px-3 py-4 space-y-1">
-      <p className="text-[10px] font-semibold text-surface-400 uppercase tracking-widest px-3 mb-2">
-        {LABELS.admin.SIDEBAR_SECTION}
-      </p>
-      <NavItem icon={<LayoutDashboard />} label={LABELS.admin.SIDEBAR_OVERVIEW}  active to="/admin" />
-      <NavItem icon={<ShoppingBag />}     label={LABELS.admin.SIDEBAR_ORDERS}    to="/admin/orders" />
-      <NavItem icon={<Leaf />}            label={LABELS.admin.SIDEBAR_PLANTS}    to="/admin/plants" />
-      <NavItem icon={<MessageCircle />}   label={LABELS.admin.SIDEBAR_CONSULT}   to="/admin/consults" />
-      <NavItem icon={<Users />}           label={LABELS.admin.SIDEBAR_CUSTOMERS} to="/admin/customers" />
-      <NavItem icon={<Settings />}        label={LABELS.admin.SIDEBAR_SETTINGS}  to="/admin/settings" />
-    </nav>
-
-    <div className="mx-3 mb-3 rounded-xl bg-brand/5 p-3">
-      <div className="w-full h-16 rounded-lg bg-brand/10 mb-2 flex items-center justify-center">
-        <Leaf className="w-7 h-7 text-brand/40" />
-      </div>
-      <p className="text-xs font-semibold text-brand leading-snug">{LABELS.admin.SIDEBAR_PROMO_TITLE}</p>
-      <p className="text-[11px] text-surface-500 mt-0.5 leading-snug">{LABELS.admin.SIDEBAR_PROMO_DESC}</p>
-    </div>
-
-    <div className="px-3 py-3 border-t border-surface-100">
-      <NavItem icon={<HelpCircle />} label={LABELS.admin.SIDEBAR_HELP} to="/help" />
-    </div>
-  </aside>
-);
-
-// ─── Top Header ───────────────────────────────────────────────────────────────
-
-const AdminHeader: React.FC = () => {
-  const user = useAuthStore((s) => s.user);
-
-  return (
-    <header className="sticky top-0 z-10 bg-white border-b border-surface-100 px-6 py-3 flex items-center gap-4">
-      <div className="flex-1 max-w-sm relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-400" />
-        <input
-          type="search"
-          placeholder={LABELS.admin.HEADER_SEARCH_PLACEHOLDER}
-          className="w-full pl-9 pr-4 py-2 text-sm bg-surface-50 border border-surface-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand/50 placeholder:text-surface-400"
-        />
-        <kbd className="hidden sm:inline-flex absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-surface-400 bg-surface-100 px-1.5 py-0.5 rounded">
-          ⌘K
-        </kbd>
-      </div>
-
-      <div className="ml-auto flex items-center gap-3">
-        <span className="hidden sm:block text-xs text-surface-500 font-medium">VN | EN</span>
-
-        <button
-          aria-label={LABELS.admin.HEADER_NOTIFICATION}
-          className="relative w-8 h-8 rounded-lg hover:bg-surface-100 flex items-center justify-center transition-colors"
-        >
-          <Bell className="w-4 h-4 text-surface-600" />
-          <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-orange-500" aria-hidden="true" />
-        </button>
-
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-brand text-white text-xs font-bold flex items-center justify-center">
-            {user?.full_name
-              ? user.full_name.split(" ").slice(-2).map((w) => w[0]).join("").toUpperCase()
-              : "AD"}
-          </div>
-          <div className="hidden sm:block">
-            <p className="text-xs font-semibold text-surface-800 leading-tight">
-              {user?.full_name || user?.email || "Admin"}
-            </p>
-            <p className="text-[10px] text-surface-400">{LABELS.admin.HEADER_ADMIN_ROLE}</p>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-};
-
 // ─── Main Dashboard Page ──────────────────────────────────────────────────────
-
-type TabKey = "all" | "orders" | "requests";
 
 export const AdminDashboardPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("all");
   const user = useAuthStore((s) => s.user);
 
-  // Dữ liệu thực — hiện tại chưa có API nên để mảng rỗng
-  const orders: OrderRow[]  = [];
-  const consults: ConsultRow[] = [];
+  // Fetch real aggregated data from Backend API
+  const { data, isLoading, isFetching, refetch } = useAdminDashboard();
 
-  const tabs: { key: TabKey; label: string }[] = [
-    { key: "all",      label: LABELS.admin.ORDERS_TAB_ALL },
-    { key: "orders",   label: LABELS.admin.ORDERS_TAB_ORDERS },
-    { key: "requests", label: LABELS.admin.ORDERS_TAB_REQUESTS },
-  ];
+  const stats = data?.stats;
+  const recentOrders = data?.recent_orders ?? [];
+  const recentConsults = data?.recent_consults ?? [];
+
+  // Định nghĩa các cột cho TableCommon
+  const orderColumns: TableColumn<DashboardRecentOrder>[] = useMemo(
+    () => [
+      {
+        key: "id",
+        header: LABELS.admin.ORDERS_COL_ID,
+        render: (row) => (
+          <span className="font-mono text-xs font-semibold text-brand tracking-wide bg-brand/5 px-2 py-0.5 rounded border border-brand/15">
+            {row.id}
+          </span>
+        ),
+      },
+      {
+        key: "customer_name",
+        header: LABELS.admin.ORDERS_COL_CUSTOMER,
+        render: (row) => (
+          <span className="text-xs font-semibold text-surface-900 block truncate max-w-[140px]">
+            {row.customer_name}
+          </span>
+        ),
+      },
+      {
+        key: "product_name",
+        header: LABELS.admin.ORDERS_COL_PRODUCT,
+        render: (row) => (
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50/80 text-brand shrink-0 flex items-center justify-center border border-emerald-100/80 shadow-2xs">
+              <Leaf className="w-4 h-4" />
+            </div>
+            <span className="text-xs text-surface-700 font-medium leading-tight line-clamp-1">
+              {row.product_name}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: "special_note",
+        header: LABELS.admin.ORDERS_COL_NOTE,
+        render: (row) => (
+          <span className="text-xs text-surface-500 max-w-[160px] truncate block italic">
+            {row.special_note || LABELS.admin.NO_NOTE}
+          </span>
+        ),
+      },
+      {
+        key: "status",
+        header: LABELS.admin.ORDERS_COL_STATUS,
+        render: (row) => <StatusBadge status={row.status} />,
+      },
+      {
+        key: "total",
+        header: LABELS.admin.ORDERS_COL_TOTAL,
+        align: "right",
+        render: (row) => (
+          <span className="text-xs font-bold text-surface-900 tracking-tight">
+            {row.total != null
+              ? formatCurrencyVND(row.total)
+              : LABELS.admin.STATUS_UNAVAILABLE}
+          </span>
+        ),
+      },
+    ],
+    []
+  );
 
   return (
-    <div className="flex min-h-screen bg-surface-50">
-      <AdminSidebar />
+    <div className="space-y-6 relative">
+      {isLoading ? (
+        <LoadingOverlay message={LABELS.common.LOADING_DATA} />
+      ) : null}
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <AdminHeader />
-
-        <main className="flex-1 p-6 space-y-6">
-          {/* Page Title */}
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h1 className="text-xl font-bold text-surface-900">
-                {LABELS.admin.DASHBOARD_TITLE}
-              </h1>
-              <p className="text-xs text-surface-500 mt-0.5">
-                {LABELS.admin.DASHBOARD_GREETING(user?.full_name || "Admin")}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <ButtonCommon variant="outline" size="sm" className="gap-1.5">
-                <CalendarDays className="w-3.5 h-3.5" />
-                {LABELS.admin.PERIOD_THIS_MONTH}
-              </ButtonCommon>
-              <ButtonCommon variant="outline" size="sm" className="gap-1.5">
-                <Download className="w-3.5 h-3.5" />
-                {LABELS.admin.EXPORT_REPORT}
-              </ButtonCommon>
-            </div>
-          </div>
-
-          {/* ── Stat Cards ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <StatCard label={LABELS.admin.STAT_REVENUE} icon={<CalendarDays className="w-4 h-4" />}>
-              <p className="text-2xl font-bold text-surface-300 tracking-tight">—</p>
-              <p className="text-xs text-surface-400 flex items-center gap-1 mt-1">
-                <TrendingUp className="w-3 h-3" />
-                {LABELS.common.LOADING_DATA}
-              </p>
-            </StatCard>
-
-            <StatCard label={LABELS.admin.STAT_ORDERS} icon={<ShoppingBag className="w-4 h-4" />}>
-              <p className="text-2xl font-bold text-surface-300 tracking-tight">—</p>
-              <p className="text-xs text-surface-400 mt-1">{LABELS.common.LOADING_DATA}</p>
-            </StatCard>
-
-            <StatCard label={LABELS.admin.STAT_INVENTORY} icon={<Leaf className="w-4 h-4" />}>
-              <p className="text-2xl font-bold text-surface-300 tracking-tight">—</p>
-              <div className="mt-2 w-full h-1.5 rounded-full bg-surface-100" />
-              <p className="text-xs text-surface-400 mt-1.5">{LABELS.common.LOADING_DATA}</p>
-            </StatCard>
-
-            <StatCard label={LABELS.admin.STAT_CONSULT} icon={<MessageCircle className="w-4 h-4" />}>
-              <p className="text-2xl font-bold text-surface-300 tracking-tight">—</p>
-              <p className="text-xs text-surface-400 mt-1">{LABELS.common.LOADING_DATA}</p>
-            </StatCard>
-          </div>
-
-          {/* ── Bottom Two-Column ── */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-            {/* Orders Table */}
-            <Card className="xl:col-span-2 overflow-hidden">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm">{LABELS.admin.ORDERS_SECTION_TITLE}</CardTitle>
-                  <p className="text-[11px] text-surface-400 mt-0.5">{LABELS.admin.ORDERS_SECTION_DESC}</p>
-                </div>
-                <LinkCommon
-                  to="/admin/orders"
-                  className="text-xs text-brand font-medium hover:underline flex items-center gap-1"
-                >
-                  {LABELS.admin.ORDERS_VIEW_ALL}
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </LinkCommon>
-              </CardHeader>
-
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between px-4 py-2 border-b border-surface-100">
-                  <div className="flex items-center gap-1">
-                    {tabs.map((tab) => (
-                      <button
-                        key={tab.key}
-                        onClick={() => setActiveTab(tab.key)}
-                        className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                          activeTab === tab.key
-                            ? "bg-surface-900 text-white"
-                            : "text-surface-500 hover:bg-surface-100"
-                        }`}
-                      >
-                        {tab.label}
-                      </button>
-                    ))}
-                  </div>
-                  <ButtonCommon variant="ghost" size="sm" className="gap-1.5 text-surface-500">
-                    <Filter className="w-3.5 h-3.5" />
-                    {LABELS.admin.ORDERS_FILTER}
-                  </ButtonCommon>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="bg-surface-50">
-                        {[
-                          LABELS.admin.ORDERS_COL_ID,
-                          LABELS.admin.ORDERS_COL_CUSTOMER,
-                          LABELS.admin.ORDERS_COL_PRODUCT,
-                          LABELS.admin.ORDERS_COL_NOTE,
-                          LABELS.admin.ORDERS_COL_STATUS,
-                          LABELS.admin.ORDERS_COL_TOTAL,
-                        ].map((col) => (
-                          <th
-                            key={col}
-                            className="py-2 px-4 text-[11px] font-semibold text-surface-500 uppercase tracking-wide"
-                          >
-                            {col}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {orders.length > 0
-                        ? orders.map((row) => <OrderTableRow key={row.id} row={row} />)
-                        : <EmptyRow colSpan={6} message={LABELS.common.LOADING_DATA} />
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Consult Panel */}
-            <Card className="overflow-hidden flex flex-col">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm">{LABELS.admin.CONSULT_TITLE}</CardTitle>
-                  <p className="text-[11px] text-surface-400 mt-0.5">{LABELS.admin.CONSULT_DESC}</p>
-                </div>
-                <MessageCircle className="w-4 h-4 text-surface-400 shrink-0" />
-              </CardHeader>
-
-              <CardContent className="p-0 flex-1">
-                {consults.length > 0
-                  ? consults.map((row) => <ConsultCard key={row.id} row={row} />)
-                  : <EmptyList message={LABELS.common.LOADING_DATA} />
-                }
-              </CardContent>
-
-              <div className="p-4 border-t border-surface-100">
-                <LinkCommon
-                  to="/admin/consults"
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-surface-200 text-xs font-medium text-surface-700 hover:bg-surface-50 transition-colors"
-                >
-                  {LABELS.admin.CONSULT_VIEW_ALL}
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </LinkCommon>
-              </div>
-            </Card>
-          </div>
-        </main>
-
-        {/* Footer — nút về trang chủ góc phải dưới */}
-        <footer className="px-6 py-3 border-t border-surface-100 flex items-center justify-between text-[11px] text-surface-400">
-          <span>{LABELS.common.BRAND} · {LABELS.footer.MADE_IN}</span>
-          <LinkCommon
-            to="/"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface-200 text-xs font-medium text-surface-600 hover:bg-surface-100 hover:text-surface-900 transition-colors"
+      {/* Page Title & Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-1">
+        <div>
+          <h1 className="text-2xl font-bold text-surface-900 tracking-tight font-sans">
+            {LABELS.admin.DASHBOARD_TITLE}
+          </h1>
+          <p className="text-xs sm:text-sm text-surface-500 mt-1">
+            {LABELS.admin.DASHBOARD_GREETING(
+              user?.full_name || LABELS.admin.HEADER_ADMIN_ROLE
+            )}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 flex-wrap">
+          <ButtonCommon
+            variant="outline"
+            size="sm"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="gap-1.5 h-9 px-3.5 text-xs font-medium rounded-lg border-surface-200 bg-white hover:bg-surface-50 shadow-2xs"
+            aria-label={LABELS.common.RELOAD}
           >
-            <Home className="w-3.5 h-3.5" />
-            {LABELS.navigation.HOME}
-          </LinkCommon>
-        </footer>
+            <RefreshCw
+              className={`w-3.5 h-3.5 ${isFetching ? "animate-spin" : ""}`}
+            />
+            <span className="hidden sm:inline">{LABELS.common.RELOAD}</span>
+          </ButtonCommon>
+
+          <ButtonCommon
+            variant="outline"
+            size="sm"
+            className="gap-1.5 h-9 px-3.5 text-xs font-medium rounded-lg border-surface-200 bg-white hover:bg-surface-50 shadow-2xs"
+          >
+            <CalendarDays className="w-3.5 h-3.5 text-surface-500" />
+            {LABELS.admin.PERIOD_THIS_MONTH}
+          </ButtonCommon>
+
+          <ButtonCommon
+            variant="outline"
+            size="sm"
+            className="gap-1.5 h-9 px-3.5 text-xs font-medium rounded-lg border-surface-200 bg-white hover:bg-surface-50 shadow-2xs"
+          >
+            <Download className="w-3.5 h-3.5 text-surface-500" />
+            {LABELS.admin.EXPORT_REPORT}
+          </ButtonCommon>
+        </div>
+      </div>
+
+      {/* ── Stat Cards ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
+        {/* Doanh thu */}
+        <StatCard
+          label={LABELS.admin.STAT_REVENUE}
+          icon={<CalendarDays className="w-4 h-4" />}
+        >
+          <p className="text-2xl lg:text-[26px] font-bold text-surface-900 tracking-tight leading-none mt-2">
+            {stats
+              ? formatCurrencyVND(stats.revenue)
+              : LABELS.admin.STATUS_UNAVAILABLE}
+          </p>
+          <div className="text-xs font-medium text-emerald-600 flex items-center gap-1 mt-2.5">
+            <TrendingUp className="w-3.5 h-3.5 shrink-0" />
+            <span>
+              {LABELS.admin.STAT_REVENUE_TREND(stats?.revenue_trend_pct ?? 0)}
+            </span>
+          </div>
+        </StatCard>
+
+        {/* Đơn hàng */}
+        <StatCard
+          label={LABELS.admin.STAT_ORDERS}
+          icon={<ShoppingBag className="w-4 h-4" />}
+        >
+          <div className="flex items-baseline mt-2">
+            <p className="text-2xl lg:text-[26px] font-bold text-surface-900 tracking-tight leading-none">
+              {stats?.total_orders ?? 0}
+            </p>
+            <span className="text-sm font-normal text-surface-500 ml-1.5">
+              {LABELS.admin.UNIT_ORDER}
+            </span>
+          </div>
+          <p className="text-xs font-medium text-amber-600 mt-2.5 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+            {LABELS.admin.STAT_ORDERS_PENDING(stats?.pending_orders ?? 0)}
+          </p>
+        </StatCard>
+
+        {/* Kho cây & sản phẩm */}
+        <StatCard
+          label={LABELS.admin.STAT_INVENTORY}
+          icon={<Leaf className="w-4 h-4" />}
+        >
+          <div className="flex items-baseline mt-2">
+            <p className="text-2xl lg:text-[26px] font-bold text-surface-900 tracking-tight leading-none">
+              {stats?.total_inventory ?? 0}
+            </p>
+            <span className="text-sm font-normal text-surface-500 ml-1.5">
+              {LABELS.admin.UNIT_PRODUCT}
+            </span>
+          </div>
+          {stats && stats.total_inventory > 0 ? (
+            <div className="mt-2.5">
+              <div className="w-full h-2 rounded-full bg-surface-100 overflow-hidden flex gap-0.5">
+                <div
+                  style={{
+                    width: `${
+                      (stats.inventory_indoor / stats.total_inventory) * 100
+                    }%`,
+                  }}
+                  className="bg-brand h-full rounded-l-full"
+                />
+                <div
+                  style={{
+                    width: `${
+                      (stats.inventory_desktop / stats.total_inventory) * 100
+                    }%`,
+                  }}
+                  className="bg-brand/50 h-full"
+                />
+                <div
+                  style={{
+                    width: `${
+                      (stats.inventory_accessory / stats.total_inventory) * 100
+                    }%`,
+                  }}
+                  className="bg-brand/20 h-full rounded-r-full"
+                />
+              </div>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[11px] text-surface-500">
+                {[
+                  {
+                    label: LABELS.admin.INVENTORY_INDOOR,
+                    value: stats.inventory_indoor,
+                    color: "bg-brand",
+                  },
+                  {
+                    label: LABELS.admin.INVENTORY_DESKTOP,
+                    value: stats.inventory_desktop,
+                    color: "bg-brand/50",
+                  },
+                  {
+                    label: LABELS.admin.INVENTORY_ACCESSORY,
+                    value: stats.inventory_accessory,
+                    color: "bg-brand/20",
+                  },
+                ].map((item) => (
+                  <span
+                    key={item.label}
+                    className="inline-flex items-center gap-1.5"
+                  >
+                    <span
+                      className={`w-2 h-2 rounded-full ${item.color} shrink-0`}
+                    />
+                    <span>
+                      {item.value} {item.label}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-surface-400 mt-2.5">
+              {LABELS.common.LOADING_DATA}
+            </p>
+          )}
+        </StatCard>
+
+        {/* Yêu cầu tư vấn */}
+        <StatCard
+          label={LABELS.admin.STAT_CONSULT}
+          icon={<MessageCircle className="w-4 h-4" />}
+        >
+          <div className="flex items-baseline mt-2">
+            <p className="text-2xl lg:text-[26px] font-bold text-surface-900 tracking-tight leading-none">
+              {stats?.new_consults ?? 0}
+            </p>
+            <span className="text-sm font-normal text-surface-500 ml-1.5">
+              {LABELS.admin.UNIT_NEW_REQUESTS}
+            </span>
+          </div>
+          <p className="text-xs font-medium text-amber-600 mt-2.5 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+            {LABELS.admin.STAT_CONSULT_CTA}
+          </p>
+        </StatCard>
+      </div>
+
+      {/* ── Bottom Two-Column ── */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+        {/* Orders Table using TableCommon */}
+        <div className="xl:col-span-2 bg-white rounded-2xl border border-surface-200/80 shadow-xs overflow-hidden">
+          <div className="px-6 py-4.5 border-b border-surface-100 flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-surface-900 tracking-tight">
+                {LABELS.admin.ORDERS_SECTION_TITLE}
+              </h2>
+              <p className="text-xs text-surface-400 mt-0.5">
+                {LABELS.admin.ORDERS_SECTION_DESC}
+              </p>
+            </div>
+            <LinkCommon
+              to="/admin/orders"
+              className="text-xs font-semibold text-brand hover:text-brand-dark flex items-center gap-1 transition-colors"
+            >
+              {LABELS.admin.ORDERS_VIEW_ALL}
+              <ChevronRight className="w-3.5 h-3.5" />
+            </LinkCommon>
+          </div>
+
+          <div>
+            {/* Filter Tabs using ButtonCommon */}
+            <div className="flex items-center justify-between px-6 py-2.5 bg-surface-50/50 border-b border-surface-100 gap-3">
+              <div className="flex items-center gap-1.5">
+                {DASHBOARD_TABS.map((tab) => (
+                  <ButtonCommon
+                    key={tab.key}
+                    variant={activeTab === tab.key ? "primary" : "ghost"}
+                    size="sm"
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`h-8 px-3 text-xs font-medium rounded-lg transition-all ${
+                      activeTab === tab.key
+                        ? "bg-surface-900 text-white shadow-xs hover:bg-surface-800"
+                        : "text-surface-600 hover:text-surface-900 hover:bg-surface-200/60"
+                    }`}
+                  >
+                    {tab.label}
+                  </ButtonCommon>
+                ))}
+              </div>
+              <ButtonCommon
+                variant="ghost"
+                size="sm"
+                className="gap-1.5 text-surface-500 hover:text-surface-800 text-xs h-8 px-2.5"
+              >
+                <Filter className="w-3.5 h-3.5" />
+                {LABELS.admin.ORDERS_FILTER}
+              </ButtonCommon>
+            </div>
+
+            {/* Table using generic TableCommon */}
+            <TableCommon
+              columns={orderColumns}
+              data={recentOrders}
+              rowKey="id"
+              isLoading={isLoading}
+              emptyTitle={LABELS.admin.EMPTY_ORDERS}
+            />
+
+            {/* Footer tip */}
+            <div className="px-6 py-3.5 border-t border-surface-100 flex items-center gap-3 bg-emerald-50/30">
+              <div className="w-8 h-8 rounded-lg bg-brand/10 text-brand flex items-center justify-center shrink-0 shadow-2xs">
+                <Leaf className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-surface-800">
+                  {LABELS.admin.ORDERS_FOOTER_TIP}
+                </p>
+                <p className="text-[11px] text-surface-500 mt-0.5">
+                  {LABELS.admin.ORDERS_FOOTER_SUB}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Consult Panel */}
+        <div className="bg-white rounded-2xl border border-surface-200/80 shadow-xs overflow-hidden flex flex-col">
+          <div className="px-6 py-4.5 border-b border-surface-100 flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-surface-900 tracking-tight">
+                {LABELS.admin.CONSULT_TITLE}
+              </h2>
+              <p className="text-xs text-surface-400 mt-0.5">
+                {LABELS.admin.CONSULT_DESC}
+              </p>
+            </div>
+            <span className="w-8 h-8 rounded-lg bg-surface-100 text-surface-500 flex items-center justify-center shrink-0">
+              <MessageCircle className="w-4 h-4" />
+            </span>
+          </div>
+
+          <div className="flex-1 divide-y divide-surface-100">
+            {recentConsults.length > 0 ? (
+              recentConsults.map((row) => (
+                <ConsultCard key={row.id} row={row} />
+              ))
+            ) : (
+              <div className="p-8">
+                <EmptyState
+                  title={LABELS.admin.EMPTY_CONSULTS}
+                  className="border-none bg-transparent p-4"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="p-4 border-t border-surface-100 bg-surface-50/30">
+            <LinkCommon
+              to="/admin/consults"
+              className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-surface-200 text-xs font-semibold text-surface-700 hover:text-surface-900 hover:bg-white hover:border-surface-300 transition-all shadow-2xs"
+            >
+              {LABELS.admin.CONSULT_VIEW_ALL}
+              <ChevronRight className="w-3.5 h-3.5" />
+            </LinkCommon>
+          </div>
+        </div>
       </div>
     </div>
   );

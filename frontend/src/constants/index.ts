@@ -70,6 +70,8 @@ export const API_ENDPOINTS = {
     TRACK_EVENT: "/recommendations/events/",
   },
   ADMIN: {
+    DASHBOARD: "/accounts/admin/dashboard/",
+    USERS: "/accounts/admin/users/",
     SETTINGS: "/settings/admin/settings/",
     AUDIT_LOGS: "/settings/admin/audit-logs/",
   },

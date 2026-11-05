@@ -361,6 +361,52 @@ export const LABELS = {
     INVENTORY_INDOOR: "Cây trong nhà",
     INVENTORY_DESKTOP: "Cây để bàn",
     INVENTORY_ACCESSORY: "Phụ kiện",
+
+    // Units & Shortcuts
+    UNIT_ORDER: "đơn",
+    UNIT_PRODUCT: "sản phẩm",
+    UNIT_NEW_REQUESTS: "yêu cầu mới",
+    LANGUAGES: "VN | EN",
+    SEARCH_SHORTCUT: "⌘K",
+    EMPTY_ORDERS: "Chưa có đơn hàng nào phát sinh.",
+    EMPTY_CONSULTS: "Chưa có yêu cầu tư vấn nào.",
+    NO_NOTE: "Không có ghi chú",
+    STATUS_UNAVAILABLE: "—",
+
+    // Customer Management
+    CUSTOMERS_TITLE: "Quản lý khách hàng",
+    CUSTOMERS_DESCRIPTION:
+      "Theo dõi danh sách tài khoản, trạng thái hoạt động và phân quyền khách hàng",
+    CUSTOMERS_SEARCH_PLACEHOLDER: "Tìm theo tên, email hoặc số điện thoại...",
+    CUSTOMERS_TOTAL: (count: number) => `Tổng cộng ${count} tài khoản`,
+    CUSTOMERS_FILTER_STATUS: "Trạng thái",
+    CUSTOMERS_FILTER_ALL: "Tất cả trạng thái",
+    CUSTOMERS_FILTER_ACTIVE: "Đang hoạt động",
+    CUSTOMERS_FILTER_BLOCKED: "Đã khoá",
+    CUSTOMERS_FILTER_ROLE: "Vai trò",
+    CUSTOMERS_ROLE_ALL: "Tất cả vai trò",
+    CUSTOMERS_ROLE_CUSTOMER: "Khách hàng",
+    CUSTOMERS_ROLE_ADMIN: "Quản trị viên",
+    CUSTOMERS_ROLE_STAFF: "Nhân viên",
+    CUSTOMERS_COL_USER: "Khách hàng",
+    CUSTOMERS_COL_CONTACT: "Thông tin liên hệ",
+    CUSTOMERS_COL_ROLE: "Vai trò",
+    CUSTOMERS_COL_STATUS: "Trạng thái",
+    CUSTOMERS_COL_JOINED: "Ngày tham gia",
+    CUSTOMERS_COL_ACTIONS: "Thao tác",
+    CUSTOMERS_EMPTY_TITLE: "Không tìm thấy khách hàng nào",
+    CUSTOMERS_EMPTY_DESC:
+      "Hãy thử thay đổi từ khóa tìm kiếm hoặc điều chỉnh bộ lọc.",
+    CUSTOMERS_ACTION_LOCK: "Khoá tài khoản",
+    CUSTOMERS_ACTION_UNLOCK: "Mở khoá tài khoản",
+    CUSTOMERS_ACTION_VIEW: "Xem chi tiết",
+    CUSTOMERS_STATUS_ACTIVE: "Hoạt động",
+    CUSTOMERS_STATUS_BLOCKED: "Đã khoá",
+    CUSTOMERS_MODAL_TITLE: "Thông tin chi tiết tài khoản",
+    CUSTOMERS_CONFIRM_LOCK: (name: string) =>
+      `Bạn có chắc chắn muốn khoá tài khoản của "${name}"? Khách hàng sẽ không thể đăng nhập.`,
+    CUSTOMERS_CONFIRM_UNLOCK: (name: string) =>
+      `Mở khoá tài khoản cho "${name}" để khách hàng tiếp tục sử dụng dịch vụ?`,
   },
 } as const;
 

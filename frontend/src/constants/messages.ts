@@ -14,6 +14,9 @@ export const MESSAGES = {
     "Không thể lưu dữ liệu trên thiết bị. Vui lòng kiểm tra cài đặt trình duyệt.",
   FAVORITE_ADDED: (name: string) => `Đã thêm ${name} vào danh sách yêu thích.`,
   FAVORITE_REMOVED: (name: string) => `Đã bỏ ${name} khỏi danh sách yêu thích.`,
+  USER_STATUS_UPDATED: "Đã cập nhật trạng thái tài khoản thành công.",
+  USER_STATUS_UPDATE_ERROR:
+    "Không thể cập nhật trạng thái tài khoản. Vui lòng thử lại sau.",
 } as const;
 
 export const VALIDATION_MESSAGES = {
