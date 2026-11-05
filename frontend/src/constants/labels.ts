@@ -28,6 +28,7 @@ export const LABELS = {
     OFFERS: "Ưu đãi",
     CARE: "Chăm cây",
     ADMIN: "Quản trị",
+    ADMIN_PANEL: "Vào trang quản trị",
     MAIN: "Điều hướng chính",
     MOBILE: "Điều hướng trên điện thoại",
     OPEN_MENU: "Mở menu",
@@ -287,6 +288,79 @@ export const LABELS = {
     AUDIT: "Nhật ký kiểm toán (Audit Logs)",
     AUDIT_DESCRIPTION:
       "Theo dõi lịch sử thay đổi cấu hình, cập nhật kho số lượng và can thiệp trạng thái hợp đồng.",
+
+    // Dashboard overview
+    DASHBOARD_TITLE: "Tổng quan cửa hàng",
+    DASHBOARD_GREETING: (name: string) =>
+      `Chào ${name}, cùng chăm sóc cửa hàng xanh của bạn hôm nay.`,
+    PERIOD_THIS_MONTH: "Tháng này",
+    EXPORT_REPORT: "Xuất báo cáo",
+
+    // Stat cards
+    STAT_REVENUE: "Tổng doanh thu",
+    STAT_REVENUE_TREND: (pct: number) =>
+      `+${pct}% so với tháng trước`,
+    STAT_ORDERS: "Đơn hàng",
+    STAT_ORDERS_PENDING: (n: number) => `${n} chờ xử lý`,
+    STAT_INVENTORY: "Kho cây & phụ kiện",
+    STAT_CONSULT: "Yêu cầu tư vấn",
+    STAT_CONSULT_CTA: "Cần liên hệ khách hàng",
+    STAT_CONSULT_NEW: (n: number) => `${n} yêu cầu mới`,
+
+    // Orders table
+    ORDERS_SECTION_TITLE: "Đơn hàng mới & Yêu cầu Order",
+    ORDERS_SECTION_DESC: "Theo dõi đơn hàng và những yêu cầu từ khách hàng.",
+    ORDERS_VIEW_ALL: "Xem tất cả",
+    ORDERS_TAB_ALL: "Tất cả",
+    ORDERS_TAB_ORDERS: "Đơn hàng",
+    ORDERS_TAB_REQUESTS: "Yêu cầu Order",
+    ORDERS_FILTER: "Bộ lọc",
+    ORDERS_COL_ID: "Mã đơn",
+    ORDERS_COL_CUSTOMER: "Khách hàng",
+    ORDERS_COL_PRODUCT: "Sản phẩm",
+    ORDERS_COL_NOTE: "Yêu cầu đặc biệt",
+    ORDERS_COL_STATUS: "Trạng thái",
+    ORDERS_COL_TOTAL: "Tổng tiền",
+    ORDERS_FOOTER_TIP: "Chăm chút từng yêu cầu đặc biệt",
+    ORDERS_FOOTER_SUB: "Bọc quà kèm thiệp chúc mừng · Đổi sang chậu trắng",
+
+    // Consultation panel
+    CONSULT_TITLE: "Yêu cầu tư vấn cây cảnh hiện tại",
+    CONSULT_DESC: "Kết nối và hỗ trợ từng khách hàng",
+    CONSULT_VIEW_ALL: "Xem tất cả yêu cầu tư vấn",
+    CONSULT_CALL: "Gọi tư vấn",
+    CONSULT_DETAIL: "Xem chi tiết",
+
+    // Sidebar
+    SIDEBAR_SECTION: "QUẢN LÝ CỬA HÀNG",
+    SIDEBAR_OVERVIEW: "Tổng quan",
+    SIDEBAR_ORDERS: "Quản lý đơn hàng",
+    SIDEBAR_PLANTS: "Quản lý cây cảnh",
+    SIDEBAR_CONSULT: "Yêu cầu tư vấn",
+    SIDEBAR_CUSTOMERS: "Khách hàng",
+    SIDEBAR_SETTINGS: "Cài đặt",
+    SIDEBAR_HELP: "Trung tâm trợ giúp",
+    SIDEBAR_PROMO_TITLE: "Mỗi ngày, thêm một mầm xanh.",
+    SIDEBAR_PROMO_DESC:
+      "Chăm chút từng chiếc lá, kết nối từng khách hàng.",
+
+    // Header
+    HEADER_SEARCH_PLACEHOLDER: "Tìm kiếm đơn hàng, sản phẩm...",
+    HEADER_ADMIN_ROLE: "Quản trị viên",
+    HEADER_NOTIFICATION: "Thông báo",
+
+    // Status badges
+    STATUS_PENDING: "Chờ xác nhận",
+    STATUS_DELIVERING: "Đang giao",
+    STATUS_DONE: "Hoàn thành",
+    STATUS_CANCELLED: "Đã huỷ",
+    STATUS_NOT_CALLED: "Chưa gọi",
+    STATUS_SUPPORTED: "Đã hỗ trợ",
+
+    // Inventory breakdown
+    INVENTORY_INDOOR: "Cây trong nhà",
+    INVENTORY_DESKTOP: "Cây để bàn",
+    INVENTORY_ACCESSORY: "Phụ kiện",
   },
 } as const;
 
