@@ -72,6 +72,7 @@ export const API_ENDPOINTS = {
   ADMIN: {
     DASHBOARD: "/accounts/admin/dashboard/",
     USERS: "/accounts/admin/users/",
+    ORDERS: "/orders/purchase-orders/",
     SETTINGS: "/settings/admin/settings/",
     AUDIT_LOGS: "/settings/admin/audit-logs/",
   },

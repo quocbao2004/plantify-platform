@@ -20,6 +20,9 @@ export const MESSAGES = {
     "Không thể cập nhật trạng thái tài khoản. Vui lòng thử lại sau.",
   USER_UPDATED: "Cập nhật thông tin tài khoản thành công.",
   USER_UPDATE_ERROR: "Không thể cập nhật thông tin tài khoản. Vui lòng thử lại sau.",
+  ORDER_STATUS_UPDATED: "Cập nhật trạng thái đơn hàng thành công.",
+  ORDER_STATUS_UPDATE_ERROR: "Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại sau.",
+  ORDER_DETAIL_FETCH_ERROR: "Không thể lấy thông tin chi tiết đơn hàng. Vui lòng thử lại sau.",
 } as const;
 
 export const VALIDATION_MESSAGES = {
