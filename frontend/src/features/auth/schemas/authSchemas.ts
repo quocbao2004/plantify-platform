@@ -24,12 +24,11 @@ export const registerSchema = z
     phone_number: z
       .string()
       .trim()
+      .min(1, VALIDATION_MESSAGES.PHONE_REQUIRED)
       .regex(
-        /^(?:0[35789]\d{8}|\+?84[35789]\d{8})?$/,
+        /^(?:0[35789]\d{8}|\+?84[35789]\d{8})$/,
         VALIDATION_MESSAGES.PHONE_INVALID,
-      )
-      .optional()
-      .or(z.literal("")),
+      ),
     password: z.string().min(8, VALIDATION_MESSAGES.PASSWORD_REGISTER_MIN),
     confirm_password: z
       .string()

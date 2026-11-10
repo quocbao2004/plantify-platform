@@ -23,6 +23,8 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
         if not getattr(user, "full_name", None) or not user.full_name.strip():
             user.full_name = name
 
+        user.phone = None
+
         return user
 
     def pre_social_login(self, request, sociallogin):

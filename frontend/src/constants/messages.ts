@@ -18,6 +18,8 @@ export const MESSAGES = {
   USER_STATUS_UPDATED: "Đã cập nhật trạng thái tài khoản thành công.",
   USER_STATUS_UPDATE_ERROR:
     "Không thể cập nhật trạng thái tài khoản. Vui lòng thử lại sau.",
+  USER_UPDATED: "Cập nhật thông tin tài khoản thành công.",
+  USER_UPDATE_ERROR: "Không thể cập nhật thông tin tài khoản. Vui lòng thử lại sau.",
 } as const;
 
 export const VALIDATION_MESSAGES = {
@@ -32,6 +34,7 @@ export const VALIDATION_MESSAGES = {
   NAME_MIN: "Họ và tên tối thiểu 2 ký tự",
   NAME_MAX: "Họ và tên tối đa 255 ký tự",
   EMAIL_MAX: "Email tối đa 254 ký tự",
+  PHONE_REQUIRED: "Vui lòng nhập số điện thoại",
   PHONE_INVALID: "Số điện thoại Việt Nam không hợp lệ",
   PASSWORD_CONFIRM_REQUIRED: "Vui lòng xác nhận mật khẩu",
   PASSWORD_MISMATCH: "Mật khẩu xác nhận không trùng khớp",

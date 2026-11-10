@@ -6,6 +6,11 @@ from rest_framework.test import APITestCase
 
 from apps.accounts.models import User
 from apps.accounts.services.register_user import register_user
+from apps.accounts.constants import (
+    PHONE_REQUIRED_ERROR,
+    PHONE_ALREADY_EXISTS_ERROR,
+    EMAIL_ALREADY_EXISTS_ERROR,
+)
 from apps.common.exceptions import ConflictError
 
 
@@ -42,24 +47,42 @@ class RegistrationTests(APITestCase):
         refreshed = self.client.post("/api/v1/accounts/refresh/", {"refresh": tokens["refresh"]})
         self.assertEqual(refreshed.status_code, 200, refreshed.data)
 
-    def test_registration_without_phone(self):
+    def test_registration_without_phone_is_rejected(self):
         payload = self.payload()
         payload.pop("phone")
         response = self.client.post(self.url, payload, format="json")
-        self.assertEqual(response.status_code, 201, response.data)
-        self.assertEqual(User.objects.get().phone, "")
+        self.assertEqual(response.status_code, 400, response.data)
+        self.assertIn("phone", response.data["error"]["details"])
 
     def test_duplicate_email_is_a_field_error_even_when_case_differs(self):
-        User.objects.create_user(email="Green.Home@Example.com", password="existing", full_name="Existing")
+        User.objects.create_user(
+            email="Green.Home@Example.com",
+            password="existing",
+            full_name="Existing",
+            phone="0911111111",
+        )
         response = self.client.post(self.url, self.payload(), format="json")
         self.assertEqual(response.status_code, 409, response.data)
         self.assertIn("email", response.data["error"]["details"])
+        self.assertEqual(response.data["error"]["details"]["email"][0], EMAIL_ALREADY_EXISTS_ERROR)
         self.assertEqual(User.objects.count(), 1)
+
+    def test_duplicate_phone_is_rejected(self):
+        User.objects.create_user(
+            email="other@example.com",
+            password="existing",
+            full_name="Existing Other",
+            phone=self.payload()["phone"],
+        )
+        response = self.client.post(self.url, self.payload(email="another@example.com"), format="json")
+        self.assertEqual(response.status_code, 400, response.data)
+        self.assertIn("phone", response.data["error"]["details"])
+        self.assertIn(PHONE_ALREADY_EXISTS_ERROR, response.data["error"]["details"]["phone"][0])
 
     def test_required_fields(self):
         response = self.client.post(self.url, {}, format="json")
         self.assertEqual(response.status_code, 400)
-        for field in ("email", "password", "full_name"):
+        for field in ("email", "password", "full_name", "phone"):
             self.assertIn(field, response.data["error"]["details"])
         self.assertFalse(User.objects.exists())
 
@@ -107,9 +130,14 @@ class RegistrationTests(APITestCase):
         self.assertIn("access", response.data["tokens"])
 
     def test_concurrent_duplicate_returns_conflict_instead_of_server_error(self):
-        User.objects.create_user(email=self.payload()["email"], password="existing", full_name="Existing")
+        User.objects.create_user(
+            email=self.payload()["email"],
+            password="existing",
+            full_name="Existing",
+            phone=self.payload()["phone"],
+        )
         with patch("apps.accounts.services.register_user.User.objects.filter") as filtered:
             filtered.return_value.exists.side_effect = [False, True]
             with patch("apps.accounts.services.register_user.User.objects.create_user", side_effect=IntegrityError):
                 with self.assertRaises(ConflictError):
-                    register_user(email=self.payload()["email"], password="safe", full_name="Duplicate")
+                    register_user(email=self.payload()["email"], password="safe", full_name="Duplicate", phone=self.payload()["phone"])

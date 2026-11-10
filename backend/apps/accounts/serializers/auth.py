@@ -3,6 +3,13 @@ from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from apps.accounts.models import User
+from apps.accounts.constants import (
+    PHONE_REGEX,
+    PHONE_MAX_LENGTH,
+    PHONE_REQUIRED_ERROR,
+    PHONE_INVALID_ERROR,
+    PHONE_ALREADY_EXISTS_ERROR,
+)
 
 
 class LoginSerializer(serializers.Serializer):
@@ -15,15 +22,27 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, min_length=8, trim_whitespace=False)
     full_name = serializers.CharField(min_length=2, max_length=255)
     phone = serializers.RegexField(
-        r"^(?:0[35789]\d{8}|\+?84[35789]\d{8})$",
-        max_length=20,
-        required=False,
-        allow_blank=True,
-        error_messages={"invalid": "Số điện thoại Việt Nam không hợp lệ."},
+        PHONE_REGEX,
+        max_length=PHONE_MAX_LENGTH,
+        required=True,
+        allow_blank=False,
+        error_messages={
+            "required": PHONE_REQUIRED_ERROR,
+            "blank": PHONE_REQUIRED_ERROR,
+            "invalid": PHONE_INVALID_ERROR,
+        },
     )
 
+    def validate_phone(self, value):
+        clean_phone = value.strip()
+        if not clean_phone:
+            raise serializers.ValidationError(PHONE_REQUIRED_ERROR)
+        if User.objects.filter(phone=clean_phone).exists():
+            raise serializers.ValidationError(PHONE_ALREADY_EXISTS_ERROR)
+        return clean_phone
+
     def validate(self, attrs):
-        user = User(email=attrs["email"], full_name=attrs["full_name"])
+        user = User(email=attrs["email"], full_name=attrs["full_name"], phone=attrs.get("phone", ""))
         try:
             validate_password(attrs["password"], user=user)
         except ValidationError as exc:

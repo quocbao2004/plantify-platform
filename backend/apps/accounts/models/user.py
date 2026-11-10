@@ -2,7 +2,13 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils import timezone
 from apps.common.models.base import UUIDTimeStampedModel
-from apps.accounts.constants.choices import UserRole
+from apps.accounts.constants import (
+    UserRole,
+    PHONE_MAX_LENGTH,
+    PHONE_REQUIRED_ERROR,
+    PHONE_ALREADY_EXISTS_ERROR,
+    EMAIL_REQUIRED_ERROR,
+)
 from apps.accounts.utils.normalize_email import normalize_email_address
 
 
@@ -11,8 +17,16 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError("Email là trường bắt buộc.")
+            raise ValueError(EMAIL_REQUIRED_ERROR)
         email = normalize_email_address(email)
+
+        phone = extra_fields.get("phone")
+        if phone is not None:
+            clean_phone = str(phone).strip()
+            extra_fields["phone"] = clean_phone if clean_phone else None
+        else:
+            extra_fields["phone"] = None
+
         user = self.model(email=email, **extra_fields)
         if password:
             user.set_password(password)
@@ -38,10 +52,23 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDTimeStampedModel):
     """
     Custom User Model for Plantify Platform.
     Auth identifier is normalized email. Primary key is UUID.
+    Enforces exactly one phone number per account (unique constraint).
     """
     email = models.EmailField(unique=True, db_index=True, verbose_name="Email")
     full_name = models.CharField(max_length=255, verbose_name="Họ và tên")
-    phone = models.CharField(max_length=20, blank=True, verbose_name="Số điện thoại")
+    phone = models.CharField(
+        max_length=PHONE_MAX_LENGTH,
+        unique=True,
+        null=True,
+        blank=True,
+        default=None,
+        db_index=True,
+        verbose_name="Số điện thoại",
+        error_messages={
+            "unique": PHONE_ALREADY_EXISTS_ERROR,
+            "blank": PHONE_REQUIRED_ERROR,
+        },
+    )
     role = models.CharField(
         max_length=20,
         choices=UserRole.choices,
@@ -62,6 +89,18 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDTimeStampedModel):
         db_table = "accounts_users"
         verbose_name = "Người dùng"
         verbose_name_plural = "Người dùng"
+
+    def clean(self):
+        super().clean()
+        if self.phone is not None:
+            clean_phone = str(self.phone).strip()
+            self.phone = clean_phone if clean_phone else None
+
+    def save(self, *args, **kwargs):
+        if self.phone is not None:
+            clean_phone = str(self.phone).strip()
+            self.phone = clean_phone if clean_phone else None
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.email} ({self.get_role_display()})"

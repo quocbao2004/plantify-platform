@@ -6,14 +6,9 @@ import { ErrorBoundary } from "@/components/common";
 
 export const MainLayout: React.FC = () => {
   const { pathname } = useLocation();
-<<<<<<< HEAD
-  const isHome  = pathname === "/";
-  const isAuth  = pathname === "/login" || pathname === "/register";
-  const isAdmin = pathname.startsWith("/admin");
-=======
   const isHome = pathname === "/";
   const isAuth = pathname === "/login" || pathname === "/register";
->>>>>>> 00a1bbd2385e78f5b8f2079465445345b5986618
+  const isAdmin = pathname.startsWith("/admin");
 
   // Auth pages: no header/footer
   if (isAuth) {

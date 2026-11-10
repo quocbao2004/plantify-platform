@@ -4,7 +4,7 @@ export interface AdminUser {
   id: string;
   email: string;
   full_name: string;
-  phone: string;
+  phone: string | null;
   role: UserRole | string;
   is_active: boolean;
   date_joined: string;
@@ -21,6 +21,8 @@ export interface AdminUserQueryParams {
 }
 
 export interface UpdateAdminUserPayload {
+  full_name?: string;
+  phone?: string;
   is_active?: boolean;
   role?: string;
 }

@@ -3,6 +3,7 @@ import {
   UserCheck,
   UserX,
   Eye,
+  Pencil,
   Shield,
   User as UserIcon,
   Phone,
@@ -16,13 +17,39 @@ import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { SelectCommon, type SelectOption } from "@/components/common/SelectCommon";
 import { TableCommon, type TableColumn } from "@/components/common/TableCommon";
 import { ModalCommon } from "@/components/common/ModalCommon";
+import { FormCommon } from "@/components/common/FormCommon";
+import { MESSAGES, VALIDATION_MESSAGES } from "@/constants/messages";
+import { notify } from "@/services/notifications";
 import { useAdminUsers, useUpdateAdminUser } from "../hooks/useAdminUsers";
 import { AdminUser } from "../types";
 
+type AccountTab = "CUSTOMERS" | "STAFF";
+
 export const AdminCustomersPage: React.FC = () => {
+  // Tab: CUSTOMERS (Khách hàng) | STAFF (Nhân viên)
+  const [activeTab, setActiveTab] = useState<AccountTab>("CUSTOMERS");
+
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
-  const [roleFilter, setRoleFilter] = useState<string>("ALL");
+  const [staffRoleFilter, setStaffRoleFilter] = useState<string>("ALL");
+
+  // Selected user for Edit Modal
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [editFormData, setEditFormData] = useState<{
+    full_name: string;
+    phone: string;
+    role: string;
+    is_active: boolean;
+  }>({
+    full_name: "",
+    phone: "",
+    role: "CUSTOMER",
+    is_active: true,
+  });
+  const [editErrors, setEditErrors] = useState<{
+    full_name?: string;
+    phone?: string;
+  }>({});
 
   // Selected user for Detail Modal
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
@@ -30,10 +57,20 @@ export const AdminCustomersPage: React.FC = () => {
   // Selected user for Lock/Unlock Confirm Modal
   const [targetToggleUser, setTargetToggleUser] = useState<AdminUser | null>(null);
 
+  // Determine role query:
+  // Tab Khách hàng: full role CUSTOMER
+  // Tab Nhân viên: full role STAFF (hoặc lọc theo staffRoleFilter nếu admin chọn)
+  const queryRole =
+    activeTab === "CUSTOMERS"
+      ? "CUSTOMER"
+      : staffRoleFilter !== "ALL"
+      ? staffRoleFilter
+      : "STAFF";
+
   // Fetch real user data from backend
   const { data, isLoading, isFetching, refetch } = useAdminUsers({
     search: searchTerm.trim() || undefined,
-    role: roleFilter !== "ALL" ? roleFilter : undefined,
+    role: queryRole,
     is_active:
       statusFilter === "ACTIVE"
         ? true
@@ -46,6 +83,65 @@ export const AdminCustomersPage: React.FC = () => {
 
   const users = data?.results ?? [];
   const totalCount = data?.count ?? users.length;
+
+  const handleOpenEdit = (user: AdminUser) => {
+    setEditingUser(user);
+    setEditFormData({
+      full_name: user.full_name || "",
+      phone: user.phone || "",
+      role: user.role || (activeTab === "CUSTOMERS" ? "CUSTOMER" : "STAFF"),
+      is_active: user.is_active,
+    });
+    setEditErrors({});
+  };
+
+  const handleSubmitEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    const errors: { full_name?: string; phone?: string } = {};
+    if (!editFormData.full_name.trim()) {
+      errors.full_name = VALIDATION_MESSAGES.NAME_MIN;
+    }
+    if (editFormData.phone.trim()) {
+      if (
+        !/^(?:0[35789]\d{8}|\+?84[35789]\d{8})$/.test(editFormData.phone.trim())
+      ) {
+        errors.phone = VALIDATION_MESSAGES.PHONE_INVALID;
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setEditErrors(errors);
+      return;
+    }
+
+    updateUser(
+      {
+        id: editingUser.id,
+        payload: {
+          full_name: editFormData.full_name.trim(),
+          phone: editFormData.phone.trim(),
+          role: editFormData.role,
+          is_active: editFormData.is_active,
+        },
+      },
+      {
+        onSuccess: () => {
+          setEditingUser(null);
+          notify.success(MESSAGES.USER_UPDATED);
+        },
+        onError: (err: any) => {
+          const detailMsg =
+            err?.response?.data?.error?.details?.phone?.[0] ||
+            err?.response?.data?.error?.details?.full_name?.[0] ||
+            err?.response?.data?.message ||
+            MESSAGES.USER_UPDATE_ERROR;
+          notify.error(detailMsg);
+        },
+      }
+    );
+  };
 
   const handleConfirmToggle = () => {
     if (!targetToggleUser) return;
@@ -71,7 +167,7 @@ export const AdminCustomersPage: React.FC = () => {
         .join("")
         .toUpperCase();
     }
-    return email ? email.substring(0, 2).toUpperCase() : "KH";
+    return email ? email.substring(0, 2).toUpperCase() : "TK";
   };
 
   const formatDate = (isoString?: string) => {
@@ -93,18 +189,35 @@ export const AdminCustomersPage: React.FC = () => {
     { value: "BLOCKED", label: LABELS.admin.CUSTOMERS_FILTER_BLOCKED },
   ];
 
-  const roleOptions: readonly SelectOption[] = [
+  const staffRoleFilterOptions: readonly SelectOption[] = [
     { value: "ALL", label: LABELS.admin.CUSTOMERS_ROLE_ALL },
-    { value: "CUSTOMER", label: LABELS.admin.CUSTOMERS_ROLE_CUSTOMER },
+    { value: "STAFF", label: LABELS.admin.CUSTOMERS_ROLE_STAFF },
     { value: "ADMIN", label: LABELS.admin.CUSTOMERS_ROLE_ADMIN },
   ];
 
-  // Định nghĩa các cột cho TableCommon
+  const roleCustomerEditOptions: readonly SelectOption[] = [
+    { value: "CUSTOMER", label: LABELS.admin.CUSTOMERS_ROLE_CUSTOMER },
+  ];
+
+  const roleStaffEditOptions: readonly SelectOption[] = [
+    { value: "STAFF", label: LABELS.admin.CUSTOMERS_ROLE_STAFF },
+    { value: "ADMIN", label: LABELS.admin.CUSTOMERS_ROLE_ADMIN },
+  ];
+
+  const statusEditOptions: readonly SelectOption[] = [
+    { value: "true", label: LABELS.admin.CUSTOMERS_STATUS_ACTIVE },
+    { value: "false", label: LABELS.admin.CUSTOMERS_STATUS_BLOCKED },
+  ];
+
+  // Định nghĩa các cột cho TableCommon dựa theo activeTab
   const columns: TableColumn<AdminUser>[] = useMemo(
     () => [
       {
         key: "user",
-        header: LABELS.admin.CUSTOMERS_COL_USER,
+        header:
+          activeTab === "CUSTOMERS"
+            ? LABELS.admin.CUSTOMERS_COL_USER
+            : LABELS.admin.CUSTOMERS_COL_STAFF,
         render: (user) => {
           const initials = getInitials(user.full_name, user.email);
           return (
@@ -144,22 +257,29 @@ export const AdminCustomersPage: React.FC = () => {
         header: LABELS.admin.CUSTOMERS_COL_ROLE,
         render: (user) => {
           const isAdminRole = user.role === "ADMIN";
+          const isStaffRole = user.role === "STAFF";
           return (
             <span
               className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border shadow-2xs ${
                 isAdminRole
                   ? "bg-purple-50 text-purple-700 border-purple-200/70"
+                  : isStaffRole
+                  ? "bg-blue-50 text-blue-700 border-blue-200/70"
                   : "bg-surface-100 text-surface-700 border-surface-200/80"
               }`}
             >
               {isAdminRole ? (
                 <Shield className="w-3 h-3 text-purple-600" />
+              ) : isStaffRole ? (
+                <Shield className="w-3 h-3 text-blue-600" />
               ) : (
                 <UserIcon className="w-3 h-3 text-surface-500" />
               )}
               <span>
                 {isAdminRole
                   ? LABELS.admin.CUSTOMERS_ROLE_ADMIN
+                  : isStaffRole
+                  ? LABELS.admin.CUSTOMERS_ROLE_STAFF
                   : LABELS.admin.CUSTOMERS_ROLE_CUSTOMER}
               </span>
             </span>
@@ -217,6 +337,18 @@ export const AdminCustomersPage: React.FC = () => {
               <Eye className="w-4 h-4" />
             </ButtonCommon>
 
+            {/* Edit button */}
+            <ButtonCommon
+              variant="ghost"
+              size="sm"
+              onClick={() => handleOpenEdit(user)}
+              className="w-8 h-8 p-0 rounded-lg text-surface-500 hover:text-brand hover:bg-brand/10 transition-colors"
+              title={LABELS.admin.CUSTOMERS_ACTION_EDIT}
+              aria-label={LABELS.admin.CUSTOMERS_ACTION_EDIT}
+            >
+              <Pencil className="w-4 h-4" />
+            </ButtonCommon>
+
             {/* Toggle lock/unlock account */}
             <ButtonCommon
               variant="ghost"
@@ -248,7 +380,7 @@ export const AdminCustomersPage: React.FC = () => {
         ),
       },
     ],
-    []
+    [activeTab]
   );
 
   return (
@@ -257,16 +389,18 @@ export const AdminCustomersPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-1">
         <div>
           <h1 className="text-2xl font-bold text-surface-900 tracking-tight font-sans">
-            {LABELS.admin.CUSTOMERS_TITLE}
+            {LABELS.admin.ACCOUNTS_TITLE}
           </h1>
           <p className="text-xs sm:text-sm text-surface-500 mt-1">
-            {LABELS.admin.CUSTOMERS_DESCRIPTION}
+            {LABELS.admin.ACCOUNTS_DESCRIPTION}
           </p>
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand/10 text-brand border border-brand/20 shadow-2xs">
-            {LABELS.admin.CUSTOMERS_TOTAL(totalCount)}
+            {activeTab === "CUSTOMERS"
+              ? LABELS.admin.ACCOUNTS_TOTAL_CUSTOMERS(totalCount)
+              : LABELS.admin.ACCOUNTS_TOTAL_STAFF(totalCount)}
           </span>
 
           <ButtonCommon
@@ -283,6 +417,46 @@ export const AdminCustomersPage: React.FC = () => {
             <span className="hidden sm:inline">{LABELS.common.RELOAD}</span>
           </ButtonCommon>
         </div>
+      </div>
+
+      {/* Tabs Selector: Quản lý khách hàng | Quản lý nhân viên */}
+      <div className="flex items-center gap-1.5 p-1 bg-surface-100/90 rounded-2xl border border-surface-200/80 w-fit">
+        <ButtonCommon
+          variant={activeTab === "CUSTOMERS" ? "brand" : "ghost"}
+          size="sm"
+          onClick={() => {
+            setActiveTab("CUSTOMERS");
+            setSearchTerm("");
+            setStatusFilter("ALL");
+          }}
+          className={`gap-2 text-xs font-semibold rounded-xl px-4 py-2 transition-all ${
+            activeTab === "CUSTOMERS"
+              ? "shadow-xs"
+              : "text-surface-600 hover:text-surface-900 hover:bg-surface-200/60"
+          }`}
+        >
+          <UserIcon className="w-4 h-4" />
+          <span>{LABELS.admin.ACCOUNTS_TAB_CUSTOMERS}</span>
+        </ButtonCommon>
+
+        <ButtonCommon
+          variant={activeTab === "STAFF" ? "brand" : "ghost"}
+          size="sm"
+          onClick={() => {
+            setActiveTab("STAFF");
+            setStaffRoleFilter("STAFF");
+            setSearchTerm("");
+            setStatusFilter("ALL");
+          }}
+          className={`gap-2 text-xs font-semibold rounded-xl px-4 py-2 transition-all ${
+            activeTab === "STAFF"
+              ? "shadow-xs"
+              : "text-surface-600 hover:text-surface-900 hover:bg-surface-200/60"
+          }`}
+        >
+          <Shield className="w-4 h-4" />
+          <span>{LABELS.admin.ACCOUNTS_TAB_STAFF}</span>
+        </ButtonCommon>
       </div>
 
       {/* Filter and Search Bar */}
@@ -312,14 +486,17 @@ export const AdminCustomersPage: React.FC = () => {
               className="text-xs h-10 min-w-[150px] bg-surface-50/50 border-surface-200 rounded-lg"
             />
 
-            <SelectCommon
-              label={LABELS.admin.CUSTOMERS_FILTER_ROLE}
-              hideLabel
-              options={roleOptions}
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="text-xs h-10 min-w-[140px] bg-surface-50/50 border-surface-200 rounded-lg"
-            />
+            {/* Chỉ hiện lọc vai trò khi ở Tab Nhân viên (STAFF/ADMIN) */}
+            {activeTab === "STAFF" && (
+              <SelectCommon
+                label={LABELS.admin.CUSTOMERS_FILTER_ROLE}
+                hideLabel
+                options={staffRoleFilterOptions}
+                value={staffRoleFilter}
+                onChange={(e) => setStaffRoleFilter(e.target.value)}
+                className="text-xs h-10 min-w-[140px] bg-surface-50/50 border-surface-200 rounded-lg"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -331,12 +508,20 @@ export const AdminCustomersPage: React.FC = () => {
           data={users}
           rowKey="id"
           isLoading={isLoading}
-          emptyTitle={LABELS.admin.CUSTOMERS_EMPTY_TITLE}
-          emptyDescription={LABELS.admin.CUSTOMERS_EMPTY_DESC}
+          emptyTitle={
+            activeTab === "CUSTOMERS"
+              ? LABELS.admin.ACCOUNTS_EMPTY_CUSTOMERS_TITLE
+              : LABELS.admin.ACCOUNTS_EMPTY_STAFF_TITLE
+          }
+          emptyDescription={
+            activeTab === "CUSTOMERS"
+              ? LABELS.admin.ACCOUNTS_EMPTY_CUSTOMERS_DESC
+              : LABELS.admin.ACCOUNTS_EMPTY_STAFF_DESC
+          }
         />
       </div>
 
-      {/* Modal: Customer Details */}
+      {/* Modal: User Details */}
       <ModalCommon
         open={Boolean(selectedUser)}
         onClose={() => setSelectedUser(null)}
@@ -391,6 +576,8 @@ export const AdminCustomersPage: React.FC = () => {
                 <p className="font-semibold text-xs text-surface-900">
                   {selectedUser.role === "ADMIN"
                     ? LABELS.admin.CUSTOMERS_ROLE_ADMIN
+                    : selectedUser.role === "STAFF"
+                    ? LABELS.admin.CUSTOMERS_ROLE_STAFF
                     : LABELS.admin.CUSTOMERS_ROLE_CUSTOMER}
                 </p>
               </div>
@@ -499,6 +686,112 @@ export const AdminCustomersPage: React.FC = () => {
               </ButtonCommon>
             </div>
           </div>
+        )}
+      </ModalCommon>
+
+      {/* Modal: Edit User Details */}
+      <ModalCommon
+        open={Boolean(editingUser)}
+        onClose={() => setEditingUser(null)}
+        title={LABELS.admin.CUSTOMERS_MODAL_EDIT_TITLE}
+      >
+        {editingUser && (
+          <FormCommon
+            onSubmit={handleSubmitEdit}
+            isSubmitting={isUpdating}
+            className="space-y-4"
+          >
+            {/* Read-only email */}
+            <div className="p-3 rounded-xl bg-surface-50/70 border border-surface-100">
+              <span className="text-[11px] font-semibold text-surface-400 uppercase tracking-wider block mb-1">
+                {LABELS.auth.EMAIL}
+              </span>
+              <p className="font-semibold text-xs text-surface-700">{editingUser.email}</p>
+            </div>
+
+            {/* Full Name */}
+            <TextFieldCommon
+              label={LABELS.admin.CUSTOMERS_EDIT_FULL_NAME}
+              value={editFormData.full_name}
+              onChange={(e) => {
+                setEditFormData((prev) => ({ ...prev, full_name: e.target.value }));
+                if (editErrors.full_name) {
+                  setEditErrors((prev) => ({ ...prev, full_name: undefined }));
+                }
+              }}
+              error={editErrors.full_name}
+              placeholder={LABELS.auth.NAME_PLACEHOLDER}
+              required
+            />
+
+            {/* Phone */}
+            <TextFieldCommon
+              label={LABELS.admin.CUSTOMERS_EDIT_PHONE}
+              value={editFormData.phone}
+              onChange={(e) => {
+                setEditFormData((prev) => ({ ...prev, phone: e.target.value }));
+                if (editErrors.phone) {
+                  setEditErrors((prev) => ({ ...prev, phone: undefined }));
+                }
+              }}
+              error={editErrors.phone}
+              placeholder={LABELS.auth.PHONE_PLACEHOLDER}
+              required
+            />
+
+            {/* Role & Status */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <SelectCommon
+                label={LABELS.admin.CUSTOMERS_EDIT_ROLE}
+                options={
+                  activeTab === "CUSTOMERS"
+                    ? roleCustomerEditOptions
+                    : roleStaffEditOptions
+                }
+                value={editFormData.role}
+                onChange={(e) =>
+                  setEditFormData((prev) => ({ ...prev, role: e.target.value }))
+                }
+                disabled={activeTab === "CUSTOMERS"}
+              />
+
+              <SelectCommon
+                label={LABELS.admin.CUSTOMERS_EDIT_STATUS}
+                options={statusEditOptions}
+                value={String(editFormData.is_active)}
+                onChange={(e) =>
+                  setEditFormData((prev) => ({
+                    ...prev,
+                    is_active: e.target.value === "true",
+                  }))
+                }
+              />
+            </div>
+
+            {/* Modal actions */}
+            <div className="pt-3 border-t border-surface-100 flex items-center justify-end gap-2">
+              <ButtonCommon
+                variant="outline"
+                size="sm"
+                type="button"
+                onClick={() => setEditingUser(null)}
+                disabled={isUpdating}
+                className="rounded-lg text-xs"
+              >
+                {LABELS.admin.CUSTOMERS_EDIT_CANCEL}
+              </ButtonCommon>
+
+              <ButtonCommon
+                variant="brand"
+                size="sm"
+                type="submit"
+                isLoading={isUpdating}
+                className="rounded-lg text-xs"
+              >
+                {LABELS.admin.CUSTOMERS_EDIT_SAVE}
+              </ButtonCommon>
+            </div>
+          </FormCommon>
         )}
       </ModalCommon>
     </div>

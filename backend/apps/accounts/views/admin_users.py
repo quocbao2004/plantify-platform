@@ -1,9 +1,15 @@
-from rest_framework import generics, filters
+import re
+from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework import status
 from django.db.models import Q
 from apps.accounts.models import User
 from apps.accounts.serializers.user import UserSerializer
+from apps.accounts.constants import (
+    PHONE_REGEX,
+    PHONE_REQUIRED_ERROR,
+    PHONE_INVALID_ERROR,
+    PHONE_ALREADY_EXISTS_ERROR,
+)
 from apps.system_settings.permissions.settings import IsAdminOnly
 
 
@@ -41,7 +47,7 @@ class AdminUserListView(generics.ListAPIView):
 
 class AdminUserDetailView(generics.RetrieveUpdateAPIView):
     """
-    Admin-only endpoint to view and update user account details (e.g. status, role).
+    Admin-only endpoint to view and update user account details (status, role, name, phone).
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -50,12 +56,39 @@ class AdminUserDetailView(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
-        # Cho phép admin cập nhật trạng thái hoạt động hoặc vai trò
-        allowed_fields = ["is_active", "role"]
-        update_data = {k: v for k, v in request.data.items() if k in allowed_fields}
 
-        for attr, value in update_data.items():
-            setattr(instance, attr, value)
+        # Update full_name if provided
+        if "full_name" in request.data:
+            clean_name = str(request.data["full_name"]).strip()
+            if clean_name:
+                instance.full_name = clean_name
+
+        # Update phone if provided with validation against duplicate and format
+        if "phone" in request.data:
+            val = request.data.get("phone")
+            if val is None or not str(val).strip():
+                instance.phone = None
+            else:
+                clean_phone = str(val).strip()
+                if not re.match(PHONE_REGEX, clean_phone):
+                    return Response(
+                        {"error": {"details": {"phone": [PHONE_INVALID_ERROR]}}},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
+                if User.objects.filter(phone=clean_phone).exclude(id=instance.id).exists():
+                    return Response(
+                        {"error": {"details": {"phone": [PHONE_ALREADY_EXISTS_ERROR]}}},
+                        status=status.HTTP_409_CONFLICT,
+                    )
+                instance.phone = clean_phone
+
+        # Update role if provided
+        if "role" in request.data:
+            instance.role = request.data["role"]
+
+        # Update is_active status if provided
+        if "is_active" in request.data:
+            instance.is_active = bool(request.data["is_active"])
 
         instance.save()
         return Response(UserSerializer(instance).data, status=status.HTTP_200_OK)
