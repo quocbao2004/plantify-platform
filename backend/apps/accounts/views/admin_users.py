@@ -5,6 +5,7 @@ from django.db.models import Q
 from apps.accounts.models import User
 from apps.accounts.serializers.user import UserSerializer
 from apps.accounts.constants import (
+    UserRole,
     PHONE_REGEX,
     PHONE_REQUIRED_ERROR,
     PHONE_INVALID_ERROR,
@@ -34,7 +35,12 @@ class AdminUserListView(generics.ListAPIView):
 
         role = self.request.query_params.get("role", "").strip()
         if role:
-            queryset = queryset.filter(role=role)
+            if role in ("STAFF_ALL", "STAFF_GROUP"):
+                queryset = queryset.filter(
+                    role__in=[UserRole.STAFF, UserRole.DELIVERY, UserRole.WARRANTY, UserRole.ADMIN]
+                )
+            else:
+                queryset = queryset.filter(role=role)
 
         is_active = self.request.query_params.get("is_active", "").strip()
         if is_active.lower() in ("true", "1"):
@@ -84,7 +90,14 @@ class AdminUserDetailView(generics.RetrieveUpdateAPIView):
 
         # Update role if provided
         if "role" in request.data:
-            instance.role = request.data["role"]
+            new_role = request.data["role"]
+            if new_role in UserRole.values:
+                instance.role = new_role
+                instance.is_staff = (new_role != UserRole.CUSTOMER)
+                if new_role == UserRole.ADMIN:
+                    instance.is_superuser = True
+                elif instance.is_superuser and new_role != UserRole.ADMIN:
+                    instance.is_superuser = False
 
         # Update is_active status if provided
         if "is_active" in request.data:

@@ -1,6 +1,6 @@
 import { BaseEntity } from "./api";
 
-export type UserRole = "CUSTOMER" | "STAFF" | "ADMIN";
+export type UserRole = "CUSTOMER" | "STAFF" | "DELIVERY" | "WARRANTY" | "ADMIN";
 
 export interface User extends BaseEntity {
   email: string;

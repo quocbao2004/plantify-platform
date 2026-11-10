@@ -10,6 +10,8 @@ import {
   Mail,
   Calendar,
   RefreshCw,
+  Truck,
+  Wrench,
 } from "lucide-react";
 import { LABELS } from "@/constants/labels";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
@@ -65,7 +67,7 @@ export const AdminCustomersPage: React.FC = () => {
       ? "CUSTOMER"
       : staffRoleFilter !== "ALL"
       ? staffRoleFilter
-      : "STAFF";
+      : "STAFF_GROUP";
 
   // Fetch real user data from backend
   const { data, isLoading, isFetching, refetch } = useAdminUsers({
@@ -189,18 +191,55 @@ export const AdminCustomersPage: React.FC = () => {
     { value: "BLOCKED", label: LABELS.admin.CUSTOMERS_FILTER_BLOCKED },
   ];
 
+  const getRoleBadge = (role: string) => {
+    switch (role) {
+      case "ADMIN":
+        return {
+          label: LABELS.admin.CUSTOMERS_ROLE_ADMIN,
+          color: "bg-purple-50 text-purple-700 border-purple-200/70",
+          icon: <Shield className="w-3 h-3 text-purple-600" />,
+        };
+      case "DELIVERY":
+        return {
+          label: LABELS.admin.CUSTOMERS_ROLE_DELIVERY,
+          color: "bg-amber-50 text-amber-700 border-amber-200/70",
+          icon: <Truck className="w-3 h-3 text-amber-600" />,
+        };
+      case "WARRANTY":
+        return {
+          label: LABELS.admin.CUSTOMERS_ROLE_WARRANTY,
+          color: "bg-teal-50 text-teal-700 border-teal-200/70",
+          icon: <Wrench className="w-3 h-3 text-teal-600" />,
+        };
+      case "STAFF":
+        return {
+          label: LABELS.admin.CUSTOMERS_ROLE_STAFF,
+          color: "bg-blue-50 text-blue-700 border-blue-200/70",
+          icon: <Shield className="w-3 h-3 text-blue-600" />,
+        };
+      case "CUSTOMER":
+      default:
+        return {
+          label: LABELS.admin.CUSTOMERS_ROLE_CUSTOMER,
+          color: "bg-surface-100 text-surface-700 border-surface-200/80",
+          icon: <UserIcon className="w-3 h-3 text-surface-500" />,
+        };
+    }
+  };
+
   const staffRoleFilterOptions: readonly SelectOption[] = [
     { value: "ALL", label: LABELS.admin.CUSTOMERS_ROLE_ALL },
     { value: "STAFF", label: LABELS.admin.CUSTOMERS_ROLE_STAFF },
+    { value: "DELIVERY", label: LABELS.admin.CUSTOMERS_ROLE_DELIVERY },
+    { value: "WARRANTY", label: LABELS.admin.CUSTOMERS_ROLE_WARRANTY },
     { value: "ADMIN", label: LABELS.admin.CUSTOMERS_ROLE_ADMIN },
   ];
 
-  const roleCustomerEditOptions: readonly SelectOption[] = [
+  const roleEditOptions: readonly SelectOption[] = [
     { value: "CUSTOMER", label: LABELS.admin.CUSTOMERS_ROLE_CUSTOMER },
-  ];
-
-  const roleStaffEditOptions: readonly SelectOption[] = [
     { value: "STAFF", label: LABELS.admin.CUSTOMERS_ROLE_STAFF },
+    { value: "DELIVERY", label: LABELS.admin.CUSTOMERS_ROLE_DELIVERY },
+    { value: "WARRANTY", label: LABELS.admin.CUSTOMERS_ROLE_WARRANTY },
     { value: "ADMIN", label: LABELS.admin.CUSTOMERS_ROLE_ADMIN },
   ];
 
@@ -256,32 +295,13 @@ export const AdminCustomersPage: React.FC = () => {
         key: "role",
         header: LABELS.admin.CUSTOMERS_COL_ROLE,
         render: (user) => {
-          const isAdminRole = user.role === "ADMIN";
-          const isStaffRole = user.role === "STAFF";
+          const badge = getRoleBadge(user.role);
           return (
             <span
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border shadow-2xs ${
-                isAdminRole
-                  ? "bg-purple-50 text-purple-700 border-purple-200/70"
-                  : isStaffRole
-                  ? "bg-blue-50 text-blue-700 border-blue-200/70"
-                  : "bg-surface-100 text-surface-700 border-surface-200/80"
-              }`}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border shadow-2xs ${badge.color}`}
             >
-              {isAdminRole ? (
-                <Shield className="w-3 h-3 text-purple-600" />
-              ) : isStaffRole ? (
-                <Shield className="w-3 h-3 text-blue-600" />
-              ) : (
-                <UserIcon className="w-3 h-3 text-surface-500" />
-              )}
-              <span>
-                {isAdminRole
-                  ? LABELS.admin.CUSTOMERS_ROLE_ADMIN
-                  : isStaffRole
-                  ? LABELS.admin.CUSTOMERS_ROLE_STAFF
-                  : LABELS.admin.CUSTOMERS_ROLE_CUSTOMER}
-              </span>
+              {badge.icon}
+              <span>{badge.label}</span>
             </span>
           );
         },
@@ -444,7 +464,7 @@ export const AdminCustomersPage: React.FC = () => {
           size="sm"
           onClick={() => {
             setActiveTab("STAFF");
-            setStaffRoleFilter("STAFF");
+            setStaffRoleFilter("ALL");
             setSearchTerm("");
             setStatusFilter("ALL");
           }}
@@ -574,11 +594,7 @@ export const AdminCustomersPage: React.FC = () => {
                   {LABELS.profile.ROLE}
                 </span>
                 <p className="font-semibold text-xs text-surface-900">
-                  {selectedUser.role === "ADMIN"
-                    ? LABELS.admin.CUSTOMERS_ROLE_ADMIN
-                    : selectedUser.role === "STAFF"
-                    ? LABELS.admin.CUSTOMERS_ROLE_STAFF
-                    : LABELS.admin.CUSTOMERS_ROLE_CUSTOMER}
+                  {getRoleBadge(selectedUser.role).label}
                 </p>
               </div>
 
@@ -743,16 +759,11 @@ export const AdminCustomersPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <SelectCommon
                 label={LABELS.admin.CUSTOMERS_EDIT_ROLE}
-                options={
-                  activeTab === "CUSTOMERS"
-                    ? roleCustomerEditOptions
-                    : roleStaffEditOptions
-                }
+                options={roleEditOptions}
                 value={editFormData.role}
                 onChange={(e) =>
                   setEditFormData((prev) => ({ ...prev, role: e.target.value }))
                 }
-                disabled={activeTab === "CUSTOMERS"}
               />
 
               <SelectCommon
