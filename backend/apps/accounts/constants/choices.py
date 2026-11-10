@@ -9,6 +9,15 @@ class UserRole(models.TextChoices):
     ADMIN = "ADMIN", "Quản trị viên"
 
 
+STAFF_ROLES_GROUP = "STAFF_GROUP"
+STAFF_ROLES = (
+    UserRole.STAFF,
+    UserRole.DELIVERY,
+    UserRole.WARRANTY,
+    UserRole.ADMIN,
+)
+
+
 class SocialProvider(models.TextChoices):
     GOOGLE = "GOOGLE", "Google"
     FACEBOOK = "FACEBOOK", "Facebook"
