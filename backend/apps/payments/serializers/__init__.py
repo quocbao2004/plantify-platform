@@ -1,5 +1,3 @@
-from .payment import PaymentSerializer, PaymentAllocationSerializer
-from .refund import RefundSerializer
-from .webhook import WebhookPayloadSerializer
+from .payments import TransactionSerializer, RefundSerializer
 
-__all__ = ["PaymentSerializer", "PaymentAllocationSerializer", "RefundSerializer", "WebhookPayloadSerializer"]
+__all__ = ["TransactionSerializer", "RefundSerializer"]

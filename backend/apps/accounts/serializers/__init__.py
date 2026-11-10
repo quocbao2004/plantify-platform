@@ -1,12 +1,11 @@
-from .auth import RegisterSerializer, SocialAuthInterfaceSerializer
 from .user import UserSerializer
-from .address import UserAddressSerializer
-from .preference import UserPreferenceSerializer
+from .staff import StaffSerializer
+from .auth import LoginSerializer, RegisterSerializer, TokenResponseSerializer
 
 __all__ = [
-    "RegisterSerializer",
-    "SocialAuthInterfaceSerializer",
     "UserSerializer",
-    "UserAddressSerializer",
-    "UserPreferenceSerializer",
+    "StaffSerializer",
+    "LoginSerializer",
+    "RegisterSerializer",
+    "TokenResponseSerializer",
 ]

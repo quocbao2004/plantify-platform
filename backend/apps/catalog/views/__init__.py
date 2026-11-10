@@ -1,5 +1,17 @@
-from .categories import CategoryListView
-from .products import ProductListView, ProductDetailView
-from .variants import VariantDetailView
+from .plants import (
+    CategoryListCreateView,
+    CategoryDetailView,
+    PlantsListCreateView,
+    PlantsDetailView,
+    PlantsDetailItemListCreateView,
+    PlantsDetailItemView,
+)
 
-__all__ = ["CategoryListView", "ProductListView", "ProductDetailView", "VariantDetailView"]
+__all__ = [
+    "CategoryListCreateView",
+    "CategoryDetailView",
+    "PlantsListCreateView",
+    "PlantsDetailView",
+    "PlantsDetailItemListCreateView",
+    "PlantsDetailItemView",
+]

@@ -1,11 +1,21 @@
-from .contracts import RentalContractListView, RentalContractDetailView, AllocateAssetView
-from .extensions import RentalExtensionRequestView
-from .inspections import RentalInspectionCreateView
+from .rentals import (
+    RentalOrderListCreateView,
+    RentalOrderDetailView,
+    RentalContractListCreateView,
+    RentalContractDetailView,
+    MaintenanceTaskListCreateView,
+    MaintenanceTaskDetailView,
+    ShipPlantsListCreateView,
+    ShipPlantsDetailView,
+)
 
 __all__ = [
-    "RentalContractListView",
+    "RentalOrderListCreateView",
+    "RentalOrderDetailView",
+    "RentalContractListCreateView",
     "RentalContractDetailView",
-    "AllocateAssetView",
-    "RentalExtensionRequestView",
-    "RentalInspectionCreateView",
+    "MaintenanceTaskListCreateView",
+    "MaintenanceTaskDetailView",
+    "ShipPlantsListCreateView",
+    "ShipPlantsDetailView",
 ]
