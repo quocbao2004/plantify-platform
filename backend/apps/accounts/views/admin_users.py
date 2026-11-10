@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import re
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -12,14 +11,11 @@ from apps.accounts.constants import (
     PHONE_INVALID_ERROR,
     PHONE_ALREADY_EXISTS_ERROR,
 )
-from apps.system_settings.permissions.settings import IsAdminOnly
-=======
 from rest_framework import generics
 from django.db.models import Q
 from apps.accounts.models import User
 from apps.accounts.serializers.user import UserSerializer
 from apps.accounts.permissions.admin import IsAdminOnly
->>>>>>> test
 
 
 class AdminUserListView(generics.ListAPIView):
@@ -59,17 +55,13 @@ class AdminUserListView(generics.ListAPIView):
 
 
 class AdminUserDetailView(generics.RetrieveUpdateAPIView):
-<<<<<<< HEAD
     """
     Admin-only endpoint to view and update user account details (status, role, name, phone).
     """
-=======
->>>>>>> test
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdminOnly]
     lookup_field = "id"
-<<<<<<< HEAD
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -116,5 +108,3 @@ class AdminUserDetailView(generics.RetrieveUpdateAPIView):
 
         instance.save()
         return Response(UserSerializer(instance).data, status=status.HTTP_200_OK)
-=======
->>>>>>> test

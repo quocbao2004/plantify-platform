@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 from django.db import transaction
-from apps.accounts.models import User, UserAddress, UserPreference
+from apps.accounts.models import User
 from apps.accounts.constants import (
     PHONE_REQUIRED_ERROR,
     PHONE_ALREADY_EXISTS_ERROR,
@@ -24,14 +23,4 @@ def update_profile(user: User, *, full_name: str = None, phone: str = None) -> U
         user.phone = clean_phone
         update_fields.append("phone")
     user.save(update_fields=update_fields)
-=======
-from apps.accounts.models import User
-
-
-def update_profile(user: User, **kwargs) -> User:
-    for field, value in kwargs.items():
-        if hasattr(user, field):
-            setattr(user, field, value)
-    user.save()
->>>>>>> test
     return user
