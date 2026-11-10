@@ -1,13 +1,6 @@
 from .category import Category
-from .product import Product
-from .image import ProductImage
-from .variant import ProductVariant
-from .rental_rate import RentalRate
+from .plants import Plants
+from .plants_detail import PlantsDetail
+from .media import Media
 
-__all__ = [
-    "Category",
-    "Product",
-    "ProductImage",
-    "ProductVariant",
-    "RentalRate",
-]
+__all__ = ["Category", "Plants", "PlantsDetail", "Media"]

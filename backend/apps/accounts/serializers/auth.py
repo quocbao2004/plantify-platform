@@ -50,3 +50,8 @@ class SocialAuthInterfaceSerializer(serializers.Serializer):
                 "Yêu cầu access_token, id_token, auth_token hoặc code để xác thực."
             )
         return attrs
+
+
+class TokenResponseSerializer(serializers.Serializer):
+    access = serializers.CharField()
+    refresh = serializers.CharField()

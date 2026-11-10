@@ -1,14 +1,24 @@
 from django.urls import path
-from apps.rentals.views.contracts import RentalContractListView, RentalContractDetailView, AllocateAssetView
-from apps.rentals.views.extensions import RentalExtensionRequestView
-from apps.rentals.views.inspections import RentalInspectionCreateView
+from apps.rentals.views import (
+    RentalOrderListCreateView,
+    RentalOrderDetailView,
+    RentalContractListCreateView,
+    RentalContractDetailView,
+    MaintenanceTaskListCreateView,
+    MaintenanceTaskDetailView,
+    ShipPlantsListCreateView,
+    ShipPlantsDetailView,
+)
 
 app_name = "rentals"
 
 urlpatterns = [
-    path("contracts/", RentalContractListView.as_view(), name="contract-list"),
-    path("contracts/<uuid:id>/", RentalContractDetailView.as_view(), name="contract-detail"),
-    path("items/<uuid:item_id>/extension-requests/", RentalExtensionRequestView.as_view(), name="extension-request"),
-    path("items/<uuid:item_id>/allocate-asset/", AllocateAssetView.as_view(), name="allocate-asset"),
-    path("items/<uuid:item_id>/inspections/", RentalInspectionCreateView.as_view(), name="inspection-create"),
+    path("orders/", RentalOrderListCreateView.as_view(), name="rental-order-list"),
+    path("orders/<uuid:pk>/", RentalOrderDetailView.as_view(), name="rental-order-detail"),
+    path("contracts/", RentalContractListCreateView.as_view(), name="rental-contract-list"),
+    path("contracts/<uuid:pk>/", RentalContractDetailView.as_view(), name="rental-contract-detail"),
+    path("maintenance-tasks/", MaintenanceTaskListCreateView.as_view(), name="maintenance-task-list"),
+    path("maintenance-tasks/<uuid:pk>/", MaintenanceTaskDetailView.as_view(), name="maintenance-task-detail"),
+    path("ship-plants/", ShipPlantsListCreateView.as_view(), name="ship-plants-list"),
+    path("ship-plants/<uuid:pk>/", ShipPlantsDetailView.as_view(), name="ship-plants-detail"),
 ]

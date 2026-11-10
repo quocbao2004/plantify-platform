@@ -1,45 +1,42 @@
 from django.contrib import admin
-from apps.catalog.models.category import Category
-from apps.catalog.models.product import Product
-from apps.catalog.models.image import ProductImage
-from apps.catalog.models.variant import ProductVariant
-from apps.catalog.models.rental_rate import RentalRate
+from apps.catalog.models import Category, Plants, PlantsDetail, Media
 
 
-class ProductImageInline(admin.TabularInline):
-    model = ProductImage
+class MediaInline(admin.TabularInline):
+    model = Media
     extra = 1
 
 
-class ProductVariantInline(admin.StackedInline):
-    model = ProductVariant
-    extra = 1
-
-
-class RentalRateInline(admin.TabularInline):
-    model = RentalRate
+class PlantsDetailInline(admin.StackedInline):
+    model = PlantsDetail
     extra = 1
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "slug", "parent", "is_active", "sort_order")
+    list_display = ("name", "slug", "is_active", "sort_order")
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ("name",)
 
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "light_requirement", "care_level", "is_active", "created_at")
-    list_filter = ("category", "light_requirement", "care_level", "is_active")
+@admin.register(Plants)
+class PlantsAdmin(admin.ModelAdmin):
+    list_display = ("name", "category", "slug", "is_active", "created_at")
+    list_filter = ("category", "is_active")
     search_fields = ("name", "description")
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [ProductImageInline, ProductVariantInline]
+    inlines = [PlantsDetailInline]
 
 
-@admin.register(ProductVariant)
-class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ("sku", "product", "size", "sale_price_vnd", "deposit_vnd", "can_sell", "can_rent", "is_active")
-    list_filter = ("can_sell", "can_rent", "size", "is_active")
-    search_fields = ("sku", "product__name")
-    inlines = [RentalRateInline]
+@admin.register(PlantsDetail)
+class PlantsDetailAdmin(admin.ModelAdmin):
+    list_display = ("sku", "plant", "size", "height", "sale_price", "rental_price", "stock_quantity", "status")
+    list_filter = ("status", "size")
+    search_fields = ("sku", "plant__name")
+    inlines = [MediaInline]
+
+
+@admin.register(Media)
+class MediaAdmin(admin.ModelAdmin):
+    list_display = ("plant_detail", "media_type", "is_primary", "display_order", "created_at")
+    list_filter = ("media_type", "is_primary")
