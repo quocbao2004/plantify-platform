@@ -199,7 +199,6 @@ export const AdminDashboardPage: React.FC = () => {
   const recentOrders = data?.recent_orders ?? [];
   const recentConsults = data?.recent_consults ?? [];
 
-  // Định nghĩa các cột cho TableCommon
   const orderColumns: TableColumn<DashboardRecentOrder>[] = useMemo(
     () => [
       {

@@ -3,7 +3,9 @@ from django.db import models
 
 class UserRole(models.TextChoices):
     CUSTOMER = "CUSTOMER", "Khách hàng"
-    STAFF = "STAFF", "Nhân viên vận hành"
+    STAFF = "STAFF", "Nhân viên bình thường"
+    DELIVERY = "DELIVERY", "Nhân viên giao hàng"
+    WARRANTY = "WARRANTY", "Nhân viên bảo hành"
     ADMIN = "ADMIN", "Quản trị viên"
 
 
