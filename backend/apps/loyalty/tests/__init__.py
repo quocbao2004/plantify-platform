@@ -1,3 +1,0 @@
-"""
-Loyalty test package.
-"""

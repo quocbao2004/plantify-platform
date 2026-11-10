@@ -1,13 +1,16 @@
 from django.urls import path
-from apps.payments.views.payments import PaymentListView, PaymentDetailView
-from apps.payments.views.refunds import RefundListView
-from apps.payments.views.webhooks import PaymentWebhookView
+from apps.payments.views import (
+    TransactionListCreateView,
+    TransactionDetailView,
+    RefundListCreateView,
+    RefundDetailView,
+)
 
 app_name = "payments"
 
 urlpatterns = [
-    path("", PaymentListView.as_view(), name="payment-list"),
-    path("<uuid:id>/", PaymentDetailView.as_view(), name="payment-detail"),
-    path("webhooks/<str:provider>/", PaymentWebhookView.as_view(), name="payment-webhook"),
-    path("refunds/", RefundListView.as_view(), name="refund-list"),
+    path("transactions/", TransactionListCreateView.as_view(), name="transaction-list"),
+    path("transactions/<uuid:pk>/", TransactionDetailView.as_view(), name="transaction-detail"),
+    path("refunds/", RefundListCreateView.as_view(), name="refund-list"),
+    path("refunds/<uuid:pk>/", RefundDetailView.as_view(), name="refund-detail"),
 ]

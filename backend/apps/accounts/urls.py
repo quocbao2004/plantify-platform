@@ -5,17 +5,15 @@ from apps.accounts.views.auth import (
     RegisterView,
     SocialAuthInterfaceView,
     GoogleLoginView,
-
 )
-from apps.accounts.views.profile import ProfileView, PreferenceView
-from apps.accounts.views.addresses import AddressListView, AddressDetailView
+from apps.accounts.views.profile import ProfileView
 from apps.accounts.views.admin_users import AdminUserListView, AdminUserDetailView
 from apps.accounts.views.admin_dashboard import AdminDashboardSummaryView
 
 app_name = "accounts"
 
 urlpatterns = [
-    # Auth Endpoints (JWT authentication)
+    # Auth Endpoints
     path("login/", LoginView.as_view(), name="login"),
     path("register/", RegisterView.as_view(), name="register-direct"),
     path("refresh/", TokenRefreshView.as_view(), name="token-refresh-direct"),
@@ -26,11 +24,8 @@ urlpatterns = [
     # Social OAuth Endpoints
     path("auth/social/", SocialAuthInterfaceView.as_view(), name="social-auth-interface"),
     path("auth/social/google/", GoogleLoginView.as_view(), name="social-google"),
-    # Me / Profile
+    # Profile
     path("me/", ProfileView.as_view(), name="profile"),
-    path("me/addresses/", AddressListView.as_view(), name="address-list"),
-    path("me/addresses/<uuid:id>/", AddressDetailView.as_view(), name="address-detail"),
-    path("me/preferences/", PreferenceView.as_view(), name="preference"),
     # Admin User Management
     path("admin/dashboard/", AdminDashboardSummaryView.as_view(), name="admin-dashboard-summary"),
     path("admin/users/", AdminUserListView.as_view(), name="admin-user-list"),

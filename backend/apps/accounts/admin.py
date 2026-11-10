@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from apps.accounts.models import User, UserAddress, UserPreference, SocialIdentity
+from apps.accounts.models import User, Staff
 
 
 @admin.register(User)
@@ -26,18 +26,8 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-@admin.register(UserAddress)
-class UserAddressAdmin(admin.ModelAdmin):
-    list_display = ("recipient_name", "user", "phone", "province", "is_default")
-    list_filter = ("is_default", "province")
-    search_fields = ("recipient_name", "phone", "address_line", "user__email")
-
-
-@admin.register(UserPreference)
-class UserPreferenceAdmin(admin.ModelAdmin):
-    list_display = ("user", "preferred_light", "preferred_size", "care_experience")
-
-
-@admin.register(SocialIdentity)
-class SocialIdentityAdmin(admin.ModelAdmin):
-    list_display = ("user", "provider", "provider_subject", "linked_at")
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ("staff_code", "user", "department", "position", "is_available", "created_at")
+    list_filter = ("department", "position", "is_available")
+    search_fields = ("staff_code", "user__full_name", "user__email")

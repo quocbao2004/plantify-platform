@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.db import transaction
 from apps.accounts.models import User, UserAddress, UserPreference
 from apps.accounts.constants import (
@@ -23,31 +24,14 @@ def update_profile(user: User, *, full_name: str = None, phone: str = None) -> U
         user.phone = clean_phone
         update_fields.append("phone")
     user.save(update_fields=update_fields)
+=======
+from apps.accounts.models import User
+
+
+def update_profile(user: User, **kwargs) -> User:
+    for field, value in kwargs.items():
+        if hasattr(user, field):
+            setattr(user, field, value)
+    user.save()
+>>>>>>> test
     return user
-
-
-@transaction.atomic
-def create_or_update_address(user: User, address_id: str = None, **address_data) -> UserAddress:
-    """Create or update user address ensuring only 1 default address exists."""
-    is_default = address_data.get("is_default", False)
-    if is_default:
-        UserAddress.objects.filter(user=user).update(is_default=False)
-
-    if address_id:
-        addr = UserAddress.objects.get(id=address_id, user=user)
-        for key, value in address_data.items():
-            setattr(addr, key, value)
-        addr.save()
-        return addr
-
-    return UserAddress.objects.create(user=user, **address_data)
-
-
-@transaction.atomic
-def update_user_preferences(user: User, **pref_data) -> UserPreference:
-    """Create or update user plant preferences."""
-    pref, _ = UserPreference.objects.get_or_create(user=user)
-    for key, value in pref_data.items():
-        setattr(pref, key, value)
-    pref.save()
-    return pref

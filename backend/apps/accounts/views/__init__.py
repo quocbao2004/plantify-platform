@@ -1,11 +1,7 @@
-from .auth import (
-    LoginView,
-    RegisterView,
-    SocialAuthInterfaceView,
-    GoogleLoginView,
-)
-from .profile import ProfileView, PreferenceView
-from .addresses import AddressListView, AddressDetailView
+from .auth import LoginView, RegisterView, SocialAuthInterfaceView, GoogleLoginView
+from .profile import ProfileView
+from .admin_dashboard import AdminDashboardSummaryView
+from .admin_users import AdminUserListView, AdminUserDetailView
 
 __all__ = [
     "LoginView",
@@ -13,7 +9,7 @@ __all__ = [
     "SocialAuthInterfaceView",
     "GoogleLoginView",
     "ProfileView",
-    "PreferenceView",
-    "AddressListView",
-    "AddressDetailView",
+    "AdminDashboardSummaryView",
+    "AdminUserListView",
+    "AdminUserDetailView",
 ]

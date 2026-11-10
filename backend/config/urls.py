@@ -15,17 +15,9 @@ from drf_spectacular.views import (
 api_v1_patterns = [
     path("accounts/", include("apps.accounts.urls", namespace="accounts")),
     path("catalog/", include("apps.catalog.urls", namespace="catalog")),
-    path("inventory/", include("apps.inventory.urls", namespace="inventory")),
     path("orders/", include("apps.orders.urls", namespace="orders")),
     path("rentals/", include("apps.rentals.urls", namespace="rentals")),
     path("payments/", include("apps.payments.urls", namespace="payments")),
-    path("loyalty/", include("apps.loyalty.urls", namespace="loyalty")),
-    path("reviews/", include("apps.reviews.urls", namespace="reviews")),
-    path("chatbot/", include("apps.chatbot.urls", namespace="chatbot")),
-    path("cms/", include("apps.cms.urls", namespace="cms")),
-    path("recommendations/", include("apps.recommendations.urls", namespace="recommendations")),
-    path("notifications/", include("apps.notifications.urls", namespace="notifications")),
-    path("settings/", include("apps.system_settings.urls", namespace="system_settings")),
 ]
 
 urlpatterns = [

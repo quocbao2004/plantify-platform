@@ -1,3 +1,0 @@
-"""
-Chatbot test package.
-"""
