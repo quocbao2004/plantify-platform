@@ -13,3 +13,8 @@ def get_user_by_email(email: str) -> Optional[User]:
     """Retrieve user by normalized email."""
     normalized = normalize_email_address(email)
     return User.objects.filter(email=normalized, is_active=True).first()
+
+
+def list_users() -> QuerySet[User]:
+    """Retrieve all active users."""
+    return User.objects.filter(is_active=True).order_by("-date_joined")

@@ -1,3 +1,5 @@
+import uuid
+from django.db.models import Q
 from rest_framework import generics, permissions
 from apps.catalog.models import Category, Plants, PlantsDetail
 from apps.catalog.serializers import (
@@ -20,15 +22,52 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PlantsListCreateView(generics.ListCreateAPIView):
-    queryset = Plants.objects.filter(is_active=True).select_related("category").prefetch_related("details__media")
     serializer_class = PlantsSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        queryset = (
+            Plants.objects.filter(is_active=True)
+            .select_related("category")
+            .prefetch_related("details__media")
+        )
+        search = self.request.query_params.get("search", "").strip()
+        if search:
+            queryset = queryset.filter(
+                Q(name__icontains=search)
+                | Q(description__icontains=search)
+                | Q(slug__icontains=search)
+            )
+
+        category = self.request.query_params.get("category", "").strip()
+        if category:
+            try:
+                cat_uuid = uuid.UUID(category)
+                queryset = queryset.filter(category__id=cat_uuid)
+            except ValueError:
+                queryset = queryset.filter(category__slug=category)
+
+        ordering = self.request.query_params.get("ordering", "-created_at")
+        if ordering:
+            queryset = queryset.order_by(ordering)
+
+        return queryset
 
 
 class PlantsDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Plants.objects.all().select_related("category").prefetch_related("details__media")
     serializer_class = PlantsSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        val = self.kwargs.get(lookup_url_kwarg) or self.kwargs.get("pk") or self.kwargs.get("slug")
+        try:
+            val_uuid = uuid.UUID(str(val))
+            return generics.get_object_or_404(queryset, id=val_uuid)
+        except (ValueError, TypeError):
+            return generics.get_object_or_404(queryset, slug=val)
 
 
 class PlantsDetailItemListCreateView(generics.ListCreateAPIView):

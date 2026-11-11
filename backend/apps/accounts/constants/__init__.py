@@ -1,4 +1,10 @@
-from .choices import UserRole, SocialProvider, CareExperienceLevel
+from .choices import (
+    UserRole,
+    SocialProvider,
+    CareExperienceLevel,
+    STAFF_ROLES_GROUP,
+    STAFF_ROLES,
+)
 from .messages import (
     PHONE_MAX_LENGTH,
     PHONE_REGEX,
@@ -13,6 +19,8 @@ __all__ = [
     "UserRole",
     "SocialProvider",
     "CareExperienceLevel",
+    "STAFF_ROLES_GROUP",
+    "STAFF_ROLES",
     "PHONE_MAX_LENGTH",
     "PHONE_REGEX",
     "PHONE_REQUIRED_ERROR",

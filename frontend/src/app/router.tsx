@@ -14,6 +14,7 @@ import {
   AdminLayout,
   AdminDashboardPage,
   AdminCustomersPage,
+  AdminOrdersPage,
 } from "@/features/admin";
 
 export const router = createBrowserRouter([
@@ -57,6 +58,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <AdminDashboardPage /> },
               { path: "customers", element: <AdminCustomersPage /> },
+              { path: "orders", element: <AdminOrdersPage /> },
             ],
           },
         ],

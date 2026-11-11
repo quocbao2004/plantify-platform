@@ -6,21 +6,21 @@ from apps.accounts.models import User
 from apps.accounts.serializers.user import UserSerializer
 from apps.accounts.constants import (
     UserRole,
+    STAFF_ROLES_GROUP,
+    STAFF_ROLES,
     PHONE_REGEX,
     PHONE_REQUIRED_ERROR,
     PHONE_INVALID_ERROR,
     PHONE_ALREADY_EXISTS_ERROR,
 )
-from rest_framework import generics
-from django.db.models import Q
-from apps.accounts.models import User
-from apps.accounts.serializers.user import UserSerializer
 from apps.accounts.permissions.admin import IsAdminOnly
+
 
 
 class AdminUserListView(generics.ListAPIView):
     """
     Admin-only endpoint to list and search customer/user accounts.
+    Supports filtering by search query (name, email, phone), role, and active status.
     """
     serializer_class = UserSerializer
     permission_classes = [IsAdminOnly]
@@ -38,10 +38,8 @@ class AdminUserListView(generics.ListAPIView):
 
         role = self.request.query_params.get("role", "").strip()
         if role:
-            if role in ("STAFF_ALL", "STAFF_GROUP"):
-                queryset = queryset.filter(
-                    role__in=[UserRole.STAFF, UserRole.DELIVERY, UserRole.WARRANTY, UserRole.ADMIN]
-                )
+            if role in (STAFF_ROLES_GROUP, "STAFF_ALL"):
+                queryset = queryset.filter(role__in=STAFF_ROLES)
             else:
                 queryset = queryset.filter(role=role)
 

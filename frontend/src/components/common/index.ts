@@ -11,3 +11,4 @@ export * from "./ToastCommon";
 export * from "./ModalCommon";
 export * from "./DropdownCommon";
 export * from "./TableCommon";
+export * from "./BadgeCommon";
