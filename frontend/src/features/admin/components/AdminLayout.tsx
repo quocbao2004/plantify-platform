@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   ShoppingBag,
+  RotateCcw,
   Leaf,
   Sprout,
   MessageCircle,
@@ -50,6 +51,7 @@ const AdminSidebar: React.FC = () => {
   const isOverview = pathname === "/admin" || pathname === "/admin/";
   const isCustomers = pathname.startsWith("/admin/customers");
   const isOrders = pathname.startsWith("/admin/orders");
+  const isReturns = pathname.startsWith("/admin/returns");
   const isPlants = pathname.startsWith("/admin/plants");
   const isConsults = pathname.startsWith("/admin/consults");
   const isSettings = pathname.startsWith("/admin/settings");
@@ -90,6 +92,12 @@ const AdminSidebar: React.FC = () => {
           label={LABELS.admin.SIDEBAR_ORDERS}
           active={isOrders}
           to="/admin/orders"
+        />
+        <NavItem
+          icon={<RotateCcw />}
+          label={LABELS.admin.SIDEBAR_RETURNS}
+          active={isReturns}
+          to="/admin/returns"
         />
         <NavItem
           icon={<Leaf />}

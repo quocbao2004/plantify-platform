@@ -15,6 +15,8 @@ import {
   AdminDashboardPage,
   AdminCustomersPage,
   AdminOrdersPage,
+  AdminPlantsPage,
+  AdminReturnsPage,
 } from "@/features/admin";
 
 export const router = createBrowserRouter([
@@ -59,6 +61,8 @@ export const router = createBrowserRouter([
               { index: true, element: <AdminDashboardPage /> },
               { path: "customers", element: <AdminCustomersPage /> },
               { path: "orders", element: <AdminOrdersPage /> },
+              { path: "plants", element: <AdminPlantsPage /> },
+              { path: "returns", element: <AdminReturnsPage /> },
             ],
           },
         ],

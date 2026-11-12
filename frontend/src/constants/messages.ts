@@ -23,6 +23,15 @@ export const MESSAGES = {
   ORDER_STATUS_UPDATED: "Cập nhật trạng thái đơn hàng thành công.",
   ORDER_STATUS_UPDATE_ERROR: "Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại sau.",
   ORDER_DETAIL_FETCH_ERROR: "Không thể lấy thông tin chi tiết đơn hàng. Vui lòng thử lại sau.",
+  PLANT_CREATED: "Thêm cây cảnh mới thành công.",
+  PLANT_CREATE_ERROR: "Không thể thêm cây cảnh. Vui lòng kiểm tra lại thông tin.",
+  PLANT_UPDATED: "Cập nhật thông tin cây cảnh thành công.",
+  PLANT_UPDATE_ERROR: "Không thể cập nhật cây cảnh. Vui lòng thử lại sau.",
+  PLANT_DELETED: "Đã xóa cây cảnh thành công.",
+  PLANT_DELETE_ERROR: "Không thể xóa cây cảnh. Vui lòng thử lại sau.",
+  RETURN_STATUS_UPDATED: "Cập nhật yêu cầu đổi trả thành công.",
+  RETURN_STATUS_UPDATE_ERROR: "Không thể cập nhật yêu cầu đổi trả. Vui lòng thử lại sau.",
+  RETURN_DETAIL_FETCH_ERROR: "Không thể tải chi tiết yêu cầu đổi trả. Vui lòng thử lại sau.",
 } as const;
 
 export const VALIDATION_MESSAGES = {
