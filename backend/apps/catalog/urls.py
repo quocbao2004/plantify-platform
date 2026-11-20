@@ -6,11 +6,23 @@ from apps.catalog.views import (
     PlantsDetailView,
     PlantsDetailItemListCreateView,
     PlantsDetailItemView,
+    ImageUploadView,
+    PlantAssetListView,
+    PlantAssetDetailView,
+    PlantAssetBatchGenerateView,
 )
 
 app_name = "catalog"
 
 urlpatterns = [
+    # Image Upload
+    path("upload-image/", ImageUploadView.as_view(), name="image-upload"),
+
+    # Plant Assets (Serialized Individual Plants & QR tracking)
+    path("plant-assets/", PlantAssetListView.as_view(), name="plant-asset-list"),
+    path("plant-assets/batch-generate/", PlantAssetBatchGenerateView.as_view(), name="plant-asset-batch-generate"),
+    path("plant-assets/<str:pk>/", PlantAssetDetailView.as_view(), name="plant-asset-detail"),
+
     # Categories
     path("categories/", CategoryListCreateView.as_view(), name="category-list"),
     path("categories/<uuid:pk>/", CategoryDetailView.as_view(), name="category-detail"),

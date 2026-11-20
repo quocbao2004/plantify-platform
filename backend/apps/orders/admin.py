@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.orders.models import PurchaseOrder, PurchaseOrderDetail
+from apps.orders.models import PurchaseOrder, PurchaseOrderDetail, ReturnRequest
 
 
 class PurchaseOrderDetailInline(admin.TabularInline):
@@ -19,3 +19,10 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
 class PurchaseOrderDetailAdmin(admin.ModelAdmin):
     list_display = ("purchase_order", "plant_detail", "quantity", "unit_price", "total_price")
     search_fields = ("purchase_order__order_code", "plant_detail__sku")
+
+
+@admin.register(ReturnRequest)
+class ReturnRequestAdmin(admin.ModelAdmin):
+    list_display = ("return_code", "order", "user", "request_type", "reason", "status", "quantity", "created_at")
+    list_filter = ("status", "request_type", "reason", "created_at")
+    search_fields = ("return_code", "order__order_code", "user__email", "user__full_name", "user__phone")

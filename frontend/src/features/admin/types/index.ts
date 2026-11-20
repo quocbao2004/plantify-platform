@@ -85,3 +85,233 @@ export interface UpdateAdminOrderStatusPayload {
   status: AdminOrderStatus;
   notes?: string;
 }
+
+// ─── Admin Plant Management Types ──────────────────────────────────────────
+
+export interface AdminCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  is_active: boolean;
+  sort_order?: number;
+  plants_count?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface CreateAdminCategoryPayload {
+  name: string;
+  description?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface UpdateAdminCategoryPayload {
+  name?: string;
+  description?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface AdminCategoryQueryParams {
+  search?: string;
+  is_active?: string;
+}
+
+export interface AdminPlantDetailItem {
+  id: string;
+  sku: string;
+  size?: string;
+  height?: number | string | null;
+  sale_price?: number | string | null;
+  rental_price?: number | string | null;
+  stock_quantity: number;
+  status: string;
+  description?: string;
+  media?: Array<{
+    id: string;
+    file_url: string;
+    is_primary: boolean;
+  }>;
+}
+
+export interface AdminPlant {
+  id: string;
+  category: string;
+  category_name?: string;
+  name: string;
+  slug: string;
+  description?: string;
+  care_guide?: string;
+  is_active: boolean;
+  details?: AdminPlantDetailItem[];
+  primary_image?: string | null;
+  images?: Array<{
+    id: string;
+    image: string;
+    is_primary: boolean;
+    sort_order: number;
+  }>;
+  sale_price?: number;
+  rental_price?: number;
+  primary_asset_code?: string | null;
+  assets_count?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminPlantQueryParams {
+  search?: string;
+  category?: string;
+  is_active?: string;
+  ordering?: string;
+  page?: number;
+  page_size?: number;
+}
+
+export interface CreateAdminPlantPayload {
+  name: string;
+  category: string;
+  description?: string;
+  care_guide?: string;
+  is_active?: boolean;
+  primary_image?: string;
+  sale_price?: number;
+  rental_price?: number;
+  stock_quantity?: number;
+}
+
+export interface UpdateAdminPlantPayload {
+  name?: string;
+  category?: string;
+  description?: string;
+  care_guide?: string;
+  is_active?: boolean;
+  primary_image?: string;
+  sale_price?: number;
+  rental_price?: number;
+  stock_quantity?: number;
+}
+
+
+// ─── Admin Return/Exchange Management Types ────────────────────────────────
+
+export type AdminReturnStatus =
+  | "PENDING"
+  | "APPROVED"
+  | "REJECTED"
+  | "COMPLETED"
+  | "CANCELLED";
+
+export type AdminReturnType =
+  | "EXCHANGE"
+  | "REFUND"
+  | "CARE_SUPPORT";
+
+export type AdminReturnReason =
+  | "DAMAGED_TRANSIT"
+  | "WRONG_ITEM"
+  | "DISEASE_14D"
+  | "NOT_AS_DESCRIBED"
+  | "OTHER";
+
+export interface AdminReturnRequest {
+  id: string;
+  return_code: string;
+  order: string;
+  order_code: string;
+  order_detail?: string | null;
+  plant_name?: string;
+  plant_sku?: string;
+  plant_size?: string;
+  plant_image?: string | null;
+  user: string;
+  user_name?: string;
+  user_email?: string;
+  user_phone?: string;
+  request_type: AdminReturnType;
+  request_type_display?: string;
+  reason: AdminReturnReason;
+  reason_display?: string;
+  status: AdminReturnStatus;
+  status_display?: string;
+  quantity: number;
+  refund_amount: number | string;
+  customer_notes?: string;
+  proof_images?: string[];
+  admin_notes?: string;
+  resolution_action?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminReturnQueryParams {
+  search?: string;
+  status?: string;
+  request_type?: string;
+  reason?: string;
+  ordering?: string;
+  page?: number;
+  page_size?: number;
+}
+
+export interface UpdateAdminReturnPayload {
+  status: AdminReturnStatus;
+  admin_notes?: string;
+  resolution_action?: string;
+  refund_amount?: number;
+}
+
+
+// ─── Plant Asset (Mã định danh từng cây cảnh & QR) ─────────────────────────
+
+export type AssetStatus = "AVAILABLE" | "RENTED" | "MAINTENANCE" | "RESERVED" | "RETIRED";
+export type AssetHealthCondition = "EXCELLENT" | "FAIR" | "NEEDS_CARE" | "DAMAGED";
+
+export interface AdminPlantAsset {
+  id: string;
+  plant_detail: string;
+  plant_id: string;
+  plant_name: string;
+  size?: string;
+  sku: string;
+  asset_code: string;
+  status: AssetStatus;
+  status_display?: string;
+  health_condition: AssetHealthCondition;
+  health_display?: string;
+  current_location: string;
+  notes?: string;
+  primary_image?: string | null;
+  care_guide?: string;
+  description?: string;
+  last_inspected_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminPlantAssetQueryParams {
+  search?: string;
+  plant_id?: string;
+  detail_id?: string;
+  status?: string;
+  health?: string;
+  page?: number;
+  page_size?: number;
+}
+
+export interface BatchGenerateAssetsPayload {
+  plant_detail_id: string;
+  quantity: number;
+  prefix?: string;
+  location?: string;
+}
+
+export interface UpdateAdminPlantAssetPayload {
+  status?: AssetStatus;
+  health_condition?: AssetHealthCondition;
+  current_location?: string;
+  notes?: string;
+}
+

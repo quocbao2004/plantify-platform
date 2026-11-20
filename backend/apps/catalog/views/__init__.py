@@ -5,6 +5,12 @@ from .plants import (
     PlantsDetailView,
     PlantsDetailItemListCreateView,
     PlantsDetailItemView,
+    ImageUploadView,
+)
+from .plant_asset import (
+    PlantAssetListView,
+    PlantAssetDetailView,
+    PlantAssetBatchGenerateView,
 )
 
 __all__ = [
@@ -14,4 +20,8 @@ __all__ = [
     "PlantsDetailView",
     "PlantsDetailItemListCreateView",
     "PlantsDetailItemView",
+    "ImageUploadView",
+    "PlantAssetListView",
+    "PlantAssetDetailView",
+    "PlantAssetBatchGenerateView",
 ]
