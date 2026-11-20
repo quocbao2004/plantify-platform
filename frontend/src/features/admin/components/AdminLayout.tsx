@@ -5,6 +5,7 @@ import {
   ShoppingBag,
   RotateCcw,
   Leaf,
+  FolderTree,
   Sprout,
   MessageCircle,
   Users,
@@ -53,6 +54,7 @@ const AdminSidebar: React.FC = () => {
   const isOrders = pathname.startsWith("/admin/orders");
   const isReturns = pathname.startsWith("/admin/returns");
   const isPlants = pathname.startsWith("/admin/plants");
+  const isCategories = pathname.startsWith("/admin/categories");
   const isConsults = pathname.startsWith("/admin/consults");
   const isSettings = pathname.startsWith("/admin/settings");
 
@@ -104,6 +106,12 @@ const AdminSidebar: React.FC = () => {
           label={LABELS.admin.SIDEBAR_PLANTS}
           active={isPlants}
           to="/admin/plants"
+        />
+        <NavItem
+          icon={<FolderTree />}
+          label={LABELS.admin.SIDEBAR_CATEGORIES}
+          active={isCategories}
+          to="/admin/categories"
         />
         <NavItem
           icon={<MessageCircle />}

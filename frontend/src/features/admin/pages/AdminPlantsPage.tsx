@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import {
   Leaf,
   Plus,
@@ -11,6 +12,7 @@ import {
   CheckCircle2,
   XCircle,
   Layers,
+  FolderTree,
 } from "lucide-react";
 import { LABELS } from "@/constants/labels";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
@@ -287,6 +289,14 @@ export const AdminPlantsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Nút liên kết trực tiếp sang Quản lý danh mục */}
+          <Link to="/admin/categories">
+            <ButtonCommon variant="outline" size="sm">
+              <FolderTree className="w-3.5 h-3.5 text-brand" />
+              {LABELS.admin.PLANTS_ACTION_CATEGORIES_MGMT}
+            </ButtonCommon>
+          </Link>
+
           <ButtonCommon
             variant="outline"
             size="sm"
@@ -342,15 +352,24 @@ export const AdminPlantsPage: React.FC = () => {
           <p className="text-xl font-bold text-surface-700">{stats.inactive}</p>
         </div>
 
-        <div className="p-3.5 rounded-xl border border-blue-200/70 bg-blue-50/40 shadow-2xs">
-          <div className="flex items-center gap-2 text-blue-700 mb-1">
-            <Layers className="w-4 h-4" />
-            <span className="text-[11px] font-semibold uppercase tracking-wider">
-              {LABELS.admin.PLANTS_FILTER_CATEGORY}
+        <Link
+          to="/admin/categories"
+          className="p-3.5 rounded-xl border border-blue-200/70 bg-blue-50/40 shadow-2xs hover:bg-blue-50/80 transition-colors block group cursor-pointer"
+          title={LABELS.admin.PLANTS_ACTION_CATEGORIES_MGMT}
+        >
+          <div className="flex items-center justify-between text-blue-700 mb-1">
+            <div className="flex items-center gap-2">
+              <Layers className="w-4 h-4" />
+              <span className="text-[11px] font-semibold uppercase tracking-wider">
+                {LABELS.admin.PLANTS_FILTER_CATEGORY}
+              </span>
+            </div>
+            <span className="text-[10px] text-blue-600 group-hover:underline">
+              {LABELS.admin.PLANTS_CATEGORIES_MANAGE_LINK} &rarr;
             </span>
           </div>
           <p className="text-xl font-bold text-blue-800">{stats.categoriesCount}</p>
-        </div>
+        </Link>
       </div>
 
       {/* Filter Tabs & Search Controls */}

@@ -95,6 +95,28 @@ export interface AdminCategory {
   description?: string;
   is_active: boolean;
   sort_order?: number;
+  plants_count?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface CreateAdminCategoryPayload {
+  name: string;
+  description?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface UpdateAdminCategoryPayload {
+  name?: string;
+  description?: string;
+  is_active?: boolean;
+  sort_order?: number;
+}
+
+export interface AdminCategoryQueryParams {
+  search?: string;
+  is_active?: string;
 }
 
 export interface AdminPlantDetailItem {

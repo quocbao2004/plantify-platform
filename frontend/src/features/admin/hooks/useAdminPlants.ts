@@ -8,7 +8,7 @@ import {
 import { MESSAGES } from "@/constants/messages";
 
 export const ADMIN_PLANTS_QUERY_KEY = ["admin-plants"] as const;
-export const ADMIN_CATEGORIES_QUERY_KEY = ["admin-categories"] as const;
+export { ADMIN_CATEGORIES_QUERY_KEY, useAdminCategories } from "./useAdminCategories";
 
 export const useAdminPlants = (params?: AdminPlantQueryParams) => {
   return useQuery({
@@ -22,14 +22,6 @@ export const useAdminPlantDetail = (id?: string) => {
     queryKey: [...ADMIN_PLANTS_QUERY_KEY, "detail", id],
     queryFn: () => (id ? adminPlantsApi.getPlantDetail(id) : Promise.reject(new Error("No id"))),
     enabled: Boolean(id),
-  });
-};
-
-export const useAdminCategories = () => {
-  return useQuery({
-    queryKey: ADMIN_CATEGORIES_QUERY_KEY,
-    queryFn: () => adminPlantsApi.getCategories(),
-    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
 
