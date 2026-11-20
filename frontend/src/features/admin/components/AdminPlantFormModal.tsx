@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Plus, UploadCloud, X, Link2, Loader2, CheckCircle2 } from "lucide-react";
 import { LABELS } from "@/constants/labels";
-import { VALIDATION_MESSAGES } from "@/constants/messages";
+import { MESSAGES, VALIDATION_MESSAGES } from "@/constants/messages";
 import { ModalCommon } from "@/components/common/ModalCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { SelectCommon, type SelectOption } from "@/components/common/SelectCommon";
 import { CheckboxCommon } from "@/components/common/CheckboxCommon";
 import { FormCommon } from "@/components/common/FormCommon";
-import { AdminPlant, AdminCategory, CreateAdminPlantPayload } from "../types";
+import {
+  AdminPlant,
+  AdminCategory,
+  CreateAdminPlantPayload,
+  CreateAdminCategoryPayload,
+} from "../types";
+import { useCreateAdminCategory } from "../hooks/useAdminCategories";
+import { adminPlantsApi } from "../api/adminPlantsApi";
+import { AdminCategoryFormModal } from "./AdminCategoryFormModal";
 
 interface AdminPlantFormModalProps {
   plant: AdminPlant | null; // null means create mode, object means edit mode
@@ -27,6 +36,8 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
   onSubmit,
 }) => {
   const isEditMode = Boolean(plant);
+  const [isQuickCategoryModalOpen, setIsQuickCategoryModalOpen] = useState(false);
+  const { mutate: quickCreateCategory, isPending: isQuickCreating } = useCreateAdminCategory();
 
   const [formData, setFormData] = useState<CreateAdminPlantPayload>({
     name: "",
@@ -45,6 +56,12 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
     category?: string;
   }>({});
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [useUrlMode, setUseUrlMode] = useState(false);
+
   useEffect(() => {
     if (plant) {
       setFormData({
@@ -58,6 +75,7 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         rental_price: plant.rental_price || 0,
         stock_quantity: plant.details?.[0]?.stock_quantity ?? 10,
       });
+      setUseUrlMode(Boolean(plant.primary_image && !plant.primary_image.includes("/media/")));
     } else {
       setFormData({
         name: "",
@@ -70,9 +88,73 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         rental_price: 0,
         stock_quantity: 10,
       });
+      setUseUrlMode(false);
     }
     setErrors({});
+    setUploadError(null);
   }, [plant, categories, open]);
+
+  const handleUploadFile = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setUploadError(MESSAGES.IMAGE_TYPE_INVALID);
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setUploadError(MESSAGES.IMAGE_SIZE_EXCEEDED);
+      return;
+    }
+
+    setUploadError(null);
+    setIsUploading(true);
+
+    try {
+      const res = await adminPlantsApi.uploadImage(file);
+      const imageUrl = res.url || res.relative_url || "";
+      setFormData((prev) => ({ ...prev, primary_image: imageUrl }));
+    } catch (err: any) {
+      const msg = err?.response?.data?.error || MESSAGES.IMAGE_UPLOAD_FAILED;
+      setUploadError(msg);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleUploadFile(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      handleUploadFile(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({ ...prev, primary_image: "" }));
+    setUploadError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const categoryOptions: SelectOption[] = categories.map((cat) => ({
     value: cat.id,
@@ -107,17 +189,30 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
     });
   };
 
+  const handleQuickCategorySubmit = (catPayload: CreateAdminCategoryPayload) => {
+    quickCreateCategory(catPayload, {
+      onSuccess: (newCat) => {
+        setIsQuickCategoryModalOpen(false);
+        if (newCat?.id) {
+          setFormData((prev) => ({ ...prev, category: newCat.id }));
+          setErrors((prev) => ({ ...prev, category: undefined }));
+        }
+      },
+    });
+  };
+
   return (
-    <ModalCommon
-      open={open}
-      onClose={onClose}
-      title={
-        isEditMode
-          ? LABELS.admin.PLANTS_MODAL_EDIT_TITLE
-          : LABELS.admin.PLANTS_MODAL_ADD_TITLE
-      }
-      className="max-w-2xl w-full"
-    >
+    <>
+      <ModalCommon
+        open={open}
+        onClose={onClose}
+        title={
+          isEditMode
+            ? LABELS.admin.PLANTS_MODAL_EDIT_TITLE
+            : LABELS.admin.PLANTS_MODAL_ADD_TITLE
+        }
+        className="max-w-2xl w-full"
+      >
       <FormCommon
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
@@ -146,12 +241,22 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
           </div>
 
           <div className="space-y-1">
-            <label
-              htmlFor="plant-category-select"
-              className="block text-xs font-semibold text-surface-700"
-            >
-              {LABELS.admin.PLANTS_FORM_CATEGORY} <span className="text-rose-500">*</span>
-            </label>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="plant-category-select"
+                className="block text-xs font-semibold text-surface-700"
+              >
+                {LABELS.admin.PLANTS_FORM_CATEGORY} <span className="text-rose-500">*</span>
+              </label>
+              <button
+                type="button"
+                onClick={() => setIsQuickCategoryModalOpen(true)}
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand hover:text-brand-dark hover:underline"
+              >
+                <Plus className="w-3 h-3" />
+                {LABELS.admin.PLANTS_QUICK_ADD_CATEGORY}
+              </button>
+            </div>
             <SelectCommon
               id="plant-category-select"
               options={categoryOptions}
@@ -235,23 +340,166 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
           </div>
         </div>
 
-        {/* Primary Image URL */}
-        <div className="space-y-1">
-          <label
-            htmlFor="plant-image-input"
-            className="block text-xs font-semibold text-surface-700"
-          >
-            {LABELS.admin.PLANTS_FORM_IMAGE_URL}
-          </label>
-          <TextFieldCommon
-            id="plant-image-input"
-            value={formData.primary_image || ""}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, primary_image: e.target.value }))
-            }
-            placeholder={LABELS.admin.PLANTS_FORM_IMAGE_URL_PLACEHOLDER}
-            disabled={isLoading}
+        {/* Image Upload / URL Section */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-semibold text-surface-700">
+              {LABELS.admin.PLANTS_FORM_IMAGE_LABEL}
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setUseUrlMode(!useUrlMode);
+                setUploadError(null);
+              }}
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand hover:text-brand-dark hover:underline"
+            >
+              {useUrlMode ? (
+                <>
+                  <UploadCloud className="w-3 h-3" />
+                  {LABELS.admin.PLANTS_IMAGE_UPLOAD_BTN}
+                </>
+              ) : (
+                <>
+                  <Link2 className="w-3 h-3" />
+                  {LABELS.admin.PLANTS_IMAGE_URL_BTN}
+                </>
+              )}
+            </button>
+          </div>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+            disabled={isLoading || isUploading}
           />
+
+          {useUrlMode ? (
+            /* Mode 1: Dán link URL */
+            <div className="space-y-2">
+              <TextFieldCommon
+                id="plant-image-input"
+                value={formData.primary_image || ""}
+                onChange={(e) => {
+                  setFormData((prev) => ({ ...prev, primary_image: e.target.value }));
+                  setUploadError(null);
+                }}
+                placeholder={LABELS.admin.PLANTS_FORM_IMAGE_URL_PLACEHOLDER}
+                disabled={isLoading}
+              />
+              {formData.primary_image ? (
+                <div className="relative w-28 h-28 rounded-lg overflow-hidden border border-surface-200 bg-surface-50 group">
+                  <img
+                    src={formData.primary_image}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    onError={() => setUploadError(MESSAGES.IMAGE_URL_INVALID)}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-1 right-1 p-1 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors"
+                    title={LABELS.admin.PLANTS_IMAGE_DELETE_BTN}
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            /* Mode 2: Tải file từ máy tính */
+            <div>
+              {formData.primary_image ? (
+                /* Đã có ảnh preview */
+                <div className="relative flex items-center gap-4 p-3 rounded-xl border border-emerald-200 bg-emerald-50/40">
+                  <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-surface-200 bg-surface-100 shrink-0 shadow-2xs">
+                    <img
+                      src={formData.primary_image}
+                      alt="Plant Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
+                      <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                      <span>{LABELS.admin.PLANTS_IMAGE_UPLOADED_SUCCESS}</span>
+                    </div>
+                    <p className="text-[11px] text-surface-500 truncate mt-0.5">
+                      {formData.primary_image}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <ButtonCommon
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isLoading || isUploading}
+                        className="text-xs h-7 px-2.5 rounded-md"
+                      >
+                        {LABELS.admin.PLANTS_IMAGE_CHANGE_BTN}
+                      </ButtonCommon>
+                      <ButtonCommon
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleRemoveImage}
+                        disabled={isLoading || isUploading}
+                        className="text-xs h-7 px-2 text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-md"
+                      >
+                        {LABELS.admin.PLANTS_IMAGE_DELETE_BTN}
+                      </ButtonCommon>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Khung Dropzone chọn file */
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => !isUploading && fileInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center gap-2 ${
+                    isDragging
+                      ? "border-brand bg-brand/5 scale-[0.99]"
+                      : "border-surface-300 hover:border-brand/70 hover:bg-surface-50/80 bg-white"
+                  } ${isUploading ? "pointer-events-none opacity-80" : ""}`}
+                >
+                  {isUploading ? (
+                    <div className="flex flex-col items-center gap-2 py-3">
+                      <Loader2 className="w-7 h-7 text-brand animate-spin" />
+                      <p className="text-xs font-medium text-surface-700">
+                        {LABELS.admin.PLANTS_IMAGE_UPLOADING}
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="w-10 h-10 rounded-full bg-brand/10 text-brand flex items-center justify-center shadow-2xs">
+                        <UploadCloud className="w-5 h-5" />
+                      </div>
+                      <div className="text-xs text-surface-600">
+                        <span className="font-semibold text-brand hover:underline">
+                          {LABELS.admin.PLANTS_IMAGE_DROPZONE_SELECT}
+                        </span>{" "}
+                        {LABELS.admin.PLANTS_IMAGE_DROPZONE_OR_DRAG}
+                      </div>
+                      <p className="text-[11px] text-surface-400">
+                        {LABELS.admin.PLANTS_IMAGE_DROPZONE_HINT}
+                      </p>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {uploadError && (
+            <p className="text-[11px] font-medium text-rose-600 mt-1 flex items-center gap-1">
+              <span>•</span> {uploadError}
+            </p>
+          )}
         </div>
 
         {/* Description */}
@@ -332,5 +580,14 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         </div>
       </FormCommon>
     </ModalCommon>
+
+    <AdminCategoryFormModal
+      open={isQuickCategoryModalOpen}
+      category={null}
+      isLoading={isQuickCreating}
+      onClose={() => setIsQuickCategoryModalOpen(false)}
+      onSubmit={handleQuickCategorySubmit}
+    />
+  </>
   );
 };

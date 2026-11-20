@@ -6,11 +6,15 @@ from apps.catalog.views import (
     PlantsDetailView,
     PlantsDetailItemListCreateView,
     PlantsDetailItemView,
+    ImageUploadView,
 )
 
 app_name = "catalog"
 
 urlpatterns = [
+    # Image Upload
+    path("upload-image/", ImageUploadView.as_view(), name="image-upload"),
+
     # Categories
     path("categories/", CategoryListCreateView.as_view(), name="category-list"),
     path("categories/<uuid:pk>/", CategoryDetailView.as_view(), name="category-detail"),

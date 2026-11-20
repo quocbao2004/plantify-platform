@@ -32,6 +32,17 @@ export const MESSAGES = {
   RETURN_STATUS_UPDATED: "Cập nhật yêu cầu đổi trả thành công.",
   RETURN_STATUS_UPDATE_ERROR: "Không thể cập nhật yêu cầu đổi trả. Vui lòng thử lại sau.",
   RETURN_DETAIL_FETCH_ERROR: "Không thể tải chi tiết yêu cầu đổi trả. Vui lòng thử lại sau.",
+  CATEGORY_CREATED: "Thêm danh mục cây thành công.",
+  CATEGORY_CREATE_ERROR: "Không thể thêm danh mục cây. Vui lòng thử lại.",
+  CATEGORY_UPDATED: "Cập nhật danh mục cây thành công.",
+  CATEGORY_UPDATE_ERROR: "Không thể cập nhật danh mục cây. Vui lòng thử lại.",
+  CATEGORY_DELETED: "Đã xóa danh mục cây thành công.",
+  CATEGORY_DELETE_ERROR: "Không thể xóa danh mục cây. Vui lòng kiểm tra lại liên kết dữ liệu.",
+  CATEGORY_HAS_PLANTS_ERROR: "Không thể xóa danh mục vì đang chứa cây cảnh liên kết. Vui lòng chuyển hoặc xóa cây trước.",
+  IMAGE_TYPE_INVALID: "Vui lòng chọn file hình ảnh (JPG, PNG, WEBP, GIF, SVG).",
+  IMAGE_SIZE_EXCEEDED: "Dung lượng file không được vượt quá 10MB.",
+  IMAGE_UPLOAD_FAILED: "Tải ảnh lên thất bại. Vui lòng thử lại.",
+  IMAGE_URL_INVALID: "Link ảnh không khả dụng hoặc bị lỗi.",
 } as const;
 
 export const VALIDATION_MESSAGES = {

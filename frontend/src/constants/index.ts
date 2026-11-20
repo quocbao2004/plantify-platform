@@ -35,6 +35,7 @@ export const API_ENDPOINTS = {
   CATALOG: {
     PRODUCTS: "/catalog/products/",
     CATEGORIES: "/catalog/categories/",
+    UPLOAD_IMAGE: "/catalog/upload-image/",
   },
   INVENTORY: {
     STOCK: "/inventory/stock/",
@@ -76,6 +77,7 @@ export const API_ENDPOINTS = {
     RETURNS: "/orders/admin/returns/",
     PLANTS: "/catalog/plants/",
     CATEGORIES: "/catalog/categories/",
+    UPLOAD_IMAGE: "/catalog/upload-image/",
     SETTINGS: "/settings/admin/settings/",
     AUDIT_LOGS: "/settings/admin/audit-logs/",
   },

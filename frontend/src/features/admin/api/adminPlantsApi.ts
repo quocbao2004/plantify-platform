@@ -141,4 +141,22 @@ export const adminPlantsApi = {
       results: [],
     };
   },
+
+  uploadImage: async (
+    file: File
+  ): Promise<{ url: string; relative_url?: string; filename?: string }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const { data } = await httpClient.post<{
+      success?: boolean;
+      url: string;
+      relative_url?: string;
+      filename?: string;
+    }>(API_ENDPOINTS.CATALOG.UPLOAD_IMAGE, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return data;
+  },
 };
