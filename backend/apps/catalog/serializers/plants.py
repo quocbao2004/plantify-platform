@@ -4,10 +4,25 @@ from apps.catalog.models import Category, Plants, PlantsDetail, Media
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    plants_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = ["id", "name", "slug", "description", "is_active", "sort_order", "created_at", "updated_at"]
-        read_only_fields = ["id", "slug", "created_at", "updated_at"]
+        fields = [
+            "id",
+            "name",
+            "slug",
+            "description",
+            "is_active",
+            "sort_order",
+            "plants_count",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "slug", "plants_count", "created_at", "updated_at"]
+
+    def get_plants_count(self, obj):
+        return getattr(obj, "plants_count_annotated", None) if hasattr(obj, "plants_count_annotated") else obj.plants.count()
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -48,6 +63,8 @@ class PlantsSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
     sale_price = serializers.SerializerMethodField()
     rental_price = serializers.SerializerMethodField()
+    min_sale_price_vnd = serializers.SerializerMethodField()
+    variants = serializers.SerializerMethodField()
     light_requirement = serializers.SerializerMethodField()
     care_level = serializers.SerializerMethodField()
 
@@ -63,10 +80,12 @@ class PlantsSerializer(serializers.ModelSerializer):
             "care_guide",
             "is_active",
             "details",
+            "variants",
             "primary_image",
             "images",
             "sale_price",
             "rental_price",
+            "min_sale_price_vnd",
             "light_requirement",
             "care_level",
             "created_at",
@@ -105,7 +124,7 @@ class PlantsSerializer(serializers.ModelSerializer):
         if details:
             prices = [d.sale_price for d in details.all() if d.sale_price is not None]
             if prices:
-                return min(prices)
+                return float(min(prices))
         return 0
 
     def get_rental_price(self, obj):
@@ -113,8 +132,32 @@ class PlantsSerializer(serializers.ModelSerializer):
         if details:
             prices = [d.rental_price for d in details.all() if d.rental_price is not None]
             if prices:
-                return min(prices)
+                return float(min(prices))
         return 0
+
+    def get_min_sale_price_vnd(self, obj):
+        return self.get_sale_price(obj)
+
+    def get_variants(self, obj):
+        details = getattr(obj, "details", None)
+        if not details:
+            return []
+        res = []
+        for d in details.all():
+            res.append({
+                "id": str(d.id),
+                "sku": d.sku,
+                "size": d.size or "M",
+                "size_display": f"Size {d.size}" if d.size else "Mặc định",
+                "height_cm": float(d.height) if d.height is not None else None,
+                "sale_price_vnd": float(d.sale_price) if d.sale_price is not None else 0,
+                "deposit_vnd": float(d.rental_price) if d.rental_price is not None else 0,
+                "can_sell": bool(d.sale_price and d.sale_price > 0),
+                "can_rent": bool(d.rental_price and d.rental_price > 0),
+                "is_active": d.status == PlantsDetail.PlantStatus.AVAILABLE,
+                "rental_rates": [],
+            })
+        return res
 
     def get_light_requirement(self, obj):
         return "MEDIUM"

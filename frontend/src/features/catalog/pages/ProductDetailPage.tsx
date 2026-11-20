@@ -110,7 +110,9 @@ export const ProductDetailPage: React.FC = () => {
               <span className="text-2xl font-bold text-accent-700">
                 {selectedVariant?.sale_price_vnd
                   ? formatCurrencyVND(selectedVariant.sale_price_vnd)
-                  : LABELS.common.CONTACT}
+                  : product.min_sale_price_vnd
+                    ? formatCurrencyVND(product.min_sale_price_vnd)
+                    : LABELS.common.CONTACT}
               </span>
             </div>
             {selectedVariant?.deposit_vnd ? (
