@@ -170,7 +170,14 @@ export const AdminPlantsPage: React.FC = () => {
               </div>
             )}
             <div>
-              <p className="font-semibold text-surface-900 text-xs">{row.name}</p>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <p className="font-semibold text-surface-900 text-xs">{row.name}</p>
+                {row.primary_asset_code && (
+                  <span className="font-mono text-[10px] font-bold text-brand bg-brand/10 border border-brand/20 px-1.5 py-0.5 rounded">
+                    {row.primary_asset_code}
+                  </span>
+                )}
+              </div>
               <p className="text-[11px] text-surface-400 font-mono mt-0.5">
                 {row.slug}
               </p>

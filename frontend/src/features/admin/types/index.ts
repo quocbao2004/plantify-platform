@@ -155,6 +155,8 @@ export interface AdminPlant {
   }>;
   sale_price?: number;
   rental_price?: number;
+  primary_asset_code?: string | null;
+  assets_count?: number;
   created_at: string;
   updated_at: string;
 }
@@ -260,3 +262,56 @@ export interface UpdateAdminReturnPayload {
   resolution_action?: string;
   refund_amount?: number;
 }
+
+
+// ─── Plant Asset (Mã định danh từng cây cảnh & QR) ─────────────────────────
+
+export type AssetStatus = "AVAILABLE" | "RENTED" | "MAINTENANCE" | "RESERVED" | "RETIRED";
+export type AssetHealthCondition = "EXCELLENT" | "FAIR" | "NEEDS_CARE" | "DAMAGED";
+
+export interface AdminPlantAsset {
+  id: string;
+  plant_detail: string;
+  plant_id: string;
+  plant_name: string;
+  size?: string;
+  sku: string;
+  asset_code: string;
+  status: AssetStatus;
+  status_display?: string;
+  health_condition: AssetHealthCondition;
+  health_display?: string;
+  current_location: string;
+  notes?: string;
+  primary_image?: string | null;
+  care_guide?: string;
+  description?: string;
+  last_inspected_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminPlantAssetQueryParams {
+  search?: string;
+  plant_id?: string;
+  detail_id?: string;
+  status?: string;
+  health?: string;
+  page?: number;
+  page_size?: number;
+}
+
+export interface BatchGenerateAssetsPayload {
+  plant_detail_id: string;
+  quantity: number;
+  prefix?: string;
+  location?: string;
+}
+
+export interface UpdateAdminPlantAssetPayload {
+  status?: AssetStatus;
+  health_condition?: AssetHealthCondition;
+  current_location?: string;
+  notes?: string;
+}
+

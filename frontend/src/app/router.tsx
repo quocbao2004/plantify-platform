@@ -5,6 +5,7 @@ import { AuthGuard, GuestGuard, AdminGuard } from "./guards";
 // Feature Pages
 import { HomePage } from "@/features/catalog/pages/HomePage";
 import { ProductListPage, ProductDetailPage } from "@/features/catalog";
+import { PublicPlantAssetPage } from "@/features/catalog/pages/PublicPlantAssetPage";
 import { LoginPage, RegisterPage, ProfilePage } from "@/features/auth";
 import { CartPage } from "@/features/cart";
 import { CheckoutPage } from "@/features/checkout";
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
       { path: "catalog", element: <ProductListPage /> },
       { path: "catalog/:idOrSlug", element: <ProductDetailPage /> },
       { path: "rentals", element: <RentalListPage /> },
+      { path: "qr/:assetCode", element: <PublicPlantAssetPage /> },
 
       // Guest Only Routes (Login, Register)
       {

@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Plus, UploadCloud, X, Link2, Loader2, CheckCircle2 } from "lucide-react";
 import { LABELS } from "@/constants/labels";
 import { MESSAGES, VALIDATION_MESSAGES } from "@/constants/messages";
+import { CURRENCY } from "@/constants";
 import { ModalCommon } from "@/components/common/ModalCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { SelectCommon, type SelectOption } from "@/components/common/SelectCommon";
 import { CheckboxCommon } from "@/components/common/CheckboxCommon";
 import { FormCommon } from "@/components/common/FormCommon";
+import { formatNumberWithDots, parseNumberFromDots } from "@/utils";
 import {
   AdminPlant,
   AdminCategory,
@@ -48,8 +50,12 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
     primary_image: "",
     sale_price: 0,
     rental_price: 0,
-    stock_quantity: 10,
+    stock_quantity: 1,
   });
+
+  const [salePriceInput, setSalePriceInput] = useState<string>("");
+  const [rentalPriceInput, setRentalPriceInput] = useState<string>("");
+  const [stockInput, setStockInput] = useState<string>("1");
 
   const [errors, setErrors] = useState<{
     name?: string;
@@ -73,8 +79,11 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         primary_image: plant.primary_image || "",
         sale_price: plant.sale_price || 0,
         rental_price: plant.rental_price || 0,
-        stock_quantity: plant.details?.[0]?.stock_quantity ?? 10,
+        stock_quantity: plant.details?.[0]?.stock_quantity ?? 1,
       });
+      setSalePriceInput(plant.sale_price ? formatNumberWithDots(plant.sale_price) : "");
+      setRentalPriceInput(plant.rental_price ? formatNumberWithDots(plant.rental_price) : "");
+      setStockInput(String(plant.details?.[0]?.stock_quantity ?? 1));
       setUseUrlMode(Boolean(plant.primary_image && !plant.primary_image.includes("/media/")));
     } else {
       setFormData({
@@ -86,13 +95,80 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         primary_image: "",
         sale_price: 0,
         rental_price: 0,
-        stock_quantity: 10,
+        stock_quantity: 1,
       });
+      setSalePriceInput("");
+      setRentalPriceInput("");
+      setStockInput("1");
       setUseUrlMode(false);
     }
     setErrors({});
     setUploadError(null);
   }, [plant, categories, open]);
+
+  // Xu ly nhap gia tien: lay so thuan tuy va xoa so 0 o dau (vi du: 0500000 -> 500000)
+  const handlePriceChange = (
+    field: "sale_price" | "rental_price",
+    valueStr: string,
+  ) => {
+    const digits = valueStr.replace(/\D/g, "");
+    const cleaned = digits.replace(/^0+(?=\d)/, "");
+    const numericValue = cleaned ? parseInt(cleaned, 10) : 0;
+
+    if (field === "sale_price") {
+      setSalePriceInput(cleaned);
+    } else {
+      setRentalPriceInput(cleaned);
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [field]: numericValue,
+    }));
+  };
+
+  // Khi roi khoi o nhap gia: tu dong format thanh chuoi co dau cham (500000 -> 500.000)
+  const handlePriceBlur = (field: "sale_price" | "rental_price") => {
+    const rawVal = field === "sale_price" ? salePriceInput : rentalPriceInput;
+    const formatted = formatNumberWithDots(rawVal);
+    if (field === "sale_price") {
+      setSalePriceInput(formatted);
+    } else {
+      setRentalPriceInput(formatted);
+    }
+  };
+
+  // Khi focus vao lai o nhap gia: chuyen ve so thuan tuy de chinh sua va tu dong boi den
+  const handlePriceFocus = (
+    field: "sale_price" | "rental_price",
+    e: React.FocusEvent<HTMLInputElement>,
+  ) => {
+    const rawVal = field === "sale_price" ? salePriceInput : rentalPriceInput;
+    const digits = rawVal.replace(/\D/g, "");
+    const cleaned = digits.replace(/^0+(?=\d)/, "");
+    if (field === "sale_price") {
+      setSalePriceInput(cleaned);
+    } else {
+      setRentalPriceInput(cleaned);
+    }
+    e.target.select();
+  };
+
+  // Xu ly nhap so luong ton kho: xoa so 0 o dau (vi du: 01555 -> 1555)
+  const handleStockChange = (rawVal: string) => {
+    const digits = rawVal.replace(/\D/g, "");
+    const cleaned = digits.replace(/^0+(?=\d)/, "");
+    setStockInput(cleaned);
+    const num = cleaned ? parseInt(cleaned, 10) : 0;
+    setFormData((prev) => ({ ...prev, stock_quantity: num }));
+  };
+
+  const handleStockBlur = () => {
+    if (!stockInput) {
+      setStockInput("1");
+      setFormData((prev) => ({ ...prev, stock_quantity: 1 }));
+    }
+  };
 
   const handleUploadFile = async (file: File) => {
     if (!file.type.startsWith("image/")) {
@@ -183,9 +259,9 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
       description: formData.description?.trim(),
       care_guide: formData.care_guide?.trim(),
       primary_image: formData.primary_image?.trim() || undefined,
-      sale_price: Number(formData.sale_price) || 0,
-      rental_price: Number(formData.rental_price) || 0,
-      stock_quantity: Number(formData.stock_quantity) || 0,
+      sale_price: parseNumberFromDots(salePriceInput),
+      rental_price: parseNumberFromDots(rentalPriceInput),
+      stock_quantity: Math.max(0, parseInt(stockInput || "0", 10)),
     });
   };
 
@@ -275,68 +351,80 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
         </div>
 
         {/* Pricing & Stock Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-3.5 rounded-xl bg-surface-50 border border-surface-200/80">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-3.5 rounded-xl bg-surface-50 border border-surface-200/80 items-start">
           <div className="space-y-1">
             <label
               htmlFor="plant-price-input"
-              className="block text-xs font-semibold text-surface-700"
+              className="block text-xs font-semibold text-surface-700 min-h-[2.25rem] leading-tight"
             >
               {LABELS.admin.PLANTS_FORM_PRICE}
             </label>
             <TextFieldCommon
               id="plant-price-input"
-              type="number"
-              min="0"
-              value={formData.sale_price ?? 0}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, sale_price: Number(e.target.value) }))
-              }
+              type="text"
+              inputMode="numeric"
+              value={salePriceInput}
+              onChange={(e) => handlePriceChange("sale_price", e.target.value)}
+              onFocus={(e) => handlePriceFocus("sale_price", e)}
+              onBlur={() => handlePriceBlur("sale_price")}
               placeholder={LABELS.admin.PLANTS_FORM_PRICE_PLACEHOLDER}
               disabled={isLoading}
             />
+            <div className="min-h-[1.25rem] mt-1 flex items-center">
+              {Number(formData.sale_price) > 0 && (
+                <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60">
+                  ≈ {formatNumberWithDots(formData.sale_price)} {CURRENCY.SYMBOL}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="space-y-1">
             <label
               htmlFor="plant-rental-price-input"
-              className="block text-xs font-semibold text-surface-700"
+              className="block text-xs font-semibold text-surface-700 min-h-[2.25rem] leading-tight"
             >
               {LABELS.admin.PLANTS_FORM_RENTAL_PRICE}
             </label>
             <TextFieldCommon
               id="plant-rental-price-input"
-              type="number"
-              min="0"
-              value={formData.rental_price ?? 0}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, rental_price: Number(e.target.value) }))
-              }
+              type="text"
+              inputMode="numeric"
+              value={rentalPriceInput}
+              onChange={(e) => handlePriceChange("rental_price", e.target.value)}
+              onFocus={(e) => handlePriceFocus("rental_price", e)}
+              onBlur={() => handlePriceBlur("rental_price")}
               placeholder={LABELS.admin.PLANTS_FORM_RENTAL_PRICE_PLACEHOLDER}
               disabled={isLoading}
             />
+            <div className="min-h-[1.25rem] mt-1 flex items-center">
+              {Number(formData.rental_price) > 0 && (
+                <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60 shrink-0">
+                  ≈ {formatNumberWithDots(formData.rental_price)} {CURRENCY.SYMBOL}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="space-y-1">
             <label
               htmlFor="plant-stock-input"
-              className="block text-xs font-semibold text-surface-700"
+              className="block text-xs font-semibold text-surface-700 min-h-[2.25rem] leading-tight"
             >
               {LABELS.admin.PLANTS_FORM_STOCK}
             </label>
             <TextFieldCommon
               id="plant-stock-input"
-              type="number"
-              min="0"
-              value={formData.stock_quantity ?? 10}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  stock_quantity: Number(e.target.value),
-                }))
-              }
+              type="text"
+              inputMode="numeric"
+              value={stockInput}
+              onFocus={(e) => e.target.select()}
+              onChange={(e) => handleStockChange(e.target.value)}
+              onBlur={handleStockBlur}
               placeholder={LABELS.admin.PLANTS_FORM_STOCK_PLACEHOLDER}
               disabled={isLoading}
             />
+            <div className="min-h-[1.25rem] mt-1" />
           </div>
         </div>
 
@@ -513,6 +601,9 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
           <textarea
             id="plant-desc-input"
             rows={3}
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
             value={formData.description || ""}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, description: e.target.value }))
@@ -534,6 +625,9 @@ export const AdminPlantFormModal: React.FC<AdminPlantFormModalProps> = ({
           <textarea
             id="plant-care-input"
             rows={3}
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
             value={formData.care_guide || ""}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, care_guide: e.target.value }))

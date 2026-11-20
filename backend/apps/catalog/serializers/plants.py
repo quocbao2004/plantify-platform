@@ -1,6 +1,10 @@
 import uuid
 from rest_framework import serializers
 from apps.catalog.models import Category, Plants, PlantsDetail, Media
+from apps.catalog.utils.plant_code import (
+    generate_plant_code_prefix,
+    generate_plant_assets_for_detail,
+)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -67,6 +71,8 @@ class PlantsSerializer(serializers.ModelSerializer):
     variants = serializers.SerializerMethodField()
     light_requirement = serializers.SerializerMethodField()
     care_level = serializers.SerializerMethodField()
+    primary_asset_code = serializers.SerializerMethodField()
+    assets_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Plants
@@ -88,10 +94,28 @@ class PlantsSerializer(serializers.ModelSerializer):
             "min_sale_price_vnd",
             "light_requirement",
             "care_level",
+            "primary_asset_code",
+            "assets_count",
             "created_at",
             "updated_at",
         ]
         read_only_fields = ["id", "slug", "created_at", "updated_at"]
+
+    def get_primary_asset_code(self, obj):
+        details = getattr(obj, "details", None)
+        if details:
+            first_detail = details.first()
+            if first_detail:
+                first_asset = first_detail.assets.first()
+                if first_asset:
+                    return first_asset.asset_code
+        return None
+
+    def get_assets_count(self, obj):
+        details = getattr(obj, "details", None)
+        if details:
+            return sum(d.assets.count() for d in details.all())
+        return 0
 
     def get_primary_image(self, obj):
         details = getattr(obj, "details", None)
@@ -169,29 +193,43 @@ class PlantsSerializer(serializers.ModelSerializer):
         primary_image_url = self.initial_data.get("primary_image") or self.initial_data.get("primary_image_url")
         sale_price = self.initial_data.get("sale_price") or self.initial_data.get("price")
         rental_price = self.initial_data.get("rental_price")
-        stock_quantity = self.initial_data.get("stock_quantity", 10)
+        stock_quantity = int(self.initial_data.get("stock_quantity") or 1)
 
         plant = Plants.objects.create(**validated_data)
 
-        if sale_price or primary_image_url:
-            sku = f"SKU-{str(plant.id)[:8].upper()}"
-            detail = PlantsDetail.objects.create(
-                plant=plant,
-                sku=sku,
-                size="M",
-                sale_price=sale_price or 0,
-                rental_price=rental_price or 0,
-                stock_quantity=stock_quantity or 10,
-                status=PlantsDetail.PlantStatus.AVAILABLE,
+        # Tạo mã SKU và tiền tố mã định danh cây từ tên cây
+        prefix = generate_plant_code_prefix(plant.name)
+        sku = f"SKU-{prefix}"
+        if PlantsDetail.objects.filter(sku=sku).exists():
+            sku = f"SKU-{prefix}-{str(plant.id)[:4].upper()}"
+
+        detail = PlantsDetail.objects.create(
+            plant=plant,
+            sku=sku,
+            size="M",
+            sale_price=sale_price or 0,
+            rental_price=rental_price or 0,
+            stock_quantity=stock_quantity,
+            status=PlantsDetail.PlantStatus.AVAILABLE,
+        )
+
+        if primary_image_url:
+            Media.objects.create(
+                plant_detail=detail,
+                file_url=str(primary_image_url).strip(),
+                media_type=Media.MediaType.IMAGE,
+                is_primary=True,
+                display_order=1,
             )
-            if primary_image_url:
-                Media.objects.create(
-                    plant_detail=detail,
-                    file_url=str(primary_image_url).strip(),
-                    media_type=Media.MediaType.IMAGE,
-                    is_primary=True,
-                    display_order=1,
-                )
+
+        # TỰ ĐỘNG SINH MÃ ĐỊNH DANH CÂY CẢNH (PlantAsset) THEO SỐ LƯỢNG TỒN KHO
+        # Ví dụ: Tên "Lan Đột Tử", số lượng = 1 -> tự sinh mã LDT-0001
+        generate_plant_assets_for_detail(
+            plant_detail=detail,
+            quantity=stock_quantity,
+            prefix=prefix,
+        )
+
         return plant
 
     def update(self, instance, validated_data):
@@ -204,6 +242,7 @@ class PlantsSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
 
+        prefix = generate_plant_code_prefix(instance.name)
         detail = instance.details.first()
         if detail:
             if sale_price is not None:
@@ -211,7 +250,16 @@ class PlantsSerializer(serializers.ModelSerializer):
             if rental_price is not None:
                 detail.rental_price = rental_price
             if stock_quantity is not None:
-                detail.stock_quantity = stock_quantity
+                new_qty = max(0, int(stock_quantity))
+                detail.stock_quantity = new_qty
+                # Tự động sinh thêm mã cây nếu số lượng mới lớn hơn số asset hiện tại
+                current_assets_count = detail.assets.count()
+                if new_qty > current_assets_count:
+                    generate_plant_assets_for_detail(
+                        plant_detail=detail,
+                        quantity=new_qty - current_assets_count,
+                        prefix=prefix,
+                    )
             detail.save()
 
             if primary_image_url:
@@ -227,15 +275,18 @@ class PlantsSerializer(serializers.ModelSerializer):
                         is_primary=True,
                         display_order=1,
                     )
-        elif sale_price or primary_image_url:
-            sku = f"SKU-{str(instance.id)[:8].upper()}"
+        else:
+            new_qty = max(0, int(stock_quantity or 1))
+            sku = f"SKU-{prefix}"
+            if PlantsDetail.objects.filter(sku=sku).exists():
+                sku = f"SKU-{prefix}-{str(instance.id)[:4].upper()}"
             new_detail = PlantsDetail.objects.create(
                 plant=instance,
                 sku=sku,
                 size="M",
                 sale_price=sale_price or 0,
                 rental_price=rental_price or 0,
-                stock_quantity=stock_quantity or 10,
+                stock_quantity=new_qty,
                 status=PlantsDetail.PlantStatus.AVAILABLE,
             )
             if primary_image_url:
@@ -246,4 +297,9 @@ class PlantsSerializer(serializers.ModelSerializer):
                     is_primary=True,
                     display_order=1,
                 )
+            generate_plant_assets_for_detail(
+                plant_detail=new_detail,
+                quantity=new_qty,
+                prefix=prefix,
+            )
         return instance

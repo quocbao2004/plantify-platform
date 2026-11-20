@@ -43,6 +43,10 @@ export const MESSAGES = {
   IMAGE_SIZE_EXCEEDED: "Dung lượng file không được vượt quá 10MB.",
   IMAGE_UPLOAD_FAILED: "Tải ảnh lên thất bại. Vui lòng thử lại.",
   IMAGE_URL_INVALID: "Link ảnh không khả dụng hoặc bị lỗi.",
+  ASSETS_GENERATED_SUCCESS: (count: number) => `Đã sinh thành công ${count} mã định danh cây cảnh mới.`,
+  ASSETS_GENERATE_ERROR: "Không thể sinh mã định danh cây cảnh. Vui lòng kiểm tra lại thông tin.",
+  ASSET_UPDATED_SUCCESS: "Đã cập nhật thông tin cây cảnh thành công.",
+  ASSET_UPDATE_ERROR: "Không thể cập nhật thông tin cây cảnh. Vui lòng thử lại sau.",
 } as const;
 
 export const VALIDATION_MESSAGES = {

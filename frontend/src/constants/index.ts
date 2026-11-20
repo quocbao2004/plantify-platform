@@ -36,6 +36,8 @@ export const API_ENDPOINTS = {
     PRODUCTS: "/catalog/products/",
     CATEGORIES: "/catalog/categories/",
     UPLOAD_IMAGE: "/catalog/upload-image/",
+    PLANT_ASSETS: "/catalog/plant-assets/",
+    PLANT_ASSETS_BATCH: "/catalog/plant-assets/batch-generate/",
   },
   INVENTORY: {
     STOCK: "/inventory/stock/",
@@ -78,6 +80,8 @@ export const API_ENDPOINTS = {
     PLANTS: "/catalog/plants/",
     CATEGORIES: "/catalog/categories/",
     UPLOAD_IMAGE: "/catalog/upload-image/",
+    PLANT_ASSETS: "/catalog/plant-assets/",
+    PLANT_ASSETS_BATCH: "/catalog/plant-assets/batch-generate/",
     SETTINGS: "/settings/admin/settings/",
     AUDIT_LOGS: "/settings/admin/audit-logs/",
   },
