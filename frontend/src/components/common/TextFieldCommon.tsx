@@ -32,6 +32,10 @@ export const TextFieldCommon = forwardRef<
       id,
       "aria-describedby": describedBy,
       "aria-invalid": invalid,
+      autoComplete = "off",
+      autoCorrect = "off",
+      autoCapitalize = "off",
+      spellCheck = false,
       ...props
     },
     ref,
@@ -41,6 +45,10 @@ export const TextFieldCommon = forwardRef<
 
     const inputNode = (
       <input
+        autoComplete={autoComplete}
+        autoCorrect={autoCorrect}
+        autoCapitalize={autoCapitalize}
+        spellCheck={spellCheck}
         {...props}
         ref={ref}
         id={inputId}
@@ -91,3 +99,4 @@ export const TextFieldCommon = forwardRef<
   },
 );
 TextFieldCommon.displayName = "TextFieldCommon";
+

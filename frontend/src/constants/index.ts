@@ -35,6 +35,9 @@ export const API_ENDPOINTS = {
   CATALOG: {
     PRODUCTS: "/catalog/products/",
     CATEGORIES: "/catalog/categories/",
+    UPLOAD_IMAGE: "/catalog/upload-image/",
+    PLANT_ASSETS: "/catalog/plant-assets/",
+    PLANT_ASSETS_BATCH: "/catalog/plant-assets/batch-generate/",
   },
   INVENTORY: {
     STOCK: "/inventory/stock/",
@@ -73,6 +76,12 @@ export const API_ENDPOINTS = {
     DASHBOARD: "/accounts/admin/dashboard/",
     USERS: "/accounts/admin/users/",
     ORDERS: "/orders/purchase-orders/",
+    RETURNS: "/orders/admin/returns/",
+    PLANTS: "/catalog/plants/",
+    CATEGORIES: "/catalog/categories/",
+    UPLOAD_IMAGE: "/catalog/upload-image/",
+    PLANT_ASSETS: "/catalog/plant-assets/",
+    PLANT_ASSETS_BATCH: "/catalog/plant-assets/batch-generate/",
     SETTINGS: "/settings/admin/settings/",
     AUDIT_LOGS: "/settings/admin/audit-logs/",
   },

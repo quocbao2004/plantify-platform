@@ -5,6 +5,7 @@ import { AuthGuard, GuestGuard, AdminGuard } from "./guards";
 // Feature Pages
 import { HomePage } from "@/features/catalog/pages/HomePage";
 import { ProductListPage, ProductDetailPage } from "@/features/catalog";
+import { PublicPlantAssetPage } from "@/features/catalog/pages/PublicPlantAssetPage";
 import { LoginPage, RegisterPage, ProfilePage } from "@/features/auth";
 import { CartPage } from "@/features/cart";
 import { CheckoutPage } from "@/features/checkout";
@@ -15,6 +16,9 @@ import {
   AdminDashboardPage,
   AdminCustomersPage,
   AdminOrdersPage,
+  AdminPlantsPage,
+  AdminCategoriesPage,
+  AdminReturnsPage,
 } from "@/features/admin";
 
 export const router = createBrowserRouter([
@@ -27,6 +31,7 @@ export const router = createBrowserRouter([
       { path: "catalog", element: <ProductListPage /> },
       { path: "catalog/:idOrSlug", element: <ProductDetailPage /> },
       { path: "rentals", element: <RentalListPage /> },
+      { path: "qr/:assetCode", element: <PublicPlantAssetPage /> },
 
       // Guest Only Routes (Login, Register)
       {
@@ -59,6 +64,9 @@ export const router = createBrowserRouter([
               { index: true, element: <AdminDashboardPage /> },
               { path: "customers", element: <AdminCustomersPage /> },
               { path: "orders", element: <AdminOrdersPage /> },
+              { path: "plants", element: <AdminPlantsPage /> },
+              { path: "categories", element: <AdminCategoriesPage /> },
+              { path: "returns", element: <AdminReturnsPage /> },
             ],
           },
         ],
