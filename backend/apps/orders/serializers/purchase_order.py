@@ -54,6 +54,8 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
     items_count = serializers.SerializerMethodField()
     status_display = serializers.CharField(source="get_status_display", read_only=True)
     payment = serializers.SerializerMethodField()
+    shipper_name = serializers.SerializerMethodField()
+    shipper_phone = serializers.SerializerMethodField()
 
     def get_payment(self, order):
         payment = purchase_payment(order)
@@ -88,6 +90,8 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
             "shipping_address",
             "recipient_name",
             "recipient_phone",
+            "shipper_name",
+            "shipper_phone",
             "notes",
             "items_count",
             "details",
@@ -100,3 +104,23 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
         if hasattr(obj, "details"):
             return obj.details.count()
         return 0
+
+    def _get_active_shipment(self, obj):
+        if not hasattr(obj, "ship_tasks"):
+            return None
+        for task in obj.ship_tasks.all():
+            if task.status != "CANCELLED":
+                return task
+        return None
+
+    def get_shipper_name(self, obj):
+        shipment = self._get_active_shipment(obj)
+        if shipment and shipment.staff and shipment.staff.user:
+            return shipment.staff.user.full_name or ""
+        return ""
+
+    def get_shipper_phone(self, obj):
+        shipment = self._get_active_shipment(obj)
+        if shipment and shipment.staff and shipment.staff.user:
+            return shipment.staff.user.phone or ""
+        return ""

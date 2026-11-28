@@ -79,6 +79,8 @@ export const API_ENDPOINTS = {
     USERS: "/accounts/admin/users/",
     ORDERS: "/orders/purchase-orders/",
     RETURNS: "/orders/admin/returns/",
+    SHIPMENTS: "/orders/admin/shipments/",
+    SHIPPERS: "/orders/admin/shippers/",
     PLANTS: "/catalog/plants/",
     CATEGORIES: "/catalog/categories/",
     UPLOAD_IMAGE: "/catalog/upload-image/",

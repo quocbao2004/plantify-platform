@@ -19,6 +19,7 @@ import {
   AdminPlantsPage,
   AdminCategoriesPage,
   AdminReturnsPage,
+  AdminShippingPage,
 } from "@/features/admin";
 
 export const router = createBrowserRouter([
@@ -67,6 +68,7 @@ export const router = createBrowserRouter([
               { path: "plants", element: <AdminPlantsPage /> },
               { path: "categories", element: <AdminCategoriesPage /> },
               { path: "returns", element: <AdminReturnsPage /> },
+              { path: "shipping", element: <AdminShippingPage /> },
             ],
           },
         ],

@@ -7,7 +7,7 @@ import { SelectCommon } from "@/components/common/SelectCommon";
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
 import { BadgeCommon } from "@/components/common/BadgeCommon";
 import { FormCommon } from "@/components/common/FormCommon";
-import { FieldCommon } from "@/components/common/FieldCommon";
+import { TextareaCommon } from "@/components/common/TextareaCommon";
 import { AdminReturnRequest, AdminReturnStatus, UpdateAdminReturnPayload } from "../types";
 import {
   ADMIN_RETURN_STATUS_CONFIG,
@@ -147,18 +147,14 @@ export const AdminReturnActionModal: React.FC<AdminReturnActionModalProps> = ({
         )}
 
         {/* Admin Notes */}
-        <FieldCommon
+        <TextareaCommon
           id="return-admin-notes"
           label={LABELS.admin.RETURNS_LABEL_ADMIN_NOTES}
-        >
-          <textarea
-            id="return-admin-notes"
-            rows={3}
-            value={adminNotes}
-            onChange={(e) => setAdminNotes(e.target.value)}
-            className="w-full px-3 py-2 text-xs rounded-lg border border-surface-300 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition-colors text-surface-900 bg-white resize-none"
-          />
-        </FieldCommon>
+          rows={3}
+          value={adminNotes}
+          onChange={(e) => setAdminNotes(e.target.value)}
+          className="w-full text-xs resize-none min-h-0"
+        />
 
         {/* Status Transition Preview */}
         {selectedStatus !== returnRequest.status && (

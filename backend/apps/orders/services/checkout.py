@@ -143,9 +143,16 @@ def update_order_status(order_id, new_status):
         return False
 
     if new_status == status.CANCELLED:
+        from apps.orders.services.shipment import cancel_shipments_for_purchase_order
+
         restore_stock(order)
         payment.status = Transaction.TransactionStatus.CANCELLED
         payment.save(update_fields=["status", "updated_at"])
+        cancel_shipments_for_purchase_order(order)
+    elif new_status == status.DELIVERING:
+        from apps.orders.services.shipment import ensure_shipment_for_purchase_order
+
+        ensure_shipment_for_purchase_order(order)
     elif new_status == status.COMPLETED and is_cod:
         payment.status = Transaction.TransactionStatus.SUCCESS
         payment.save(update_fields=["status", "updated_at"])
