@@ -5,6 +5,7 @@ import { ModalCommon } from "@/components/common/ModalCommon";
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { SelectCommon } from "@/components/common/SelectCommon";
 import { TextFieldCommon } from "@/components/common/TextFieldCommon";
+import { FormCommon } from "@/components/common/FormCommon";
 import { BadgeCommon } from "@/components/common/BadgeCommon";
 import { AdminOrder, AdminOrderStatus } from "../types";
 import {
@@ -62,7 +63,7 @@ export const AdminOrderStatusModal: React.FC<AdminOrderStatusModalProps> = ({
       title={LABELS.admin.ORDERS_MODAL_STATUS_TITLE}
       className="max-w-md w-full"
     >
-      <form id="admin-order-status-form" onSubmit={handleSubmit} className="space-y-4 pt-2">
+      <FormCommon id="admin-order-status-form" onSubmit={handleSubmit} className="space-y-4 pt-2">
         {/* Order Identifier & Current Status */}
         <div className="p-3.5 rounded-lg bg-surface-50 border border-surface-200/80 space-y-2">
           <div className="flex items-center justify-between text-xs">
@@ -90,38 +91,24 @@ export const AdminOrderStatusModal: React.FC<AdminOrderStatusModalProps> = ({
         </div>
 
         {/* Status Selection */}
-        <div className="space-y-1.5">
-          <label
-            htmlFor="order-status-select"
-            className="block text-xs font-semibold text-surface-700"
-          >
-            {LABELS.admin.ORDERS_LABEL_NEW_STATUS}
-          </label>
-          <SelectCommon
-            id="order-status-select"
-            options={ADMIN_ORDER_STATUS_SELECT_OPTIONS}
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value as AdminOrderStatus)}
-            disabled={isLoading}
-          />
-        </div>
+        <SelectCommon
+          id="order-status-select"
+          label={LABELS.admin.ORDERS_LABEL_NEW_STATUS}
+          options={ADMIN_ORDER_STATUS_SELECT_OPTIONS}
+          value={selectedStatus}
+          onChange={(e) => setSelectedStatus(e.target.value as AdminOrderStatus)}
+          disabled={isLoading}
+        />
 
         {/* Optional Notes */}
-        <div className="space-y-1.5">
-          <label
-            htmlFor="order-notes-input"
-            className="block text-xs font-semibold text-surface-700"
-          >
-            {LABELS.admin.ORDERS_LABEL_CONFIRM_NOTE}
-          </label>
-          <TextFieldCommon
-            id="order-notes-input"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder={LABELS.admin.ORDERS_LABEL_NO_NOTES}
-            disabled={isLoading}
-          />
-        </div>
+        <TextFieldCommon
+          id="order-notes-input"
+          label={LABELS.admin.ORDERS_LABEL_CONFIRM_NOTE}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder={LABELS.admin.ORDERS_LABEL_NO_NOTES}
+          disabled={isLoading}
+        />
 
         {/* Transition Preview Warning / Notice */}
         {selectedStatus !== order.status && (
@@ -158,7 +145,7 @@ export const AdminOrderStatusModal: React.FC<AdminOrderStatusModalProps> = ({
             {LABELS.admin.ORDERS_CONFIRM_SUBMIT}
           </ButtonCommon>
         </div>
-      </form>
+      </FormCommon>
     </ModalCommon>
   );
 };

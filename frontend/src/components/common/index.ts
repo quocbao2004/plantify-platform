@@ -5,6 +5,7 @@ export * from "./LoadingOverlay";
 export * from "./ButtonCommon";
 export * from "./LinkCommon";
 export * from "./TextFieldCommon";
+export * from "./TextareaCommon";
 export * from "./SelectCommon";
 export * from "./FormCommon";
 export * from "./ToastCommon";

@@ -11,7 +11,7 @@ from config.exceptions import ConflictError
 
 def order_queryset():
     return PurchaseOrder.objects.select_related("user").prefetch_related(
-        "details__plant_detail__plant", "details__plant_detail__media", "transactions",
+        "details__plant_detail__plant", "details__plant_detail__media", "transactions", "ship_tasks__staff__user",
     )
 
 
@@ -69,13 +69,21 @@ class PurchaseOrderDetailView(generics.RetrieveUpdateAPIView):
     def perform_update(self, serializer):
         order = PurchaseOrder.objects.select_for_update().get(pk=serializer.instance.pk)
         serializer.instance = order
+        new_status = serializer.validated_data.get("status", order.status)
         if order.checkout_key is not None:
             if set(serializer.validated_data) - {"status", "notes"}:
                 raise serializers.ValidationError("Chỉ có thể cập nhật trạng thái và ghi chú của đơn checkout.")
-            new_status = serializer.validated_data.get("status", order.status)
             if new_status != order.status and not update_order_status(order.pk, new_status):
                 raise ConflictError("Không thể chuyển đơn sang trạng thái này.")
         serializer.save()
+        if order.checkout_key is None and new_status == PurchaseOrder.OrderStatus.DELIVERING:
+            from apps.orders.services.shipment import ensure_shipment_for_purchase_order
+
+            ensure_shipment_for_purchase_order(order)
+        if order.checkout_key is None and new_status == PurchaseOrder.OrderStatus.COMPLETED:
+            from apps.orders.services.shipment import complete_shipments_for_purchase_order
+
+            complete_shipments_for_purchase_order(order)
 
 
 class PurchaseOrderDetailItemListCreateView(generics.ListAPIView):

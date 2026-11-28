@@ -82,3 +82,4 @@ class ReturnRequestAdmin(admin.ModelAdmin):
     list_display = ("return_code", "order", "user", "request_type", "reason", "status", "quantity", "created_at")
     list_filter = ("status", "request_type", "reason", "created_at")
     search_fields = ("return_code", "order__order_code", "user__email", "user__full_name", "user__phone")
+

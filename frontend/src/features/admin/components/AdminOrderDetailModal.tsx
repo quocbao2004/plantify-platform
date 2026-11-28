@@ -166,6 +166,16 @@ export const AdminOrderDetailModal: React.FC<AdminOrderDetailModalProps> = ({
                   {order.shipping_address}
                 </span>
               </div>
+              <div className="flex justify-between py-1 border-t border-surface-100">
+                <span className="text-surface-500 text-xs">
+                  {LABELS.admin.ORDERS_LABEL_SHIPPER}
+                </span>
+                <span className="font-semibold text-surface-900 text-xs">
+                  {order.shipper_name
+                    ? `${order.shipper_name}${order.shipper_phone ? ` (${order.shipper_phone})` : ""}`
+                    : LABELS.admin.SHIPPING_UNASSIGNED_BADGE}
+                </span>
+              </div>
             </div>
           </div>
         </div>

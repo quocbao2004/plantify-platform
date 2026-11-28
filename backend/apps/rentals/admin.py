@@ -54,6 +54,6 @@ class MaintenanceTaskAdmin(admin.ModelAdmin):
 
 @admin.register(ShipPlants)
 class ShipPlantsAdmin(admin.ModelAdmin):
-    list_display = ("ship_code", "rental_contract", "staff", "ship_type", "status", "scheduled_date")
-    list_filter = ("ship_type", "status", "scheduled_date")
-    search_fields = ("ship_code", "rental_contract__contract_code", "recipient_name")
+    list_display = ("ship_code", "ship_type", "purchase_order", "rental_contract", "staff", "status", "cod_amount", "cod_collected", "scheduled_date")
+    list_filter = ("ship_type", "status", "scheduled_date", "cod_collected")
+    search_fields = ("ship_code", "purchase_order__order_code", "rental_contract__contract_code", "recipient_name", "recipient_phone")

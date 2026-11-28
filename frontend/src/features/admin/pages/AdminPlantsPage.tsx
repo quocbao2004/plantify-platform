@@ -386,9 +386,11 @@ export const AdminPlantsPage: React.FC = () => {
           {ADMIN_PLANT_TABS.map((tab) => {
             const isActive = activeTab === tab.key;
             return (
-              <button
+              <ButtonCommon
                 key={tab.key}
                 type="button"
+                variant="unstyled"
+                size="unstyled"
                 onClick={() => handleTabChange(tab.key)}
                 className={`px-3.5 py-2 text-xs font-semibold rounded-t-lg transition-colors whitespace-nowrap border-b-2 ${
                   isActive
@@ -397,7 +399,7 @@ export const AdminPlantsPage: React.FC = () => {
                 }`}
               >
                 {tab.label}
-              </button>
+              </ButtonCommon>
             );
           })}
         </div>

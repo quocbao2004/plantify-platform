@@ -66,6 +66,8 @@ export interface AdminOrder {
   shipping_address: string;
   recipient_name: string;
   recipient_phone: string;
+  shipper_name?: string;
+  shipper_phone?: string;
   notes?: string;
   items_count?: number;
   details?: AdminOrderDetailItem[];
@@ -315,3 +317,87 @@ export interface UpdateAdminPlantAssetPayload {
   notes?: string;
 }
 
+
+
+// ─── Admin Shipping Management Types (ShipPlants) ─────────────────────────
+
+export type AdminShipmentStatus =
+  | "PENDING"
+  | "UNASSIGNED"
+  | "ASSIGNED"
+  | "SHIPPING"
+  | "DELIVERING"
+  | "DELIVERED_PENDING_CONFIRM"
+  | "DELIVERED"
+  | "COMPLETED"
+  | "CANCELLED"
+  | "FAILED";
+
+export interface AdminShipper {
+  id: string;
+  full_name: string;
+  email: string;
+  phone?: string;
+  role: string;
+  staff_code?: string;
+}
+
+export interface AdminShipment {
+  id: string;
+  tracking_code?: string;
+  ship_code?: string;
+  order?: string;
+  purchase_order?: string;
+  rental_contract?: string;
+  order_code?: string;
+  order_total?: number | string;
+  shipper?: string | null;
+  staff?: string | null;
+  shipper_name?: string;
+  staff_name?: string;
+  shipper_phone?: string;
+  staff_phone?: string;
+  shipper_email?: string;
+  ship_type?: string;
+  status: AdminShipmentStatus;
+  status_display?: string;
+  recipient_name: string;
+  recipient_phone: string;
+  shipping_address?: string;
+  delivery_address?: string;
+  cod_amount: number | string;
+  cod_collected: number | string;
+  proof_image?: string;
+  shipper_notes?: string;
+  admin_notes?: string;
+  notes?: string;
+  items_count?: number;
+  plant_names?: string[];
+  assigned_at?: string | null;
+  scheduled_date?: string | null;
+  delivered_at?: string | null;
+  delivered_date?: string | null;
+  confirmed_at?: string | null;
+  confirmed_date?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminShipmentQueryParams {
+  search?: string;
+  status?: string;
+  shipper?: string;
+  ordering?: string;
+  page?: number;
+  page_size?: number;
+}
+
+export interface UpdateAdminShipmentPayload {
+  shipper?: string | null;
+  staff?: string | null;
+  status?: AdminShipmentStatus;
+  proof_image?: string;
+  shipper_notes?: string;
+  admin_notes?: string;
+  cod_collected?: number;
+}

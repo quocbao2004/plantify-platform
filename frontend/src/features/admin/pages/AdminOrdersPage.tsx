@@ -172,6 +172,27 @@ export const AdminOrdersPage: React.FC = () => {
         ),
       },
       {
+        key: "shipper",
+        header: LABELS.admin.ORDERS_COL_SHIPPER,
+        render: (row) =>
+          row.shipper_name ? (
+            <div className="space-y-0.5">
+              <p className="font-semibold text-surface-900 text-xs">
+                {row.shipper_name}
+              </p>
+              {row.shipper_phone && (
+                <p className="text-[11px] text-surface-500 font-mono">
+                  {row.shipper_phone}
+                </p>
+              )}
+            </div>
+          ) : (
+            <span className="text-xs text-surface-400">
+              {LABELS.admin.STATUS_UNAVAILABLE}
+            </span>
+          ),
+      },
+      {
         key: "items_count",
         header: LABELS.admin.ORDERS_COL_ITEMS_COUNT,
         align: "center",
@@ -358,9 +379,11 @@ export const AdminOrdersPage: React.FC = () => {
           {ADMIN_ORDER_TABS.map((tab) => {
             const isActive = activeTab === tab.key;
             return (
-              <button
+              <ButtonCommon
                 key={tab.key}
                 type="button"
+                variant="unstyled"
+                size="unstyled"
                 onClick={() => handleTabChange(tab.key)}
                 className={`px-3.5 py-2 text-xs font-semibold rounded-t-lg transition-colors whitespace-nowrap border-b-2 ${
                   isActive
@@ -369,7 +392,7 @@ export const AdminOrdersPage: React.FC = () => {
                 }`}
               >
                 {tab.label}
-              </button>
+              </ButtonCommon>
             );
           })}
         </div>
