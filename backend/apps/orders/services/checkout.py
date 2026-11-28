@@ -153,9 +153,13 @@ def update_order_status(order_id, new_status):
         from apps.orders.services.shipment import ensure_shipment_for_purchase_order
 
         ensure_shipment_for_purchase_order(order)
-    elif new_status == status.COMPLETED and is_cod:
-        payment.status = Transaction.TransactionStatus.SUCCESS
-        payment.save(update_fields=["status", "updated_at"])
+    elif new_status == status.COMPLETED:
+        from apps.orders.services.shipment import complete_shipments_for_purchase_order
+
+        if is_cod:
+            payment.status = Transaction.TransactionStatus.SUCCESS
+            payment.save(update_fields=["status", "updated_at"])
+        complete_shipments_for_purchase_order(order)
 
     order.status = new_status
     order.save(update_fields=["status", "updated_at"])

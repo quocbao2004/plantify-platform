@@ -45,6 +45,21 @@ def cancel_shipments_for_purchase_order(order: PurchaseOrder) -> None:
     ).update(status=ShipPlants.ShipStatus.CANCELLED)
 
 
+def complete_shipments_for_purchase_order(order: PurchaseOrder) -> None:
+    """
+    When Admin manually marks a PurchaseOrder as COMPLETED, automatically sync
+    all active ShipPlants records to DELIVERED (bypassing POD requirement).
+    """
+    from django.utils import timezone
+
+    ShipPlants.objects.filter(purchase_order=order).exclude(
+        status__in=[ShipPlants.ShipStatus.DELIVERED, ShipPlants.ShipStatus.CANCELLED]
+    ).update(
+        status=ShipPlants.ShipStatus.DELIVERED,
+        confirmed_date=timezone.now(),
+    )
+
+
 def sync_delivering_purchase_orders() -> None:
     """
     Backfill ShipPlants records for any PurchaseOrder already in DELIVERING

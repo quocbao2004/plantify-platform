@@ -80,6 +80,10 @@ class PurchaseOrderDetailView(generics.RetrieveUpdateAPIView):
             from apps.orders.services.shipment import ensure_shipment_for_purchase_order
 
             ensure_shipment_for_purchase_order(order)
+        if order.checkout_key is None and new_status == PurchaseOrder.OrderStatus.COMPLETED:
+            from apps.orders.services.shipment import complete_shipments_for_purchase_order
+
+            complete_shipments_for_purchase_order(order)
 
 
 class PurchaseOrderDetailItemListCreateView(generics.ListAPIView):
