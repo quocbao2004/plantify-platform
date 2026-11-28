@@ -1,4 +1,6 @@
 /** Shared Vietnamese interface copy. Keep labels, placeholders and accessibility text here. */
+export const STORE_HOTLINE = "1900 6868";
+
 export const LABELS = {
   common: {
     DIALOG_TITLE: "Thông tin",
@@ -122,7 +124,12 @@ export const LABELS = {
     SIZE: "Chọn kích thước:",
     LIGHT: "Ánh sáng",
     CARE: "Chăm sóc",
-    BUY: "Mua ngay",
+    ADD_TO_CART: "Thêm vào giỏ hàng",
+    CONTACT_TO_ORDER: "Liên hệ đặt hàng",
+    INVALID_QUANTITY: "Nhập số nguyên lớn hơn 0.",
+    STOCK_CONTACT: `Kho hiện không đủ số lượng. Gọi ${STORE_HOTLINE} để đặt hàng.`,
+    ORDER_LIMIT_CONTACT: `Số lượng vượt giới hạn đặt online. Gọi ${STORE_HOTLINE} để đặt hàng.`,
+    UNAVAILABLE_FOR_PURCHASE: "Hiện chưa thể mua",
     RENT: "Thuê cây định kỳ",
     EASY_BADGE: "Dễ chăm",
     BESTSELLER: "Bán chạy",
@@ -154,13 +161,16 @@ export const LABELS = {
     CARE_TITLE: "Đồng hành chăm cây",
     CARE_DESCRIPTION: "Tư vấn tận tâm, kể cả sau mua",
     COLLECTION_EYEBROW: "Mỗi không gian, một sắc xanh",
+    COLLECTION_EMPTY: "Danh mục cây đang được cập nhật.",
+    COLLECTION_ERROR: "Chưa tải được danh mục cây.",
     EXPLORE_ALL: "Khám phá tất cả",
     FEATURED_EYEBROW: "Được yêu thương nhiều nhất",
     FEATURED_TITLE: "Những chiếc lá được chọn nhiều",
     ALL_PLANTS: "Xem tất cả cây",
     FEATURED_FILTERS: "Lọc cây nổi bật",
-    EMPTY: "Những người bạn xanh đang được chuẩn bị.",
-    EXPLORE_PLANTS: "Khám phá tất cả cây",
+    FEATURED_ALL: "Tất cả",
+    FEATURED_ERROR: "Chưa tải được danh sách cây nổi bật.",
+    RETRY: "Thử lại",
     CARE_EYEBROW: "Mới bắt đầu trồng cây?",
     CARE_HEADLINE: "Bạn không cần có “bàn tay xanh”.",
     CARE_COPY:
@@ -214,6 +224,7 @@ export const LABELS = {
   },
   cart: {
     TITLE: "Giỏ hàng của bạn",
+    VIEW: "Xem giỏ hàng",
     DESCRIPTION: "Xem lại cây cảnh và dịch vụ bạn đã chọn trước khi thanh toán",
     EMPTY_TITLE: "Giỏ hàng hiện đang trống",
     EMPTY_DESCRIPTION:
@@ -760,7 +771,7 @@ export const LABELS = {
     PUBLIC_ASSET_CARE_GUIDE_EMPTY: "Chưa có hướng dẫn chăm sóc riêng cho loài cây này.",
     PUBLIC_ASSET_DESCRIPTION: "Đặc điểm cây cảnh:",
     PUBLIC_ASSET_HOTLINE_TITLE: "Hỗ trợ kỹ thuật & Bảo dưỡng cây:",
-    PUBLIC_ASSET_HOTLINE_NUMBER: "1900 6868 (Hotline K&B Plants)",
+    PUBLIC_ASSET_HOTLINE_NUMBER: `${STORE_HOTLINE} (Hotline K&B Plants)`,
     PUBLIC_ASSET_REQUEST_MAINTENANCE: "Gửi yêu cầu chăm sóc / Đổi trả cây",
     PUBLIC_ASSET_NOT_FOUND: "Không tìm thấy thông tin cây cảnh này trên hệ thống.",
     PUBLIC_ASSET_NOT_FOUND_DESC: "Mã định danh không tồn tại hoặc đã bị thu hồi khỏi hệ thống.",

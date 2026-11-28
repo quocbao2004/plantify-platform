@@ -2,6 +2,7 @@ from django.urls import path
 from apps.catalog.views import (
     CategoryListCreateView,
     CategoryDetailView,
+    PlantsBySlugView,
     PlantsListCreateView,
     PlantsDetailView,
     PlantsDetailItemListCreateView,
@@ -29,7 +30,8 @@ urlpatterns = [
 
     # Plants
     path("plants/", PlantsListCreateView.as_view(), name="plants-list"),
-    path("plants/<str:pk>/", PlantsDetailView.as_view(), name="plants-detail"),
+    path("plants/<uuid:pk>/", PlantsDetailView.as_view(), name="plants-detail"),
+    path("plants/<slug:slug>/", PlantsBySlugView.as_view(), name="plants-by-slug"),
     path("plant-details/", PlantsDetailItemListCreateView.as_view(), name="plant-details-list"),
     path("plant-details/<uuid:pk>/", PlantsDetailItemView.as_view(), name="plant-details-detail"),
 

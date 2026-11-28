@@ -183,7 +183,7 @@ export function Header() {
                 to="/login"
                 variant="brand"
                 size="sm"
-                className="rounded-full px-4 text-xs font-semibold whitespace-nowrap ml-1 shadow-sm"
+                className="store-login-button rounded-full px-4 text-xs font-semibold whitespace-nowrap ml-1 shadow-sm"
               >
                 {LABELS.navigation.LOGIN}
               </LinkCommon>

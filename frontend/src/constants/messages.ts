@@ -15,6 +15,9 @@ export const MESSAGES = {
     "Không thể lưu dữ liệu trên thiết bị. Vui lòng kiểm tra cài đặt trình duyệt.",
   FAVORITE_ADDED: (name: string) => `Đã thêm ${name} vào danh sách yêu thích.`,
   FAVORITE_REMOVED: (name: string) => `Đã bỏ ${name} khỏi danh sách yêu thích.`,
+  CART_ITEM_ADDED: (name: string, quantity: number) =>
+    `Đã thêm ${quantity} × ${name} vào giỏ hàng.`,
+  CART_QUANTITY_LIMIT: "Giỏ hàng đã đạt giới hạn số lượng cho phép.",
   USER_STATUS_UPDATED: "Đã cập nhật trạng thái tài khoản thành công.",
   USER_STATUS_UPDATE_ERROR:
     "Không thể cập nhật trạng thái tài khoản. Vui lòng thử lại sau.",

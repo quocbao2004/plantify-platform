@@ -28,6 +28,11 @@ class TransactionSerializer(serializers.ModelSerializer):
     refunds = RefundSerializer(many=True, read_only=True)
     user_email = serializers.CharField(source="user.email", read_only=True)
 
+    def validate_purchase_order(self, order):
+        if order and order.checkout_key:
+            raise serializers.ValidationError("Giao dịch COD được quản lý theo trạng thái đơn hàng.")
+        return order
+
     class Meta:
         model = Transaction
         fields = [

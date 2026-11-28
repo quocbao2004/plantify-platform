@@ -17,6 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
             "name",
             "slug",
             "description",
+            "image_url",
             "is_active",
             "sort_order",
             "plants_count",
@@ -69,10 +70,9 @@ class PlantsSerializer(serializers.ModelSerializer):
     rental_price = serializers.SerializerMethodField()
     min_sale_price_vnd = serializers.SerializerMethodField()
     variants = serializers.SerializerMethodField()
-    light_requirement = serializers.SerializerMethodField()
-    care_level = serializers.SerializerMethodField()
     primary_asset_code = serializers.SerializerMethodField()
     assets_count = serializers.SerializerMethodField()
+    units_sold = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Plants
@@ -84,6 +84,8 @@ class PlantsSerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "care_guide",
+            "care_level",
+            "light_requirement",
             "is_active",
             "details",
             "variants",
@@ -92,24 +94,18 @@ class PlantsSerializer(serializers.ModelSerializer):
             "sale_price",
             "rental_price",
             "min_sale_price_vnd",
-            "light_requirement",
-            "care_level",
             "primary_asset_code",
             "assets_count",
+            "units_sold",
             "created_at",
             "updated_at",
         ]
         read_only_fields = ["id", "slug", "created_at", "updated_at"]
 
     def get_primary_asset_code(self, obj):
-        details = getattr(obj, "details", None)
-        if details:
-            first_detail = details.first()
-            if first_detail:
-                first_asset = first_detail.assets.first()
-                if first_asset:
-                    return first_asset.asset_code
-        return None
+        first_detail = next(iter(obj.details.all()), None)
+        first_asset = next(iter(first_detail.assets.all()), None) if first_detail else None
+        return first_asset.asset_code if first_asset else None
 
     def get_assets_count(self, obj):
         details = getattr(obj, "details", None)
@@ -118,16 +114,9 @@ class PlantsSerializer(serializers.ModelSerializer):
         return 0
 
     def get_primary_image(self, obj):
-        details = getattr(obj, "details", None)
-        if details:
-            for detail in details.all():
-                for m in detail.media.all():
-                    if m.is_primary:
-                        return m.file_url
-                first_media = detail.media.first()
-                if first_media:
-                    return first_media.file_url
-        return None
+        images = self.get_images(obj)
+        primary = next((image for image in images if image["is_primary"]), None)
+        return (primary or images[0])["image"] if images else None
 
     def get_images(self, obj):
         imgs = []
@@ -135,6 +124,8 @@ class PlantsSerializer(serializers.ModelSerializer):
         if details:
             for detail in details.all():
                 for m in detail.media.all():
+                    if m.media_type != Media.MediaType.IMAGE:
+                        continue
                     imgs.append({
                         "id": str(m.id),
                         "image": m.file_url,
@@ -146,7 +137,7 @@ class PlantsSerializer(serializers.ModelSerializer):
     def get_sale_price(self, obj):
         details = getattr(obj, "details", None)
         if details:
-            prices = [d.sale_price for d in details.all() if d.sale_price is not None]
+            prices = [d.sale_price for d in details.all() if d.sale_price and d.sale_price > 0]
             if prices:
                 return float(min(prices))
         return 0
@@ -176,18 +167,13 @@ class PlantsSerializer(serializers.ModelSerializer):
                 "height_cm": float(d.height) if d.height is not None else None,
                 "sale_price_vnd": float(d.sale_price) if d.sale_price is not None else 0,
                 "deposit_vnd": float(d.rental_price) if d.rental_price is not None else 0,
+                "stock_quantity": d.stock_quantity,
                 "can_sell": bool(d.sale_price and d.sale_price > 0),
                 "can_rent": bool(d.rental_price and d.rental_price > 0),
                 "is_active": d.status == PlantsDetail.PlantStatus.AVAILABLE,
                 "rental_rates": [],
             })
         return res
-
-    def get_light_requirement(self, obj):
-        return "MEDIUM"
-
-    def get_care_level(self, obj):
-        return "EASY"
 
     def create(self, validated_data):
         primary_image_url = self.initial_data.get("primary_image") or self.initial_data.get("primary_image_url")

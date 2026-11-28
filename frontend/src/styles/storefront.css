@@ -304,6 +304,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 30px; }
   .care-guide summary { font-size: 12px; }
   .search-suggestions > span { width: 100%; }
 }
+@media (max-width: 430px) {
+  .header-actions .store-login-button { display: none; }
+}
 @media (max-width: 359px) {
   .header-actions .store-icon-button { width: 30px; }
   .store-brand > span:not(.brand-dot) { font-size: 21px; }

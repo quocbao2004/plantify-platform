@@ -13,10 +13,12 @@ import { notifyFormErrors } from "@/utils/formErrors";
 import { registerSchema, type RegisterFormValues } from "../schemas/authSchemas";
 import { useRegister } from "../hooks/useAuth";
 import { useGoogleAuth } from "../hooks/useGoogleAuth";
+import { authReturnLink, useAuthDestination } from "../utils/checkoutRedirect";
 import { PasswordField } from "./PasswordField";
 import { SocialAuthButtons } from "./SocialAuthButtons";
 
 export function RegisterForm() {
+  const destination = useAuthDestination();
   const { mutateAsync: registerUser, isPending } = useRegister();
   const { isPending: isGooglePending, handleGoogleLogin } = useGoogleAuth();
   const inFlight = useRef(false);
@@ -159,7 +161,7 @@ export function RegisterForm() {
         <SocialAuthButtons onGoogleClick={handleGoogleLogin} isLoading={isGooglePending} disabled={busy} />
         <p className="text-xs text-surface-500 text-center mt-6">
           {LABELS.auth.HAVE_ACCOUNT}{" "}
-          <LinkCommon to="/login" className="font-semibold text-brand hover:underline">{LABELS.navigation.LOGIN}</LinkCommon>
+          <LinkCommon to={authReturnLink("/login", destination)} className="font-semibold text-brand hover:underline">{LABELS.navigation.LOGIN}</LinkCommon>
         </p>
       </FormCommon>
     </>

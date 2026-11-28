@@ -85,3 +85,24 @@ Verify seed behavior against an isolated in-memory SQLite database:
 ```powershell
 .\.venv\Scripts\python.exe manage.py test apps.common.tests --settings=config.settings.test
 ```
+
+## Thanh toán mua cây qua VNPay
+
+Áp dụng migration Django và đặt các biến sau trong `backend/.env`. Lấy mã kết nối và khóa bí mật từ [tài khoản merchant VNPay Sandbox](https://sandbox.vnpayment.vn/devreg/). Giữ khóa bí mật ở backend.
+
+```dotenv
+VNPAY_TMN_CODE=
+VNPAY_HASH_SECRET=
+VNPAY_PAYMENT_URL=https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+VNPAY_QUERY_URL=https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
+VNPAY_RETURN_URL=https://backend.example/api/v1/payments/vnpay/return/
+VNPAY_ORDERS_URL=http://127.0.0.1:3000/orders
+```
+
+Đăng ký IPN `https://backend.example/api/v1/payments/vnpay/ipn/` với VNPay. Thay tên miền ví dụ bằng backend HTTPS mà cổng thanh toán truy cập được. `VNPAY_ORDERS_URL` trỏ tới trang đơn hàng của frontend. Khởi động lại backend sau khi cập nhật `.env`. Checkout sẽ cho chọn VNPay khi đủ cấu hình. [Tài liệu VNPay PAY 2.1.0](https://sandbox.vnpayment.vn/apis/docs/thanh-toan-pay/pay.html)
+
+Đơn VNPay giữ tồn kho khi tạo và chỉ chuyển sang đã thanh toán khi backend nhận kết quả hợp lệ từ VNPay. Nếu hết phiên 15 phút mà đơn vẫn chờ xác nhận, nhân viên có thể đối soát mã giao dịch trên Django Admin bằng lệnh sau. Tồn kho chỉ được trả lại khi có kết quả xác nhận giao dịch thất bại, hoặc kết quả xác thực rằng giao dịch hết hạn chưa tồn tại. [Tài liệu VNPay QueryDR](https://sandbox.vnpayment.vn/apis/docs/truy-van-hoan-tien/querydr%26refund.html)
+
+```powershell
+.\.venv\Scripts\python.exe manage.py reconcile_vnpay <ma-giao-dich> --server-ip <ip-cua-backend>
+```

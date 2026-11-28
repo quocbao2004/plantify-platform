@@ -7,6 +7,7 @@ import { LABELS, PRODUCT_LABELS } from "@/constants/labels";
 import { Heart, Plus, Sprout, ArrowUpRight } from "lucide-react";
 import { formatCurrencyVND } from "@/utils";
 import { useWishlistStore } from "@/stores/wishlistStore";
+import { CARE_LEVEL_LABELS } from "../constants";
 import type { Product } from "../types";
 
 interface ProductCardProps {
@@ -21,6 +22,14 @@ export function ProductCard({ product, onQuickView, badge }: ProductCardProps) {
   );
   const toggleFavorite = useWishlistStore((state) => state.toggle);
   const detailPath = `/catalog/${product.slug || product.id}`;
+  const careLabel = product.care_level === "MODERATE"
+    ? LABELS.catalog.MODERATE_CARE
+    : product.care_level && CARE_LEVEL_LABELS[product.care_level];
+  const lightLabel = product.light_requirement === "LOW" ? LABELS.catalog.LOW_LIGHT : LABELS.catalog.DAILY_GREEN;
+  const description = [careLabel, product.light_requirement && lightLabel].filter(Boolean).join(" · ");
+  const isBestseller = (product.units_sold ?? 0) > 0;
+  const badgeLabel = badge || (isBestseller ? LABELS.catalog.BESTSELLER : undefined)
+    || (product.care_level === "EASY" ? LABELS.catalog.EASY_BADGE : undefined);
   const imageContent = product.primary_image ? (
     <img
       src={product.primary_image}
@@ -54,12 +63,7 @@ export function ProductCard({ product, onQuickView, badge }: ProductCardProps) {
             {imageContent}
           </LinkCommon>
         )}
-        <span className="product-badge">
-          {badge ||
-            (product.care_level === "EASY"
-              ? LABELS.catalog.EASY_BADGE
-              : LABELS.catalog.BESTSELLER)}
-        </span>
+        {badgeLabel && <span className="product-badge">{badgeLabel}</span>}
         <ButtonCommon
           variant="unstyled"
           type="button"
@@ -98,15 +102,7 @@ export function ProductCard({ product, onQuickView, badge }: ProductCardProps) {
             {product.name}
           </LinkCommon>
         )}
-        <p className="product-description">
-          {product.care_level === "EASY"
-            ? LABELS.catalog.EASY_CARE
-            : LABELS.catalog.MODERATE_CARE}
-          <span aria-hidden="true"> · </span>
-          {product.light_requirement === "LOW"
-            ? LABELS.catalog.LOW_LIGHT
-            : LABELS.catalog.DAILY_GREEN}
-        </p>
+        {description && <p className="product-description">{description}</p>}
         <div className="product-price-row">
           <span className="product-price">
             {product.min_sale_price_vnd

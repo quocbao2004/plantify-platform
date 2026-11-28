@@ -7,6 +7,7 @@ import { LinkCommon } from "@/components/common/LinkCommon";
 import { CheckboxCommon } from "@/components/common/CheckboxCommon";
 import { LABELS } from "@/constants/labels";
 import { useLoginForm } from "../hooks/useLoginForm";
+import { authReturnLink, useAuthDestination } from "../utils/checkoutRedirect";
 
 import { AuthLayout } from "../components/AuthLayout";
 
@@ -66,6 +67,7 @@ const EyeOffIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const LoginPage: React.FC = () => {
+  const destination = useAuthDestination();
   const {
     email, setEmail,
     password, setPassword,
@@ -194,7 +196,7 @@ export const LoginPage: React.FC = () => {
             <p className="text-xs text-surface-500 text-center mt-6">
               {LABELS.auth.NO_ACCOUNT}{" "}
               <LinkCommon
-                to="/register"
+                to={authReturnLink("/register", destination)}
                 className="font-semibold text-brand hover:underline"
               >
                 {LABELS.auth.REGISTER_NOW}

@@ -1,6 +1,10 @@
 from rest_framework import serializers
+from django.utils import timezone
 from apps.orders.models import PurchaseOrder, PurchaseOrderDetail
 from apps.catalog.serializers import PlantsDetailSerializer
+from apps.payments.models import Transaction
+from apps.payments.providers.vnpay import PAYMENT_WINDOW, vnpay_enabled
+from apps.payments.services.vnpay import purchase_payment
 
 
 class PurchaseOrderDetailSerializer(serializers.ModelSerializer):
@@ -49,6 +53,23 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
     user_phone = serializers.CharField(source="user.phone", read_only=True, default="")
     items_count = serializers.SerializerMethodField()
     status_display = serializers.CharField(source="get_status_display", read_only=True)
+    payment = serializers.SerializerMethodField()
+
+    def get_payment(self, order):
+        payment = purchase_payment(order)
+        if payment is None:
+            return None
+        is_pending_vnpay = (
+            payment.payment_method == Transaction.PaymentMethod.VNPAY
+            and payment.status == Transaction.TransactionStatus.PENDING
+        )
+        expired = payment.transaction_date + PAYMENT_WINDOW <= timezone.now()
+        return {
+            "method": payment.payment_method,
+            "status": payment.status,
+            "can_resume": is_pending_vnpay and not expired and vnpay_enabled(),
+            "expired": is_pending_vnpay and expired,
+        }
 
     class Meta:
         model = PurchaseOrder
@@ -60,6 +81,8 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
             "user_phone",
             "order_code",
             "total_amount",
+            "shipping_fee",
+            "payment",
             "status",
             "status_display",
             "shipping_address",

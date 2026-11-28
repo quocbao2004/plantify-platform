@@ -6,10 +6,13 @@ from apps.orders.views import (
     ReturnRequestListCreateView,
     ReturnRequestDetailView,
 )
+from apps.orders.views.checkout import CartQuoteView, CheckoutView
 
 app_name = "orders"
 
 urlpatterns = [
+    path("cart/quote/", CartQuoteView.as_view(), name="cart-quote"),
+    path("checkout/", CheckoutView.as_view(), name="checkout"),
     # Purchase Orders (Customer & Staff)
     path("purchase-orders/", PurchaseOrderListCreateView.as_view(), name="purchase-order-list"),
     path("purchase-orders/<uuid:pk>/", PurchaseOrderDetailView.as_view(), name="purchase-order-detail"),

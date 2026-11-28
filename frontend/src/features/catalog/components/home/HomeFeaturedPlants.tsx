@@ -5,35 +5,39 @@ import { useState } from "react";
 
 import { ArrowRight, Droplets, Leaf, Sun } from "lucide-react";
 import { ModalCommon } from "@/components/common/ModalCommon";
+import { LoadingOverlay } from "@/components/common/LoadingOverlay";
 import { formatCurrencyVND } from "@/utils";
 import { ProductCard } from "../ProductCard";
-import { useProducts } from "../../hooks/useProducts";
-import {
-  homeProducts,
-  homeFilters,
-  type HomeFilter,
-} from "../../constants/homeContent";
+import { useCategories, useProducts } from "../../hooks/useProducts";
 import { CARE_LEVEL_LABELS, LIGHT_REQUIREMENT_LABELS } from "../../constants";
-import type { Product } from "../../types";
+import type { Product, ProductQueryParams } from "../../types";
+
+const featuredParams: ProductQueryParams = { page_size: 4, sort_by: "popular" };
 
 export function HomeFeaturedPlants() {
-  const { data } = useProducts({ page_size: 4 }, { silentError: true });
-  const [filter, setFilter] = useState<HomeFilter>("all");
+  const [filter, setFilter] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const products = data?.results?.length ? data.results : homeProducts;
-  const filteredProducts = products.filter((product) => {
-    if (filter === "easy") return product.care_level === "EASY";
-    if (filter === "indoor") {
-      return (
-        product.category_name.toLocaleLowerCase("vi").includes("trong nhà") ||
-        product.light_requirement === "BRIGHT_INDIRECT" ||
-        product.light_requirement === "MEDIUM"
-      );
-    }
-    if (filter === "desktop")
-      return product.category_name.toLocaleLowerCase("vi").includes("bàn");
-    return true;
-  });
+  const { data: categories } = useCategories({ silentError: true });
+  const filters: { value: string; label: string; params: ProductQueryParams }[] = [
+    { value: "all", label: LABELS.home.FEATURED_ALL, params: {} },
+    { value: "easy", label: LABELS.catalog.EASY_CARE, params: { care_level: "EASY" } },
+    ...(categories?.results.slice(0, 2) ?? []).map((category) => ({
+      value: category.id,
+      label: category.name,
+      params: { category: category.slug },
+    })),
+  ];
+  const activeFilter = filters.find((item) => item.value === filter) ?? filters[0];
+  const filterParams = activeFilter.params;
+  const { data, isLoading, isError, isFetching, refetch } = useProducts(
+    { ...featuredParams, ...filterParams },
+    { silentError: true },
+  );
+  const products = data?.results ?? [];
+  const previewPrice = selectedProduct?.min_sale_price_vnd;
+  const previewVariant = previewPrice
+    ? selectedProduct?.variants?.find((variant) => variant.sale_price_vnd === previewPrice)
+    : undefined;
 
   return (
     <>
@@ -57,13 +61,13 @@ export function HomeFeaturedPlants() {
           role="group"
           aria-label={LABELS.home.FEATURED_FILTERS}
         >
-          {homeFilters.map((item) => (
+          {filters.map((item) => (
             <ButtonCommon
               variant="unstyled"
               key={item.value}
-              className={`product-filter${filter === item.value ? " is-active" : ""}`}
+              className={`product-filter${activeFilter.value === item.value ? " is-active" : ""}`}
               type="button"
-              aria-pressed={filter === item.value}
+              aria-pressed={activeFilter.value === item.value}
               onClick={() => setFilter(item.value)}
             >
               {item.label}
@@ -73,36 +77,35 @@ export function HomeFeaturedPlants() {
         <div
           className="home-products-grid"
           aria-live="polite"
-          aria-atomic="false"
+          aria-busy={isLoading}
         >
-          {filteredProducts.map((product, index) => (
+          {products.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
               onQuickView={setSelectedProduct}
-              badge={
-                filter === "all" && index === 0
-                  ? LABELS.catalog.FAVORITE_BADGE
-                  : undefined
-              }
             />
           ))}
         </div>
-        {filteredProducts.length === 0 ? (
+        {isLoading && <LoadingOverlay message={LABELS.catalog.LOADING} />}
+        {!isLoading && products.length === 0 && (
           <div className="home-empty-state">
             <Leaf size={28} strokeWidth={1.3} />
-            <p>{LABELS.home.EMPTY}</p>
-            <ButtonCommon
-              variant="unstyled"
-              type="button"
-              className="store-text-link"
-              onClick={() => setFilter("all")}
-            >
-              {LABELS.home.EXPLORE_PLANTS}
-              <ArrowRight size={16} />
-            </ButtonCommon>
+            <p role={isError ? "alert" : "status"}>
+              {isError ? LABELS.home.FEATURED_ERROR : LABELS.catalog.EMPTY_TITLE}
+            </p>
+            {isError ? (
+              <ButtonCommon variant="outline" isLoading={isFetching} onClick={() => void refetch()}>
+                {LABELS.home.RETRY}
+              </ButtonCommon>
+            ) : activeFilter.value !== "all" && (
+              <ButtonCommon variant="unstyled" className="store-text-link" onClick={() => setFilter("all")}>
+                {LABELS.home.ALL_PLANTS}
+                <ArrowRight size={16} />
+              </ButtonCommon>
+            )}
           </div>
-        ) : null}
+        )}
       </section>
       <ModalCommon
         open={selectedProduct !== null}
@@ -124,20 +127,25 @@ export function HomeFeaturedPlants() {
             <div className="product-dialog-copy">
               <p className="section-eyebrow">{selectedProduct.category_name}</p>
               <p className="quick-view-price">
-                {selectedProduct.min_sale_price_vnd
-                  ? formatCurrencyVND(selectedProduct.min_sale_price_vnd)
-                  : LABELS.common.CONTACT}
+                {previewPrice ? formatCurrencyVND(previewPrice) : LABELS.common.CONTACT}
+                {previewVariant && (
+                  <span className="ml-2 text-xs font-medium">{previewVariant.size_display}</span>
+                )}
               </p>
               <p>{selectedProduct.description}</p>
               <div className="plant-care-facts">
-                <p>
-                  <Sun size={18} />
-                  {LIGHT_REQUIREMENT_LABELS[selectedProduct.light_requirement]}
-                </p>
-                <p>
-                  <Droplets size={18} />
-                  {CARE_LEVEL_LABELS[selectedProduct.care_level]}
-                </p>
+                {selectedProduct.light_requirement && (
+                  <p>
+                    <Sun size={18} />
+                    {LIGHT_REQUIREMENT_LABELS[selectedProduct.light_requirement]}
+                  </p>
+                )}
+                {selectedProduct.care_level && (
+                  <p>
+                    <Droplets size={18} />
+                    {CARE_LEVEL_LABELS[selectedProduct.care_level]}
+                  </p>
+                )}
               </div>
               {selectedProduct.care_instructions ? (
                 <p className="quick-view-care">
@@ -146,11 +154,10 @@ export function HomeFeaturedPlants() {
               ) : null}
               <LinkCommon
                 className="store-primary-button"
-                to={
-                  selectedProduct.id.startsWith("showcase-")
-                    ? `/catalog?search=${encodeURIComponent(selectedProduct.name)}`
-                    : `/catalog/${selectedProduct.slug || selectedProduct.id}`
-                }
+                to={{
+                  pathname: `/catalog/${selectedProduct.slug || selectedProduct.id}`,
+                  search: previewVariant ? `?variant=${encodeURIComponent(previewVariant.id)}` : "",
+                }}
                 onClick={() => setSelectedProduct(null)}
               >
                 {LABELS.catalog.STORE_CTA}

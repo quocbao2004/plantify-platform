@@ -9,7 +9,9 @@ export interface Category extends BaseEntity {
   name: string;
   slug: string;
   description?: string;
+  image_url?: string;
   is_active: boolean;
+  sort_order?: number;
 }
 
 export interface RentalRate extends BaseEntity {
@@ -21,10 +23,11 @@ export interface RentalRate extends BaseEntity {
 
 export interface ProductVariant extends BaseEntity {
   sku: string;
-  size: PlantSize;
+  size: string;
   size_display: string;
   height_cm?: number;
   sale_price_vnd?: number;
+  stock_quantity?: number;
   deposit_vnd?: number;
   can_sell: boolean;
   can_rent: boolean;
@@ -45,20 +48,25 @@ export interface Product extends BaseEntity {
   category_name: string;
   description?: string;
   care_instructions?: string;
-  light_requirement: LightRequirement;
-  care_level: CareLevel;
+  light_requirement?: LightRequirement;
+  care_level?: CareLevel;
   primary_image?: string;
   min_sale_price_vnd?: number;
+  min_rental_price_vnd?: number;
+  units_sold?: number;
   is_active: boolean;
-  images?: ProductImage[];
   variants?: ProductVariant[];
+  images?: ProductImage[];
 }
 
 export interface ProductQueryParams {
-  category?: string;
   search?: string;
+  category?: string;
   light_requirement?: LightRequirement;
   care_level?: CareLevel;
+  can_rent?: boolean;
+  can_sell?: boolean;
+  sort_by?: "price_asc" | "price_desc" | "newest" | "name" | "popular";
   page?: number;
   page_size?: number;
 }
