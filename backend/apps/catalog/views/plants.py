@@ -3,26 +3,32 @@ import uuid
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from django.db.models import Q, Count
+from django.db.models import Count, Q, Sum
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from apps.catalog.models import Category, Plants, PlantsDetail
+from apps.catalog.permissions import IsStaffOrReadOnly
 from apps.catalog.serializers import (
     CategorySerializer,
     PlantsSerializer,
     PlantsDetailSerializer,
 )
+from apps.orders.models import PurchaseOrder
+
+
+def plant_queryset():
+    return Plants.objects.select_related("category").prefetch_related("details__media", "details__assets")
 
 
 class CategoryListCreateView(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
 
     def get_queryset(self):
         is_active_param = self.request.query_params.get("is_active", "").strip().lower()
-        if is_active_param in ("all", "any") or (self.request.user and self.request.user.is_staff):
+        if self.request.user.is_staff and is_active_param not in ("true", "1"):
             queryset = Category.objects.all()
         else:
             queryset = Category.objects.filter(is_active=True)
@@ -32,7 +38,7 @@ class CategoryListCreateView(generics.ListCreateAPIView):
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all().annotate(plants_count_annotated=Count("plants"))
     serializer_class = CategorySerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -52,24 +58,20 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class PlantsListCreateView(generics.ListCreateAPIView):
     serializer_class = PlantsSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
+    filterset_fields = ["care_level", "light_requirement"]
 
     def get_queryset(self):
-        is_active_param = self.request.query_params.get("is_active", "").strip().lower()
-        if is_active_param in ("true", "1"):
-            queryset = Plants.objects.filter(is_active=True)
+        params = self.request.query_params
+        is_active_param = params.get("is_active", "").strip().lower()
+        queryset = plant_queryset()
+        if not self.request.user.is_staff or is_active_param in ("true", "1"):
+            queryset = queryset.filter(is_active=True, category__is_active=True)
         elif is_active_param in ("false", "0"):
-            queryset = Plants.objects.filter(is_active=False)
-        elif is_active_param in ("all", "any") or (self.request.user and self.request.user.is_staff):
-            queryset = Plants.objects.all()
-        else:
-            # Default for storefront
-            queryset = Plants.objects.filter(is_active=True)
-
-        queryset = queryset.select_related("category").prefetch_related("details__media")
+            queryset = queryset.filter(is_active=False)
 
         # Search filter
-        search = self.request.query_params.get("search", "").strip()
+        search = params.get("search", "").strip()
         if search:
             queryset = queryset.filter(
                 Q(name__icontains=search)
@@ -79,48 +81,72 @@ class PlantsListCreateView(generics.ListCreateAPIView):
             )
 
         # Category filter
-        category = self.request.query_params.get("category", "").strip()
+        category = params.get("category", "").strip()
         if category and category.upper() != "ALL":
+            category_filter = Q(category__slug=category) | Q(category__name__iexact=category)
             try:
-                cat_uuid = uuid.UUID(category)
-                queryset = queryset.filter(category__id=cat_uuid)
+                category_filter |= Q(category_id=uuid.UUID(category))
             except ValueError:
-                queryset = queryset.filter(category__slug=category)
+                pass
+            queryset = queryset.filter(category_filter)
+
+        if params.get("sort_by") == "popular":
+            order_status = PurchaseOrder.OrderStatus
+            purchased = Q(details__purchase_order_details__purchase_order__status__in=[
+                order_status.PAID, order_status.PROCESSING, order_status.DELIVERING, order_status.COMPLETED,
+            ])
+            return queryset.annotate(
+                units_sold=Sum("details__purchase_order_details__quantity", filter=purchased, default=0),
+            ).order_by("-units_sold", "-created_at", "id")
 
         # Ordering
-        ordering = self.request.query_params.get("ordering", "-created_at")
-        if ordering:
-            queryset = queryset.order_by(ordering)
-
-        return queryset
+        ordering = params.get("ordering", "-created_at")
+        if ordering.lstrip("-") not in {"created_at", "updated_at", "name", "slug"}:
+            ordering = "-created_at"
+        return queryset.order_by(ordering, "id")
 
 
 class PlantsDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Plants.objects.all().select_related("category").prefetch_related("details__media")
+    queryset = plant_queryset()
     serializer_class = PlantsSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(is_active=True, category__is_active=True)
+        return queryset
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
-        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
-        val = self.kwargs.get(lookup_url_kwarg) or self.kwargs.get("pk") or self.kwargs.get("slug")
+        val = self.kwargs["pk"]
         try:
             val_uuid = uuid.UUID(str(val))
-            return generics.get_object_or_404(queryset, id=val_uuid)
-        except (ValueError, TypeError):
-            return generics.get_object_or_404(queryset, slug=val)
+        except ValueError:
+            obj = generics.get_object_or_404(queryset, slug=val)
+        else:
+            obj = generics.get_object_or_404(queryset, id=val_uuid)
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+
+class PlantsBySlugView(generics.RetrieveAPIView):
+    queryset = plant_queryset().filter(is_active=True, category__is_active=True)
+    serializer_class = PlantsSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = "slug"
 
 
 class PlantsDetailItemListCreateView(generics.ListCreateAPIView):
     queryset = PlantsDetail.objects.all().select_related("plant").prefetch_related("media")
     serializer_class = PlantsDetailSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
 
 
 class PlantsDetailItemView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PlantsDetail.objects.all().select_related("plant").prefetch_related("media")
     serializer_class = PlantsDetailSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
 
 
 class ImageUploadView(APIView):
@@ -129,7 +155,7 @@ class ImageUploadView(APIView):
     Hỗ trợ multipart/form-data với field 'file' hoặc 'image'.
     """
     parser_classes = [MultiPartParser, FormParser]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsStaffOrReadOnly]
 
     def post(self, request, *args, **kwargs):
         file_obj = request.FILES.get("file") or request.FILES.get("image")

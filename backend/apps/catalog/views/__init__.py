@@ -1,6 +1,7 @@
 from .plants import (
     CategoryListCreateView,
     CategoryDetailView,
+    PlantsBySlugView,
     PlantsListCreateView,
     PlantsDetailView,
     PlantsDetailItemListCreateView,
@@ -16,6 +17,7 @@ from .plant_asset import (
 __all__ = [
     "CategoryListCreateView",
     "CategoryDetailView",
+    "PlantsBySlugView",
     "PlantsListCreateView",
     "PlantsDetailView",
     "PlantsDetailItemListCreateView",

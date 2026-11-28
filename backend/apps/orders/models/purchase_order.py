@@ -33,6 +33,8 @@ class PurchaseOrder(UUIDTimeStampedModel):
         default=0,
         verbose_name="Tổng tiền đơn hàng",
     )
+    shipping_fee = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    checkout_key = models.UUIDField(null=True, blank=True, editable=False)
     status = models.CharField(
         max_length=20,
         choices=OrderStatus.choices,
@@ -50,6 +52,9 @@ class PurchaseOrder(UUIDTimeStampedModel):
         verbose_name = "Đơn mua cây"
         verbose_name_plural = "Đơn mua cây"
         ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(fields=["user", "checkout_key"], name="unique_user_checkout_key"),
+        ]
 
     def __str__(self):
         return f"{self.order_code} - {self.recipient_name} ({self.get_status_display()})"

@@ -1,16 +1,21 @@
-import { BaseEntity } from "@/types";
-import { ProductVariant } from "@/features/catalog/types";
-
-export interface CartItem extends BaseEntity {
-  variant: string;
-  variant_details?: ProductVariant;
+export interface CartItem {
+  plant_detail: string;
   quantity: number;
-  item_type: "PURCHASE" | "RENTAL";
-  rental_duration_months?: number;
 }
 
-export interface Cart extends BaseEntity {
-  items: CartItem[];
-  total_items: number;
-  estimated_total_vnd: number;
+export interface CartQuoteLine extends CartItem {
+  name: string | null;
+  slug: string | null;
+  size: string;
+  unit_price: string | null;
+  line_total: string;
+  available_quantity: number;
+}
+
+export interface CartQuote {
+  items: CartQuoteLine[];
+  subtotal: string;
+  shipping_fee: string;
+  total: string;
+  vnpay_enabled: boolean;
 }

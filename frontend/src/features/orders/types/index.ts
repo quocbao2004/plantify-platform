@@ -1,23 +1,30 @@
 import { BaseEntity } from "@/types";
 
-export type OrderStatus = "PENDING" | "PAID" | "CONFIRMED" | "SHIPPED" | "COMPLETED" | "CANCELLED";
+export type OrderStatus = "PENDING" | "PAID" | "PROCESSING" | "DELIVERING" | "COMPLETED" | "CANCELLED";
 
 export interface OrderItem extends BaseEntity {
-  variant_sku: string;
-  product_name: string;
+  plant_name: string;
+  plant_detail_info: { size: string };
   quantity: number;
-  unit_price_vnd: number;
-  total_price_vnd: number;
+  unit_price: string;
+  total_price: string;
 }
 
 export interface Order extends BaseEntity {
-  order_number: string;
+  order_code: string;
   status: OrderStatus;
-  status_display: string;
-  subtotal_vnd: number;
-  shipping_fee_vnd: number;
-  discount_amount_vnd: number;
-  total_amount_vnd: number;
-  items: OrderItem[];
-  created_at: string;
+  shipping_fee: string;
+  total_amount: string;
+  recipient_name: string;
+  recipient_phone: string;
+  shipping_address: string;
+  notes: string;
+  details: OrderItem[];
+  payment?: {
+    method: string;
+    status: "PENDING" | "SUCCESS" | "FAILED" | "CANCELLED";
+    can_resume: boolean;
+    expired: boolean;
+  } | null;
+  payment_url?: string;
 }

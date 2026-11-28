@@ -9,7 +9,12 @@ import {
 import { User } from "@/types";
 import { MESSAGES } from "@/constants/messages";
 
-type AuthApiData = Omit<AuthResponse, "user"> & { user: User & { phone?: string } };
+type ApiUser = User & { phone?: string };
+type AuthApiData = Omit<AuthResponse, "user"> & { user: ApiUser };
+
+function normalizeUser(user: ApiUser): User {
+  return { ...user, phone_number: user.phone ?? user.phone_number };
+}
 
 function readAuthResponse(response: AuthApiData | { data: AuthApiData }): AuthResponse {
   if (!response || typeof response !== "object") {
@@ -20,7 +25,7 @@ function readAuthResponse(response: AuthApiData | { data: AuthApiData }): AuthRe
     throw new Error(MESSAGES.INVALID_API_RESPONSE);
   }
   return {
-    user: { ...payload.user, phone_number: payload.user.phone ?? payload.user.phone_number },
+    user: normalizeUser(payload.user),
     tokens: payload.tokens,
   };
 }
@@ -66,7 +71,7 @@ export const authApi = {
   },
 
   getMe: async (): Promise<User> => {
-    const { data } = await httpClient.get<User>(API_ENDPOINTS.AUTH.ME);
-    return data;
+    const { data } = await httpClient.get<ApiUser>(API_ENDPOINTS.AUTH.ME);
+    return normalizeUser(data);
   },
 };

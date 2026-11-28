@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
   USER: "plantify_user",
   THEME: "plantify_theme",
   NEWSLETTER_INTEREST: "plantify-newsletter-interest-v1",
+  CART: "plantify-purchase-cart-v1",
 } as const;
 
 export { LABELS, PRODUCT_LABELS } from "./labels";
@@ -33,7 +34,7 @@ export const API_ENDPOINTS = {
     SOCIAL_FACEBOOK: "/accounts/auth/social/facebook/",
   },
   CATALOG: {
-    PRODUCTS: "/catalog/products/",
+    PRODUCTS: "/catalog/plants/",
     CATEGORIES: "/catalog/categories/",
     UPLOAD_IMAGE: "/catalog/upload-image/",
     PLANT_ASSETS: "/catalog/plant-assets/",
@@ -44,9 +45,9 @@ export const API_ENDPOINTS = {
     PLANT_ASSETS: "/inventory/plant-assets/",
   },
   ORDERS: {
-    CART: "/orders/cart/",
+    CART_QUOTE: "/orders/cart/quote/",
     CHECKOUT: "/orders/checkout/",
-    ORDERS: "/orders/orders/",
+    ORDERS: "/orders/purchase-orders/",
   },
   RENTALS: {
     CONTRACTS: "/rentals/contracts/",
@@ -54,6 +55,7 @@ export const API_ENDPOINTS = {
     INSPECTIONS: "/rentals/inspections/",
   },
   PAYMENTS: {
+    VNPAY: "/payments/vnpay/",
     INITIATE: "/payments/initiate/",
     DEPOSITS: "/payments/deposits/",
   },

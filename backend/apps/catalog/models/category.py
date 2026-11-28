@@ -10,6 +10,7 @@ class Category(UUIDTimeStampedModel):
     name = models.CharField(max_length=150, unique=True, verbose_name="Tên danh mục")
     slug = models.SlugField(max_length=180, unique=True, blank=True)
     description = models.TextField(blank=True, verbose_name="Mô tả")
+    image_url = models.CharField(max_length=500, blank=True, default="", verbose_name="URL hình ảnh")
     is_active = models.BooleanField(default=True, db_index=True, verbose_name="Đang kích hoạt")
     sort_order = models.PositiveIntegerField(default=0, db_index=True, verbose_name="Thứ tự hiển thị")
 

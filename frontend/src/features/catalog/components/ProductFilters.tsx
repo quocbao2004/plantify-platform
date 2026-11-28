@@ -42,7 +42,9 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <SelectCommon
         label={LABELS.catalog.CATEGORY}
-        value={filters.category || ""}
+        value={categories?.find((category) =>
+          category.slug === filters.category || category.name === filters.category,
+        )?.id || filters.category || ""}
         onChange={(event) =>
           onChange({ category: event.target.value || undefined, page: 1 })
         }

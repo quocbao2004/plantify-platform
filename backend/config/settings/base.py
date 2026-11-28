@@ -158,6 +158,13 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CHECKOUT_SHIPPING_FEE_VND = max(0, int(os.getenv("CHECKOUT_SHIPPING_FEE_VND", "0")))
+VNPAY_TMN_CODE = os.getenv("VNPAY_TMN_CODE", "").strip()
+VNPAY_HASH_SECRET = os.getenv("VNPAY_HASH_SECRET", "").strip()
+VNPAY_PAYMENT_URL = os.getenv("VNPAY_PAYMENT_URL", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html").strip()
+VNPAY_QUERY_URL = os.getenv("VNPAY_QUERY_URL", "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction")
+VNPAY_RETURN_URL = os.getenv("VNPAY_RETURN_URL", "").strip()
+VNPAY_ORDERS_URL = os.getenv("VNPAY_ORDERS_URL", "").strip()
 
 # Django REST Framework
 REST_FRAMEWORK = {

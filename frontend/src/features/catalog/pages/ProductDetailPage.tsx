@@ -1,11 +1,14 @@
 import { ButtonCommon } from "@/components/common/ButtonCommon";
 import { LinkCommon } from "@/components/common/LinkCommon";
-import { LABELS, PRODUCT_LABELS } from "@/constants/labels";
+import { TextFieldCommon } from "@/components/common/TextFieldCommon";
+import { LABELS, PRODUCT_LABELS, STORE_HOTLINE } from "@/constants/labels";
+import { MESSAGES } from "@/constants/messages";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   ArrowLeft,
-  Check,
+  ShoppingCart,
+  Phone,
   Sun,
   Droplets,
   ShieldCheck,
@@ -16,14 +19,17 @@ import { Badge, Card } from "@/components/ui";
 import { LoadingOverlay } from "@/components/common";
 import { formatCurrencyVND } from "@/utils";
 import { CARE_LEVEL_LABELS, LIGHT_REQUIREMENT_LABELS } from "../constants";
+import { MAX_CART_QUANTITY, useCartStore } from "@/features/cart/cartStore";
+import { notify } from "@/services/notifications";
 
 export const ProductDetailPage: React.FC = () => {
   const { idOrSlug } = useParams<{ idOrSlug: string }>();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const addItem = useCartStore((state) => state.addItem);
+  const cartItems = useCartStore((state) => state.items);
   const { data: product, isLoading, error } = useProductDetail(idOrSlug || "");
-
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
-    null,
-  );
+  const [quantityInput, setQuantityInput] = useState("1");
 
   if (isLoading) {
     return (
@@ -50,9 +56,31 @@ export const ProductDetailPage: React.FC = () => {
     );
   }
 
-  const selectedVariant =
-    product.variants?.find((v) => v.id === selectedVariantId) ||
-    product.variants?.[0];
+  const selectedVariantId = searchParams.get("variant");
+  const selectedVariant = product.variants?.find((variant) => variant.id === selectedVariantId)
+    ?? product.variants?.[0];
+  const salePrice = selectedVariant ? selectedVariant.sale_price_vnd : product.min_sale_price_vnd;
+  const stock = selectedVariant?.stock_quantity ?? 0;
+  const canSell = Boolean(selectedVariant?.can_sell && selectedVariant.is_active && product.is_active);
+  const quantity = Number(quantityInput);
+  const validQuantity = Number.isSafeInteger(quantity) && quantity >= 1;
+  const quantityInCart = cartItems.find((item) => item.plant_detail === selectedVariant?.id)?.quantity ?? 0;
+  const totalQuantity = quantityInCart + quantity;
+  const needsContact = canSell && validQuantity && totalQuantity > Math.min(stock, MAX_CART_QUANTITY);
+  const canAddToCart = canSell && validQuantity && !needsContact;
+  const contactMessage = totalQuantity > stock ? LABELS.catalog.STOCK_CONTACT : LABELS.catalog.ORDER_LIMIT_CONTACT;
+
+  const addPlantToCart = () => {
+    if (!selectedVariant || !canAddToCart) return;
+    if (!addItem(selectedVariant.id, quantity, stock)) {
+      notify.error(MESSAGES.CART_QUANTITY_LIMIT);
+      return;
+    }
+    notify.success(MESSAGES.CART_ITEM_ADDED(product.name, quantity), {
+      id: "cart-item-added",
+      action: { label: LABELS.cart.VIEW, onClick: () => navigate("/cart") },
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -92,9 +120,9 @@ export const ProductDetailPage: React.FC = () => {
               <span className="text-xs font-medium text-surface-500">
                 {product.category_name}
               </span>
-              <Badge variant="outline">
-                {CARE_LEVEL_LABELS[product.care_level]}
-              </Badge>
+              {product.care_level && (
+                <Badge variant="outline">{CARE_LEVEL_LABELS[product.care_level]}</Badge>
+              )}
             </div>
             <h1 className="text-2xl font-bold text-surface-900">
               {product.name}
@@ -108,11 +136,7 @@ export const ProductDetailPage: React.FC = () => {
                 {LABELS.catalog.SALE_PRICE}
               </span>
               <span className="text-2xl font-bold text-accent-700">
-                {selectedVariant?.sale_price_vnd
-                  ? formatCurrencyVND(selectedVariant.sale_price_vnd)
-                  : product.min_sale_price_vnd
-                    ? formatCurrencyVND(product.min_sale_price_vnd)
-                    : LABELS.common.CONTACT}
+                {salePrice ? formatCurrencyVND(salePrice) : LABELS.common.CONTACT}
               </span>
             </div>
             {selectedVariant?.deposit_vnd ? (
@@ -140,7 +164,13 @@ export const ProductDetailPage: React.FC = () => {
                       selectedVariant?.id === v.id ? "primary" : "outline"
                     }
                     size="sm"
-                    onClick={() => setSelectedVariantId(v.id)}
+                    aria-pressed={selectedVariant?.id === v.id}
+                    onClick={() => {
+                      const params = new URLSearchParams(searchParams);
+                      params.set("variant", v.id);
+                      setSearchParams(params, { replace: true, preventScrollReset: true });
+                      setQuantityInput("1");
+                    }}
                   >
                     {v.size_display}{" "}
                     {v.height_cm ? PRODUCT_LABELS.height(v.height_cm) : ""}
@@ -152,7 +182,7 @@ export const ProductDetailPage: React.FC = () => {
 
           {/* Care Attributes */}
           <div className="grid grid-cols-2 gap-3 pt-2">
-            <Card className="p-3 flex items-center gap-2.5">
+            {product.light_requirement && <Card className="p-3 flex items-center gap-2.5">
               <Sun className="w-4 h-4 text-amber-500 shrink-0" />
               <div className="text-xs">
                 <p className="text-surface-500">{LABELS.catalog.LIGHT}</p>
@@ -160,8 +190,8 @@ export const ProductDetailPage: React.FC = () => {
                   {LIGHT_REQUIREMENT_LABELS[product.light_requirement]}
                 </p>
               </div>
-            </Card>
-            <Card className="p-3 flex items-center gap-2.5">
+            </Card>}
+            {product.care_level && <Card className="p-3 flex items-center gap-2.5">
               <Droplets className="w-4 h-4 text-blue-500 shrink-0" />
               <div className="text-xs">
                 <p className="text-surface-500">{LABELS.catalog.CARE}</p>
@@ -169,15 +199,42 @@ export const ProductDetailPage: React.FC = () => {
                   {CARE_LEVEL_LABELS[product.care_level]}
                 </p>
               </div>
-            </Card>
+            </Card>}
           </div>
 
           {/* Action Buttons */}
+          {canSell && (
+            <TextFieldCommon
+              label="Số lượng"
+              type="number"
+              inputMode="numeric"
+              min={1}
+              step={1}
+              className="w-20"
+              value={quantityInput}
+              onChange={(event) => setQuantityInput(event.target.value)}
+              error={validQuantity ? undefined : LABELS.catalog.INVALID_QUANTITY}
+              helperText={needsContact ? contactMessage : undefined}
+            />
+          )}
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-surface-200">
-            <ButtonCommon variant="primary" size="lg" className="flex-1">
-              <Check className="w-4 h-4" />
-              {LABELS.catalog.BUY}
-            </ButtonCommon>
+            {needsContact ? (
+              <LinkCommon href={`tel:${STORE_HOTLINE.replace(/\s/g, "")}`} variant="primary" size="lg" className="flex-1">
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                {LABELS.catalog.CONTACT_TO_ORDER}
+              </LinkCommon>
+            ) : (
+              <ButtonCommon
+                variant="primary"
+                size="lg"
+                className="flex-1"
+                onClick={addPlantToCart}
+                disabled={!canAddToCart}
+              >
+                <ShoppingCart className="w-4 h-4" aria-hidden="true" />
+                {canSell ? LABELS.catalog.ADD_TO_CART : LABELS.catalog.UNAVAILABLE_FOR_PURCHASE}
+              </ButtonCommon>
+            )}
             <ButtonCommon variant="outline" size="lg" className="flex-1">
               <ShieldCheck className="w-4 h-4" />
               {LABELS.catalog.RENT}

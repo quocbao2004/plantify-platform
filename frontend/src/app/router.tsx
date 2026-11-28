@@ -32,6 +32,7 @@ export const router = createBrowserRouter([
       { path: "catalog/:idOrSlug", element: <ProductDetailPage /> },
       { path: "rentals", element: <RentalListPage /> },
       { path: "qr/:assetCode", element: <PublicPlantAssetPage /> },
+      { path: "cart", element: <CartPage /> },
 
       // Guest Only Routes (Login, Register)
       {
@@ -46,7 +47,6 @@ export const router = createBrowserRouter([
       {
         element: <AuthGuard />,
         children: [
-          { path: "cart", element: <CartPage /> },
           { path: "checkout", element: <CheckoutPage /> },
           { path: "orders", element: <OrderListPage /> },
           { path: "profile", element: <ProfilePage /> },

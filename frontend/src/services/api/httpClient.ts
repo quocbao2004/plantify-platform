@@ -2,6 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { env } from "@/config/env";
 import { STORAGE_KEYS, API_ENDPOINTS } from "@/constants";
 import { ApiErrorResponse } from "@/types";
+import { authReturnLink } from "@/features/auth/utils/checkoutRedirect";
 
 export const httpClient = axios.create({
   baseURL: env.VITE_API_BASE_URL,
@@ -98,7 +99,8 @@ httpClient.interceptors.response.use(
         localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
         localStorage.removeItem(STORAGE_KEYS.USER);
-        window.location.href = "/login";
+        const { pathname, search } = window.location;
+        window.location.href = authReturnLink("/login", ["/checkout", "/orders"].includes(pathname) ? pathname + search : "/");
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

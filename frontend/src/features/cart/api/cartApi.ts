@@ -1,22 +1,10 @@
 import { httpClient } from "@/services/api";
 import { API_ENDPOINTS } from "@/constants";
-import { Cart } from "../types";
+import type { CartItem, CartQuote } from "../types";
 
 export const cartApi = {
-  getCart: async (): Promise<Cart> => {
-    const { data } = await httpClient.get<Cart>(API_ENDPOINTS.ORDERS.CART);
+  quote: async (items: CartItem[], signal?: AbortSignal): Promise<CartQuote> => {
+    const { data } = await httpClient.post<CartQuote>(API_ENDPOINTS.ORDERS.CART_QUOTE, { items }, { signal });
     return data;
-  },
-
-  addItem: async (variantId: string, quantity: number = 1): Promise<Cart> => {
-    const { data } = await httpClient.post<Cart>(`${API_ENDPOINTS.ORDERS.CART}items/`, {
-      variant: variantId,
-      quantity,
-    });
-    return data;
-  },
-
-  removeItem: async (itemId: string): Promise<void> => {
-    await httpClient.delete(`${API_ENDPOINTS.ORDERS.CART}items/${itemId}/`);
   },
 };

@@ -10,27 +10,6 @@ vi.mock("@/services/notifications", () => ({
   notify: { success: vi.fn(), error: vi.fn(), info: vi.fn(), dismiss: vi.fn() },
 }));
 
-vi.mock("lucide-react", () => ({
-  Leaf: () => null,
-  Plus: () => null,
-  RefreshCw: () => null,
-  Search: () => null,
-  Filter: () => null,
-  Eye: () => null,
-  Pencil: () => null,
-  Trash2: () => null,
-  CheckCircle2: () => null,
-  XCircle: () => null,
-  Layers: () => null,
-  DollarSign: () => null,
-  Tag: () => null,
-  Calendar: () => null,
-  BookOpen: () => null,
-  Info: () => null,
-  AlertTriangle: () => null,
-  X: () => null,
-}));
-
 vi.mock("@/features/admin/api/adminPlantsApi", () => ({
   adminPlantsApi: {
     getPlants: vi.fn(),

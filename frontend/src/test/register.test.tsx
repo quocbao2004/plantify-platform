@@ -40,7 +40,7 @@ const authResponse = {
   tokens: { access: "access-token", refresh: "refresh-token" },
 };
 
-function fillForm(phone = "") {
+function fillForm(phone = "0912345678") {
   for (const [placeholder, value] of [
     [LABELS.auth.NAME_PLACEHOLDER, "Nguyễn Văn A"],
     [LABELS.auth.EMAIL_PLACEHOLDER, "nguyenvana@example.com"],
@@ -175,15 +175,15 @@ describe("RegisterPage and RegisterForm", () => {
     expect(notify.success).toHaveBeenCalledWith(MESSAGES.REGISTER_SUCCESS);
   });
 
-  it("trims profile fields and supports registration without a phone", async () => {
+  it("trims profile fields including the required phone", async () => {
     vi.mocked(authApi.register).mockResolvedValueOnce(authResponse);
     renderRegister();
-    fillForm();
+    fillForm("  0912345678  ");
     fireEvent.change(screen.getByLabelText(LABELS.auth.FULL_NAME), { target: { value: "  Nguyễn Văn A  " } });
     fireEvent.change(screen.getByLabelText(LABELS.auth.EMAIL), { target: { value: "  NGUYENVANA@EXAMPLE.COM  " } });
     fireEvent.click(screen.getByRole("button", { name: LABELS.auth.CREATE_ACCOUNT }));
     await waitFor(() => expect(authApi.register).toHaveBeenCalledWith({
-      full_name: "Nguyễn Văn A", email: "nguyenvana@example.com", phone_number: undefined, password: "MatKhau123",
+      full_name: "Nguyễn Văn A", email: "nguyenvana@example.com", phone_number: "0912345678", password: "MatKhau123",
     }));
     await screen.findByText("Trang chủ sau đăng ký");
   });
@@ -280,11 +280,11 @@ describe("RegisterPage and RegisterForm", () => {
 });
 
 describe("registration input validation", () => {
-  it.each(["abc0912345678", "091234567899", "0|12345678", "8412345678"])("rejects invalid phone %s", (phone_number) => {
+  it.each(["", "  ", "abc0912345678", "091234567899", "0|12345678", "8412345678"])("rejects missing or invalid phone %s", (phone_number) => {
     expect(registerSchema.safeParse({ full_name: "Nguyễn An", email: "an@example.com", phone_number, password: "MatKhau123", confirm_password: "MatKhau123" }).success).toBe(false);
   });
 
-  it.each(["", "  ", "0912345678", "+84912345678", "84912345678"])("accepts optional or valid phone %s", (phone_number) => {
+  it.each(["0912345678", "+84912345678", "84912345678"])("accepts valid phone %s", (phone_number) => {
     expect(registerSchema.safeParse({ full_name: "Nguyễn An", email: "an@example.com", phone_number, password: "MatKhau123", confirm_password: "MatKhau123" }).success).toBe(true);
   });
 });

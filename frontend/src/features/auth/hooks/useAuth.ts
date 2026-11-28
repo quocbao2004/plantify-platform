@@ -5,9 +5,11 @@ import { useAuthStore } from "@/stores/authStore";
 import { LoginPayload, RegisterPayload, SocialLoginPayload } from "../types";
 import { MESSAGES } from "@/constants/messages";
 import { notify } from "@/services/notifications";
+import { useAuthDestination } from "../utils/checkoutRedirect";
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const destination = useAuthDestination();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
@@ -22,13 +24,14 @@ export const useLogin = () => {
       if (user && tokens) {
         setAuth(user, tokens);
       }
-      navigate("/");
+      navigate(destination, { replace: true });
     },
   });
 };
 
 export const useRegister = () => {
   const navigate = useNavigate();
+  const destination = useAuthDestination();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
@@ -39,13 +42,14 @@ export const useRegister = () => {
     },
     onSuccess: (data) => {
       setAuth(data.user, data.tokens);
-      navigate("/", { replace: true });
+      navigate(destination, { replace: true });
     },
   });
 };
 
 export const useSocialLogin = () => {
   const navigate = useNavigate();
+  const destination = useAuthDestination();
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return useMutation({
@@ -60,7 +64,7 @@ export const useSocialLogin = () => {
       if (user && tokens) {
         setAuth(user, tokens);
       }
-      navigate("/");
+      navigate(destination, { replace: true });
     },
   });
 };
